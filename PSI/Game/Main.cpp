@@ -108,7 +108,7 @@ int main()
 	dimensions, etc.
 	*/
 	IrrlichtDevice *device =
-		createDevice(video::EDT_SOFTWARE, dimension2d<u32>(640, 480), 16,
+		createDevice(video::EDT_OPENGL, dimension2d<u32>(640, 480), 16,
 		false, false, false, 0);
 
 	if (!device)
@@ -136,7 +136,7 @@ int main()
 	The text is placed at the position (10,10) as top left corner and
 	(260,22) as lower right corner.
 	*/
-	guienv->addStaticText(L"Hello World! This is the Irrlicht Software renderer!",
+	guienv->addStaticText(L"Hello World! This is the Irrlicht OPENGL renderer!",
 		rect<s32>(10, 10, 260, 22), true);
 
 	/*
