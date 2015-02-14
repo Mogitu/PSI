@@ -49,10 +49,10 @@
     <widget class="QPushButton" name="pushButton">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>90</y>
-       <width>75</width>
-       <height>23</height>
+       <x>50</x>
+       <y>180</y>
+       <width>141</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="text">
@@ -69,7 +69,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Scale</string>
+      <string>Min Scale</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
@@ -82,20 +82,20 @@
       </rect>
      </property>
      <property name="text">
-      <string>Amount</string>
+      <string>Max Scale</string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_2">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>90</y>
+       <x>70</x>
+       <y>80</y>
        <width>75</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>Change Color</string>
      </property>
     </widget>
    </widget>

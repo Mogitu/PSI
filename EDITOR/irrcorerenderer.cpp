@@ -17,7 +17,7 @@ IrrCoreRenderer::IrrCoreRenderer(QWidget *irrRenderTarget, bool softwareRenderer
     //Set Parameters. Most important part here is: params.WindowId. This value sets the output destination of this Irrlicht instance.
     this->params.AntiAlias = 0;
     this->params.Bits = 32;
-    this->params.DeviceType = EIDT_BEST;
+    this->params.DeviceType = EIDT_WIN32;
     this->params.Doublebuffer = true;
     this->params.DriverType = rendererType;
     this->params.EventReceiver = 0;
@@ -35,6 +35,15 @@ IrrCoreRenderer::IrrCoreRenderer(QWidget *irrRenderTarget, bool softwareRenderer
     this->params.ZBufferBits = 16;
 
     this->device = createDeviceEx(this->params);
+
+    minScale= 1.0;
+    maxScale =1.0;
+
+    bright = new core::vector3di(255.0,255.0,255.0);
+    dark = new core::vector3di(255,255,255);
+
+
+
 }
 
 IrrCoreRenderer::~IrrCoreRenderer()
@@ -44,17 +53,20 @@ IrrCoreRenderer::~IrrCoreRenderer()
 
 void IrrCoreRenderer::createParticle()
 {
+
     particleNode = smgr->addParticleSystemSceneNode(false);
 
     particleEmitter = particleNode->createBoxEmitter(
                         core::aabbox3d<f32>(-7,0,-7,7,1,7),  // emitter size
                         core::vector3df(0.0f,0.06f,0.0f),    // initial direction
                         80,100,                              // emit rate
-                        video::SColor(0,255,255,255),        // darkest color
-                        video::SColor(0,255,255,255),        // brightest color
+                        video::SColor(0,dark->X,dark->Y,dark->Z),        // darkest color
+                        video::SColor(0,bright->X,bright->Y,bright->Z),        // brightest color
                         800,2000,20,                         // min and max age, angle
-                        core::dimension2df(10.f,10.f),       // min size
-                        core::dimension2df(20.f,20.f));      // max size
+                       //core::dimension2df(10.f,10.f),       // min size
+                        core::dimension2df(minScale,minScale),
+                        core::dimension2df(maxScale, maxScale));      // max size
+
 
     particleNode->setEmitter(particleEmitter); // this grabs the emitter
     particleEmitter->drop(); // so we can drop it here without deleting it
@@ -75,7 +87,7 @@ void IrrCoreRenderer::createParticle()
 void IrrCoreRenderer::deleteParticle()
 {
 
-   particleNode->clearParticles();
+   particleNode->remove();
 
 
 }
@@ -86,6 +98,7 @@ void IrrCoreRenderer::init()
     {
         smgr = this->device->getSceneManager();
         smgr->addCameraSceneNode(0, core::vector3df(0, -50, -100), core::vector3df(0, 5, 0));
+        createParticle();
         startTimer(0);
     }
 }

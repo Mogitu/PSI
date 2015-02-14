@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    d= new QColorDialog();
+
     //Init an Irrlicht instance and give it a target widget into where Irrlicht should show its output - here I named it "irrRenderWidget0" and "irrRenderWidget1".
     this->initIrrInstance0(ui->centralWidget->findChild<QWidget *>("irrRenderWidget0"));
     //this->initIrrInstance1(ui->centralWidget->findChild<QWidget *>("irrRenderWidget1"));
@@ -46,10 +48,22 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 
 void MainWindow::on_pushButton_clicked()
 {
+    //
+    irr0->bright->X = d->currentColor().red();
+    irr0->bright->Y = d->currentColor().green();
+    irr0->bright->Z = d->currentColor().blue();
+
+    this->irr0->minScale = ui->lineEdit->text().toFloat();
     this->irr0->createParticle();
+
+
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
     this->irr0->deleteParticle();
+    d->open();
 }
+
+
+

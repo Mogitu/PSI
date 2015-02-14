@@ -5,6 +5,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <qcolordialog.h>
 #include "irrcorerenderer.h"
 
 namespace Ui {
@@ -21,6 +22,7 @@ public:
 
     IrrCoreRenderer* irr0;
     //IrrCoreRenderer* irr1;
+     QColorDialog* d;
 
 
 private:

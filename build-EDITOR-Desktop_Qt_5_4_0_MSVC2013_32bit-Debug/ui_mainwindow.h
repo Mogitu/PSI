@@ -68,7 +68,7 @@ public:
         lineEdit_2->setGeometry(QRect(70, 50, 113, 20));
         pushButton = new QPushButton(groupBox);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(70, 90, 75, 23));
+        pushButton->setGeometry(QRect(50, 180, 141, 61));
         label = new QLabel(groupBox);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(10, 20, 47, 13));
@@ -77,7 +77,7 @@ public:
         label_2->setGeometry(QRect(10, 50, 47, 13));
         pushButton_2 = new QPushButton(groupBox);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
-        pushButton_2->setGeometry(QRect(160, 90, 75, 23));
+        pushButton_2->setGeometry(QRect(70, 80, 75, 23));
         irrRenderWidget0 = new QWidget(centralWidget);
         irrRenderWidget0->setObjectName(QStringLiteral("irrRenderWidget0"));
         irrRenderWidget0->setGeometry(QRect(280, 10, 401, 501));
@@ -111,9 +111,9 @@ public:
         actionExport->setText(QApplication::translate("MainWindow", "Export", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Settings", 0));
         pushButton->setText(QApplication::translate("MainWindow", "Apply", 0));
-        label->setText(QApplication::translate("MainWindow", "Scale", 0));
-        label_2->setText(QApplication::translate("MainWindow", "Amount", 0));
-        pushButton_2->setText(QApplication::translate("MainWindow", "PushButton", 0));
+        label->setText(QApplication::translate("MainWindow", "Min Scale", 0));
+        label_2->setText(QApplication::translate("MainWindow", "Max Scale", 0));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Change Color", 0));
         menuJan->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 

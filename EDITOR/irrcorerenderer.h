@@ -22,6 +22,12 @@ public:
 
     void createParticle();
     void deleteParticle();
+    float minScale;
+    float maxScale;
+
+
+    core::vector3di* dark;
+    core::vector3di* bright;
 
 private:
     QWidget *irrRenderTarget;
@@ -30,6 +36,8 @@ private:
     scene::IParticleSystemSceneNode* particleNode;
     scene::IParticleEmitter* particleEmitter;
     scene::IParticleAffector* particleAffector;
+
+
 
 protected:
     SIrrlichtCreationParameters params;
