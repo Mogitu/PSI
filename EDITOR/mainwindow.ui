@@ -14,13 +14,13 @@
    <string>Particle Editor Alpha</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="Options">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>10</y>
       <width>271</width>
-      <height>501</height>
+      <height>491</height>
      </rect>
     </property>
     <property name="title">
@@ -35,6 +35,9 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="text">
+      <string>1</string>
+     </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_2">
      <property name="geometry">
@@ -45,12 +48,15 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="text">
+      <string>1</string>
+     </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="ApplyAll">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>180</y>
+       <x>60</x>
+       <y>420</y>
        <width>141</width>
        <height>61</height>
       </rect>
@@ -85,10 +91,10 @@
       <string>Max Scale</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="PickColor">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>10</x>
        <y>80</y>
        <width>75</width>
        <height>23</height>
@@ -99,13 +105,13 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="irrRenderWidget0" native="true">
+   <widget class="QWidget" name="ParticlePreviewWidget" native="true">
     <property name="geometry">
      <rect>
       <x>280</x>
       <y>10</y>
       <width>401</width>
-      <height>501</height>
+      <height>491</height>
      </rect>
     </property>
    </widget>
@@ -123,7 +129,6 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionFdsfs"/>
     <addaction name="actionExport"/>
    </widget>
    <addaction name="menuJan"/>
@@ -137,11 +142,6 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="actionFdsfs">
-   <property name="text">
-    <string>Import</string>
-   </property>
-  </action>
   <action name="actionExport">
    <property name="text">
     <string>Export</string>

@@ -14,10 +14,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    irrcorerenderer.cpp
+    IrrRenderWidget.cpp
 
 HEADERS  += mainwindow.h \
-    irrcorerenderer.h
+    IrrRenderWidget.h
 
 FORMS    += mainwindow.ui
 

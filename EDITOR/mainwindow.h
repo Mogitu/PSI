@@ -6,7 +6,7 @@
 
 #include <QMainWindow>
 #include <qcolordialog.h>
-#include "irrcorerenderer.h"
+#include "IrrRenderWidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,21 +20,23 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    IrrCoreRenderer* irr0;
-    //IrrCoreRenderer* irr1;
-     QColorDialog* d;
+    IrrRenderWidget* irrRenderWidget;
+    QColorDialog* colorPicker;
 
 
 private:
     Ui::MainWindow *ui;
-    void initIrrInstance0(QWidget *irrRenderTarget);
-   //void initIrrInstance1(QWidget *irrRenderTarget);
+    void InitIrrRenderWidget(QWidget *irrRenderTarget);
+
 
 protected:
     virtual void resizeEvent(QResizeEvent *event);
+
+
 private slots:
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
+
+    void on_ApplyAll_clicked();
+    void on_PickColor_clicked();
 };
 
 #endif // MAINWINDOW_H
