@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -39,6 +40,8 @@ public:
     QLabel *label;
     QLabel *label_2;
     QPushButton *PickColor;
+    QComboBox *comboBox;
+    QLabel *label_3;
     QWidget *ParticlePreviewWidget;
     QMenuBar *menuBar;
     QMenu *menuJan;
@@ -74,7 +77,13 @@ public:
         label_2->setGeometry(QRect(10, 50, 47, 13));
         PickColor = new QPushButton(Options);
         PickColor->setObjectName(QStringLiteral("PickColor"));
-        PickColor->setGeometry(QRect(10, 80, 75, 23));
+        PickColor->setGeometry(QRect(10, 120, 75, 23));
+        comboBox = new QComboBox(Options);
+        comboBox->setObjectName(QStringLiteral("comboBox"));
+        comboBox->setGeometry(QRect(70, 80, 69, 22));
+        label_3 = new QLabel(Options);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setGeometry(QRect(10, 80, 47, 13));
         ParticlePreviewWidget = new QWidget(centralWidget);
         ParticlePreviewWidget->setObjectName(QStringLiteral("ParticlePreviewWidget"));
         ParticlePreviewWidget->setGeometry(QRect(280, 10, 401, 491));
@@ -105,12 +114,25 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Particle Editor Alpha", 0));
         actionExport->setText(QApplication::translate("MainWindow", "Export", 0));
         Options->setTitle(QApplication::translate("MainWindow", "Settings", 0));
+#ifndef QT_NO_TOOLTIP
+        lineEdit->setToolTip(QApplication::translate("MainWindow", "Smallest scale of the particles", 0));
+#endif // QT_NO_TOOLTIP
         lineEdit->setText(QApplication::translate("MainWindow", "1", 0));
+#ifndef QT_NO_TOOLTIP
+        lineEdit_2->setToolTip(QApplication::translate("MainWindow", "Biggest scale of particles", 0));
+#endif // QT_NO_TOOLTIP
         lineEdit_2->setText(QApplication::translate("MainWindow", "1", 0));
         ApplyAll->setText(QApplication::translate("MainWindow", "Apply", 0));
         label->setText(QApplication::translate("MainWindow", "Min Scale", 0));
         label_2->setText(QApplication::translate("MainWindow", "Max Scale", 0));
         PickColor->setText(QApplication::translate("MainWindow", "Change Color", 0));
+        comboBox->clear();
+        comboBox->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "Box", 0)
+         << QApplication::translate("MainWindow", "Point", 0)
+         << QApplication::translate("MainWindow", "Sphere", 0)
+        );
+        label_3->setText(QApplication::translate("MainWindow", "Shape", 0));
         menuJan->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 

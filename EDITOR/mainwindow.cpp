@@ -15,8 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete irrRenderWidget;
-    delete colorPicker;
     delete ui;
 }
 
@@ -35,13 +33,10 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 
 void MainWindow::on_ApplyAll_clicked()
 {
-    irrRenderWidget->bright->X = colorPicker->currentColor().red();
-    irrRenderWidget->bright->Y = colorPicker->currentColor().green();
-    irrRenderWidget->bright->Z = colorPicker->currentColor().blue();
-    irrRenderWidget->minScale = ui->lineEdit->text().toFloat();
-    irrRenderWidget->maxScale = ui->lineEdit_2->text().toFloat();
-
-    irrRenderWidget->createEmitter();
+    irrRenderWidget->particleManager->setColor(colorPicker->currentColor());
+    irrRenderWidget->particleManager->minScale = ui->lineEdit->text().toFloat();
+    irrRenderWidget->particleManager->maxScale = ui->lineEdit_2->text().toFloat();
+    irrRenderWidget->particleManager->createEmitter();
 }
 
 

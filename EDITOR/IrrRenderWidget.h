@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QWidget>
 #include "irrlicht.h"
+#include "ParticleManager.h"
 
 using namespace irr;
 using namespace core;
@@ -19,25 +20,17 @@ class IrrRenderWidget : public QWidget
 
 public:
     IrrRenderWidget(QWidget *irrRenderTarget, bool softwareRenderer);
-    ~IrrRenderWidget();
+    ~IrrRenderWidget();  
     void init();
     void resizeIrrWidget(int x, int y, int newWidth, int newHeight);
 
-    void createParticle();    
-    void createEmitter();
-    float minScale;
-    float maxScale;
+    ParticleManager* particleManager;
 
-    vector3di* dark;
-    vector3di* bright;
 
 private:
     QWidget *irrRenderTarget;
     E_DRIVER_TYPE rendererType;
     ISceneManager* smgr;
-    IParticleSystemSceneNode* particleNode;
-    IParticleEmitter* particleEmitter;
-    IParticleAffector* particleAffector;
 
 
 
