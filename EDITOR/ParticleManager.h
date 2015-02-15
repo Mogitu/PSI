@@ -10,30 +10,36 @@ using namespace core;
 using namespace scene;
 using namespace video;
 
-
 class ParticleManager{
     public:
         ParticleManager(IrrlichtDevice* device);
         ~ParticleManager();
 
-        void createParticle();
-        void createEmitter();       
-
-        vector3di* dark;
-        vector3di* bright;
+        //vars
+        vector3di dark;
+        vector3di bright;
 
         float minScale;
-        float maxScale;
+        float maxScale;        
 
-        void setColor(QColor& color);
+        //functions
+        void setColorBright(QColor& color);
+        void setColorDark(QColor& color);
+        void setDirection(float x, float y, float z);
+        void createParticle();
+        void createEmitter();
 
-    private:
-        void init();
+    private:        
+        //vars
         IParticleSystemSceneNode* particleNode;
         IParticleEmitter* particleEmitter;
         IParticleAffector* particleAffector;
         IrrlichtDevice* device;
         ISceneManager* manager;
+        vector3df direction;
+
+        //functions
+        void init();
 
 };
 

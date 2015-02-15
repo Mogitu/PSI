@@ -23,6 +23,12 @@
       <height>491</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
     <property name="title">
      <string>Settings</string>
     </property>
@@ -55,7 +61,7 @@
       <string>Biggest scale of particles</string>
      </property>
      <property name="text">
-      <string>1</string>
+      <string>2</string>
      </property>
     </widget>
     <widget class="QPushButton" name="ApplyAll">
@@ -97,19 +103,6 @@
       <string>Max Scale</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="PickColor">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>120</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Change Color</string>
-     </property>
-    </widget>
     <widget class="QComboBox" name="comboBox">
      <property name="geometry">
       <rect>
@@ -147,6 +140,97 @@
      <property name="text">
       <string>Shape</string>
      </property>
+    </widget>
+    <widget class="QPushButton" name="PickBrightest">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>210</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Change brightest</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="PickDarkest">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>260</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Change darkest</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>151</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Direction</string>
+     </property>
+     <widget class="QLineEdit" name="dirX">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dirY">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>50</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.05</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dirZ">
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>50</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>111</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X               Y               Z</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="ParticlePreviewWidget" native="true">

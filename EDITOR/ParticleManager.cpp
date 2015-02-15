@@ -8,9 +8,7 @@ ParticleManager::ParticleManager(IrrlichtDevice* dev):device(dev), manager(dev->
 }
 
 ParticleManager::~ParticleManager()
-{
-    delete dark;
-    delete bright;
+{    
     particleNode->drop();
 }
 
@@ -19,16 +17,29 @@ void ParticleManager::init()
     minScale=1;
     maxScale=2;
 
-    dark = new vector3di(255,255,255);
-    bright = new vector3di(255,255,255);
+    dark.set(255,255,255);
+    bright.set(255,255,255);
+    direction.set(0,0.06,0);
     createParticle();
 }
 
-void ParticleManager::setColor(QColor& color)
+void ParticleManager::setColorBright(QColor& color)
 {
-   bright->X = color.red();
-   bright->Y = color.green();
-   bright->Z = color.blue();
+   bright.X = color.red();
+   bright.Y = color.green();
+   bright.Z = color.blue();
+}
+
+void ParticleManager::setColorDark(QColor& color)
+{
+    dark.X= color.red();
+    dark.Y= color.green();
+    dark.Z=color.blue();
+}
+
+void ParticleManager::setDirection(float x, float y, float z)
+{
+    direction.set(x,y,z);
 }
 
 
@@ -37,10 +48,10 @@ void ParticleManager::createParticle()
     particleNode = device->getSceneManager()->addParticleSystemSceneNode(false);
     particleEmitter = particleNode->createBoxEmitter(
                         aabbox3d<f32>(-7,0,-7,7,1,7),  // emitter size
-                        vector3df(0.0f,0.06f,0.0f),    // initial direction
+                        direction,    // initial direction
                         80,100,                              // emit rate
-                        SColor(0,dark->X,dark->Y,dark->Z),        // darkest color
-                        SColor(0,bright->X,bright->Y,bright->Z),        // brightest color
+                        SColor(0,dark.X,dark.Y,dark.Z),        // darkest color
+                        SColor(0,bright.X,bright.Y,bright.Z),        // brightest color
                         800,2000,20,                         // min and max age, angle
                        //core::dimension2df(10.f,10.f),       // min size
                         dimension2df(minScale,minScale),
@@ -68,10 +79,10 @@ void ParticleManager::createEmitter()
     particleNode->clearParticles();
     particleEmitter = particleNode->createBoxEmitter(
                 aabbox3d<f32>(-7,0,-7,7,1,7),  // emitter size
-                vector3df(0.0f,0.06f,0.0f),    // initial direction
-                80,100,                              // emit rate
-                SColor(0,255,255,255),        // darkest color
-                SColor(0,bright->X,bright->Y,bright->Z),        // brightest color
+                direction,    // initial direction
+                80,100,                              // emit rate               
+                SColor(0,dark.X,dark.Y,dark.Z),        // brightest color
+                SColor(0,bright.Y,bright.Y,bright.Z),        // darkest color
                 800,2000,20,                         // min and max age, angle
                //core::dimension2df(10.f,10.f),       // min size
                 dimension2df(minScale,minScale),

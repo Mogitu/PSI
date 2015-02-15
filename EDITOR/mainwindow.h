@@ -21,7 +21,8 @@ public:
     ~MainWindow();
 
     IrrRenderWidget* irrRenderWidget;
-    QColorDialog* colorPicker;
+    QColorDialog* colorPickerBright;
+    QColorDialog* colorPickerDark;
 
 
 private:
@@ -35,8 +36,9 @@ protected:
 
 private slots:
 
-    void on_ApplyAll_clicked();
-    void on_PickColor_clicked();
+    void on_ApplyAll_clicked();  
+    void on_PickDarkest_clicked();
+    void on_PickBrightest_clicked();
 };
 
 #endif // MAINWINDOW_H
