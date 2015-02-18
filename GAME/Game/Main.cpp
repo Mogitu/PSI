@@ -33,7 +33,7 @@ int main()
 	smgr->loadScene("../Assets/level.irr");
 
 	
-	smgr->addCameraSceneNode(0, vector3df(0, 20, 100), vector3df(0, 20, -100));
+	smgr->addCameraSceneNode(0, vector3df(0, 20, 100), vector3df(0, 0,0));
 
 	
 	while (device->run())
