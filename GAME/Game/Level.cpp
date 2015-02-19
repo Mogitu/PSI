@@ -8,7 +8,7 @@ Level::Level(irr::scene::ISceneManager *smgr, irr::scene::ISceneNode *node, irr:
 	smgr->loadScene(path);
 	smgr->getSceneNodesFromType(irr::scene::ESNT_ANY, nodes); 
 	initialise();
-	createCollision(node);
+	//createCollision(node);
 }
 
 Level::~Level()
