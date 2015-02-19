@@ -158,6 +158,7 @@ int main()
 		return 1;
 	}
 	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
+	IAnimatedMeshSceneNode* node2 = smgr->addAnimatedMeshSceneNode(mesh);
 
 	/*
 	To let the mesh look a little bit nicer, we change its material. We
@@ -173,31 +174,31 @@ int main()
 		node->setMD2Animation(scene::EMAT_STAND);
 		node->setMaterialTexture(0, driver->getTexture("../Assets/sydney.bmp"));
 	}
+	if (node2)
+	{
+		node2->setMaterialFlag(EMF_LIGHTING, false);
+		node2->setMD2Animation(scene::EMAT_STAND);
+		node2->setMaterialTexture(0, driver->getTexture("../Assets/sydney.bmp"));
+	}
 
 	/*
 	To look at the mesh, we place a camera into 3d space at the position
 	(0, 30, -40). The camera looks from there to (0,5,0), which is
 	approximately the place where our md2 model is.
 	*/
-	smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
+	smgr->addCameraSceneNode(node, vector3df(0, 90, -40), vector3df(0, 5, 0));
 
-	/*
-	Ok, now we have set up the scene, lets draw everything: We run the
-	device in a while() loop, until the device does not want to run any
-	more. This would be when the user closes the window or presses ALT+F4
-	(or whatever keycode closes a window).
-	*/
+	int lastFPS = -1;
+	u32 then = device->getTimer()->getTime();
+	const f32 fadeRate = 0.1f;
 	while (device->run())
 	{
-		/*
-		Anything can be drawn between a beginScene() and an endScene()
-		call. The beginScene() call clears the screen with a color and
-		the depth buffer, if desired. Then we let the Scene Manager and
-		the GUI Environment draw their content. With the endScene()
-		call everything is presented on the screen.
-		*/
+		const u32 now = device->getTimer()->getTime();
+		const f32 frameDeltaTime = (f32)(now - then);
+		then = now;
 		driver->beginScene(true, true, SColor(255, 100, 101, 140));
-
+		
+		node->setPosition(node->getPosition() + vector3df(0,0.01,0)*frameDeltaTime);
 		smgr->drawAll();
 		guienv->drawAll();
 
