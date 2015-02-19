@@ -10,10 +10,17 @@ using namespace video;
 
 class Model
 {
-public:
+private:
 	vector3df position;
-		
+	vector3df rotation;
+	vector3df scale;
+public:
 	Model(vector3df position);
+	Model(vector3df position, vector3df rotation);
+	Model(vector3df position, vector3df rotation, vector3df scale);
+	vector3df getPosition() { return position; }
+	vector3df getRotation() { return rotation; }
+	vector3df getScale() { return scale; }
 	virtual void Initialize(ISceneManager* smgr, IVideoDriver* driver, io::path meshName, io::path textureName) = 0;
 };
 

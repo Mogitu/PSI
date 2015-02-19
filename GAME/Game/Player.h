@@ -7,6 +7,8 @@ class Player : public AnimatedModel
 {
 public:
 	Player(ISceneManager* smgr, IVideoDriver* driver, io::path meshName, io::path textureName, vector3df position);
+	Player(ISceneManager* smgr, IVideoDriver* driver, io::path meshName, io::path textureName, vector3df position, vector3df rotation);
+	Player(ISceneManager* smgr, IVideoDriver* driver, io::path meshName, io::path textureName, vector3df position, vector3df rotation, vector3df scale);
 	void Update();
 };
 
