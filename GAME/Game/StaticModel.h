@@ -1,4 +1,4 @@
-#ifndef __STATIC_MODEL_h__
+#ifndef __STATIC_MODEL_H__
 #define __STATIC_MODEL_H__
 #include "Model.h"
 class StaticModel : public Model
