@@ -5,6 +5,16 @@ StaticModel::StaticModel(ISceneManager* smgr, IVideoDriver* driver, io::path mes
 	this->Initialize(smgr, driver, meshName, textureName);
 }
 
+StaticModel::StaticModel(ISceneManager* smgr, IVideoDriver* driver, io::path meshName, io::path textureName, vector3df position, vector3df rotation) : Model(position, rotation)
+{
+	this->Initialize(smgr, driver, meshName, textureName);
+}
+
+StaticModel::StaticModel(ISceneManager* smgr, IVideoDriver* driver, io::path meshName, io::path textureName, vector3df position, vector3df rotation, vector3df scale) : Model(position, rotation, scale)
+{
+	this->Initialize(smgr, driver, meshName, textureName);
+}
+
 void StaticModel::Initialize(ISceneManager* smgr, IVideoDriver* driver, io::path meshName, io::path textureName)
 {
 	sMesh = smgr->getMesh(meshName);
@@ -16,6 +26,10 @@ void StaticModel::Initialize(ISceneManager* smgr, IVideoDriver* driver, io::path
 
 	if (sNode)
 	{
+		sNode->setPosition(this->getPosition());
+		sNode->setRotation(this->getRotation());
+		sNode->setScale(this->getScale());
+
 		sNode->setMaterialFlag(EMF_LIGHTING, false);
 		sNode->setMaterialTexture(0, driver->getTexture(textureName));
 	}
