@@ -16,27 +16,30 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+typedef int PSI_SPHERE;
+typedef int PSI_CUBE;
+
 class BulletHelper
 {
 public:
-	BulletHelper(IrrlichtDevice *device);
+	BulletHelper();
 	~BulletHelper();
 
-	void MAKEBODY(IMeshSceneNode* n, btScalar TMass);
-	void UpdatePhysics(u32 TDeltaTime);
-	void UpdateRender(btRigidBody *TObject);
-	void ClearObjects();
-	void buildIrrLevel(Level *level);	
-	
+	btRigidBody *createBody(IMeshSceneNode* n, btScalar TMass);
+	void updatePhysics(u32 TDeltaTime);
+	void updateRender(btRigidBody *TObject);
+	void clearObjects();
+	void buildIrrLevel(Level *level);		
 
 private:
-	list<btRigidBody *> Objects;
-	btDiscreteDynamicsWorld *World;
-	btDefaultCollisionConfiguration *CollisionConfiguration;
-	btBroadphaseInterface *BroadPhase;
-	btCollisionDispatcher *Dispatcher;
-	btSequentialImpulseConstraintSolver *Solver;
-	IrrlichtDevice *device;	
+	list<btRigidBody *> objects;
+	btDiscreteDynamicsWorld *world;
+	btDefaultCollisionConfiguration *collisionConfiguration;
+	btBroadphaseInterface *broadPhase;
+	btCollisionDispatcher *dispatcher;
+	btSequentialImpulseConstraintSolver *solver;	
+	btRigidBody *createCube(IMeshSceneNode* n, btScalar TMass);
+	btRigidBody *createSphere(IMeshSceneNode* n, btScalar TMass);
 };
 
 

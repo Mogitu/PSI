@@ -1,30 +1,30 @@
 #include "BulletHelper.h"
 
-BulletHelper::BulletHelper(IrrlichtDevice *device) :device(device)
+BulletHelper::BulletHelper()
 {
 	// Initialize bullet
-	btDefaultCollisionConfiguration *CollisionConfiguration = new btDefaultCollisionConfiguration();
-	btBroadphaseInterface *BroadPhase = new btAxisSweep3(btVector3(-1000, -1000, -1000), btVector3(1000, 1000, 1000));
-	btCollisionDispatcher *Dispatcher = new btCollisionDispatcher(CollisionConfiguration);
+	btDefaultCollisionConfiguration *collisionConfiguration = new btDefaultCollisionConfiguration();
+	btBroadphaseInterface *broadPhase = new btAxisSweep3(btVector3(-1000, -1000, -1000), btVector3(1000, 1000, 1000));
+	btCollisionDispatcher *dispatcher = new btCollisionDispatcher(collisionConfiguration);
 	btSequentialImpulseConstraintSolver *Solver = new btSequentialImpulseConstraintSolver();
-	World = new btDiscreteDynamicsWorld(Dispatcher, BroadPhase, Solver, CollisionConfiguration);
+	world = new btDiscreteDynamicsWorld(dispatcher, broadPhase, Solver, collisionConfiguration);
 }
 
 BulletHelper::~BulletHelper()
 {
-	delete World;
-	delete Solver;
-	delete Dispatcher;
-	delete BroadPhase;
-	delete CollisionConfiguration;
-	ClearObjects();
+	delete world;
+	delete solver;
+	delete dispatcher;
+	delete broadPhase;
+	delete collisionConfiguration;
+	clearObjects();
 }
 
 
 // Removes all objects from the world
-void BulletHelper::ClearObjects() {
+void BulletHelper::clearObjects() {
 
-	for (list<btRigidBody *>::Iterator Iterator = Objects.begin(); Iterator != Objects.end(); ++Iterator) {
+	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator) {
 		btRigidBody *Object = *Iterator;
 
 		// Delete irrlicht node
@@ -32,18 +32,18 @@ void BulletHelper::ClearObjects() {
 		Node->remove();
 
 		// Remove the object from the world
-		World->removeRigidBody(Object);
+		world->removeRigidBody(Object);
 
 		// Free memory
 		delete Object->getMotionState();
 		delete Object->getCollisionShape();
 		delete Object;
 	}
-	Objects.clear();
+	objects.clear();
 }
 
 // Passes bullet's orientation to irrlicht
-void BulletHelper::UpdateRender(btRigidBody *TObject) {
+void BulletHelper::updateRender(btRigidBody *TObject) {
 	ISceneNode *Node = static_cast<ISceneNode *>(TObject->getUserPointer());
 
 	// Set position
@@ -60,20 +60,22 @@ void BulletHelper::UpdateRender(btRigidBody *TObject) {
 }
 
 // Create a box rigid body
-void BulletHelper::MAKEBODY(IMeshSceneNode* n, btScalar TMass) {
-	IMeshSceneNode *Node = n;
-	Node->setMaterialFlag(EMF_LIGHTING, 1);
-	Node->setMaterialFlag(EMF_NORMALIZE_NORMALS, true);
-	Node->setMaterialTexture(0, device->getVideoDriver()->getTexture("../Assets/Sydney.bmp"));
-	Node->setDebugDataVisible(EDS_BBOX);
+btRigidBody *BulletHelper::createBody(IMeshSceneNode* Node, btScalar TMass) {	
+	btRigidBody *b = 0;	
 
+	b = createCube(Node, TMass);
+
+	return b;
+	
+}
+
+btRigidBody *BulletHelper::createCube(IMeshSceneNode* Node, btScalar TMass)
+{
 	// Set the initial position of the object
 	btTransform Transform;
 	Transform.setIdentity();
-	Transform.setOrigin(btVector3(Node->getPosition().X, Node->getPosition().Y, Node->getPosition().Z));
-
+	Transform.setOrigin(btVector3(Node->getAbsolutePosition().X, Node->getAbsolutePosition().Y, Node->getAbsolutePosition().Z));
 	btDefaultMotionState *MotionState = new btDefaultMotionState(Transform);
-
 	// Create the shape
 	btVector3 HalfExtents(Node->getTransformedBoundingBox().getExtent().X*0.5, Node->getTransformedBoundingBox().getExtent().Y*0.5, Node->getTransformedBoundingBox().getExtent().Z*0.5);
 
@@ -86,43 +88,76 @@ void BulletHelper::MAKEBODY(IMeshSceneNode* n, btScalar TMass) {
 	// Store a pointer to the irrlicht node so we can update it later
 	RigidBody->setUserPointer((void *)(Node));
 	// Add it to the world
-	World->addRigidBody(RigidBody);
-	Objects.push_back(RigidBody);
+	world->addRigidBody(RigidBody);
+	objects.push_back(RigidBody);
+
+	return RigidBody;
+}
+
+btRigidBody *BulletHelper::createSphere(IMeshSceneNode* Node, btScalar TMass)
+{
+	// Set the initial position of the object
+	btTransform Transform;
+	Transform.setIdentity();
+	Transform.setOrigin(btVector3(Node->getAbsolutePosition().X, Node->getAbsolutePosition().Y, Node->getAbsolutePosition().Z));
+	btDefaultMotionState *MotionState = new btDefaultMotionState(Transform);
+	// Create the shape	
+	btVector3 HalfExtents(Node->getTransformedBoundingBox().getExtent().X*0.5, Node->getTransformedBoundingBox().getExtent().Y*0.5, Node->getTransformedBoundingBox().getExtent().Z*0.5);
+	btCollisionShape *Shape = new btSphereShape(HalfExtents.getX());
+	// Add mass
+	btVector3 LocalInertia;
+	Shape->calculateLocalInertia(TMass, LocalInertia);
+	// Create the rigid body object
+	btRigidBody *RigidBody = new btRigidBody(TMass, MotionState, Shape, LocalInertia);
+	// Store a pointer to the irrlicht node so we can update it later
+	RigidBody->setUserPointer((void *)(Node));
+	// Add it to the world
+	world->addRigidBody(RigidBody);
+	objects.push_back(RigidBody);
+	return RigidBody;
 }
 
 // Runs the physics simulation.
 // - TDeltaTime tells the simulation how much time has passed since the last frame so the simulation can run independently of the frame rate.
-void BulletHelper::UpdatePhysics(u32 TDeltaTime) {
+void BulletHelper::updatePhysics(u32 TDeltaTime) {
 
-	World->stepSimulation(TDeltaTime * 0.001f, 60);
+	world->stepSimulation(TDeltaTime * 0.001f, 60);
 
 	// Relay the object's orientation to irrlicht
-	for (list<btRigidBody *>::Iterator Iterator = Objects.begin(); Iterator != Objects.end(); ++Iterator) {
+	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator) {
 
-		UpdateRender(*Iterator);
+		updateRender(*Iterator);
 	}
 }
 
 void BulletHelper::buildIrrLevel(Level *level)
 {
+	
 	for (int i = 0; i < level->getNodes().size(); i++)
 	{
+		btRigidBody *tmp = 0;
 		std::string name = level->getNodes()[i]->getName();
 
 		ISceneNode *node = level->getNamedNode(name);
 
-		std::string b = name.substr(0, 3);
-		std::cout << b << std::endl;
+		std::string b = name.substr(0, 2);		
 
-		if (b == "BOX")
+		if (b == "DB")
 		{
 			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
-			MAKEBODY(p, 1);
+			std::cout << "fdsfds" << std::endl;
+			tmp=createCube(p, 1);
 		}
-		else if (b == "WAL")
+		else if (b == "SB")
 		{
 			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
-			MAKEBODY(p, 0);
+			tmp=createCube(p, 0);
 		}
-	}
+		else if (b =="DS")
+		{
+			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
+			tmp = createSphere(p, 1);
+		}
+		tmp = 0;
+	}	
 }
