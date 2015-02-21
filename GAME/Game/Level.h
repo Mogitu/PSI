@@ -1,21 +1,20 @@
-#include <irrlicht.h>
+#ifndef LEVEL_H
+#define LEVEL_H
 
+#include <irrlicht.h>
 #include <iostream>
 #include <string>
-
 
 class Level
 {
 public:
-	Level(irr::scene::ISceneManager *smgr, irr::scene::ISceneNode *node,irr::io::path path);	
+	Level(irr::scene::ISceneManager *smgr,irr::io::path path);	
 	~Level();
-	irr::scene::ISceneNode* getNamedNode(std::string name);
-	void initialise();	
-	void createCollision(irr::scene::ISceneNode *n);
+	irr::scene::ISceneNode *getNamedNode(std::string name);
+	irr::core::array<irr::scene::ISceneNode *> getNodes();
 private:	
-	irr::scene::ISceneManager *smgr;
-	irr::scene::ISceneNode *node;
+	irr::scene::ISceneManager *smgr;	
 	irr::core::array<irr::scene::ISceneNode *> nodes;
-	irr::scene::IMetaTriangleSelector *meta;
-
 };
+
+#endif LEVEL_H
