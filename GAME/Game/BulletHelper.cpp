@@ -142,18 +142,17 @@ void BulletHelper::buildIrrLevel(Level *level)
 
 		std::string b = name.substr(0, 2);		
 
-		if (b == "DB")
+		if (b == DYNAMIC_CUBE)
 		{
-			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
-			std::cout << "fdsfds" << std::endl;
+			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);			
 			tmp=createCube(p, 1);
 		}
-		else if (b == "SB")
+		else if (b == STATIC_CUBE)
 		{
 			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
 			tmp=createCube(p, 0);
 		}
-		else if (b =="DS")
+		else if (b ==DYNAMIC_SPHERE)
 		{
 			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
 			tmp = createSphere(p, 1);

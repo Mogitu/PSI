@@ -16,8 +16,10 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-typedef int PSI_SPHERE;
-typedef int PSI_CUBE;
+const std::string DYNAMIC_SPHERE = "DS";
+const std::string DYNAMIC_CUBE ="DB";
+const std::string STATIC_SPHERE ="SS";
+const std::string STATIC_CUBE = "SB";
 
 class BulletHelper
 {
