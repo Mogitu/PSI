@@ -20,6 +20,7 @@ const std::string DYNAMIC_SPHERE = "DS";
 const std::string DYNAMIC_CUBE ="DB";
 const std::string STATIC_SPHERE ="SS";
 const std::string STATIC_CUBE = "SB";
+const std::string WORLD = "WB";
 
 class BulletHelper
 {
@@ -42,6 +43,9 @@ private:
 	btSequentialImpulseConstraintSolver *solver;	
 	btRigidBody *createCube(IMeshSceneNode* n, btScalar TMass);
 	btRigidBody *createSphere(IMeshSceneNode* n, btScalar TMass);
+	btRigidBody *createTriangleBody(IMeshSceneNode *Node);
+	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* pMesh, const vector3df& scaling);
+
 };
 
 
