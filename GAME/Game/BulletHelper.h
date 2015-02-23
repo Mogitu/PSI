@@ -28,9 +28,9 @@ public:
 	BulletHelper();
 	~BulletHelper();
 
-	btRigidBody *createBody(IMeshSceneNode* n, btScalar TMass);
-	void updatePhysics(u32 TDeltaTime);
-	void updateRender(btRigidBody *TObject);
+	btRigidBody *createBody(IMeshSceneNode* n, btScalar mass);
+	void updatePhysics(u32 deltaTime);
+	void updateRender(btRigidBody *object);
 	void clearObjects();
 	void buildIrrLevel(Level *level);		
 
@@ -41,11 +41,10 @@ private:
 	btBroadphaseInterface *broadPhase;
 	btCollisionDispatcher *dispatcher;
 	btSequentialImpulseConstraintSolver *solver;	
-	btRigidBody *createCube(IMeshSceneNode* n, btScalar TMass);
-	btRigidBody *createSphere(IMeshSceneNode* n, btScalar TMass);
-	btRigidBody *createTriangleBody(IMeshSceneNode *Node);
-	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* pMesh, const vector3df& scaling);
-
+	btRigidBody *createCube(IMeshSceneNode* node, btScalar mass);
+	btRigidBody *createSphere(IMeshSceneNode* node, btScalar mass);
+	btRigidBody *createTriangleBody(IMeshSceneNode *node);
+	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, const vector3df& scaling);
 };
 
 
