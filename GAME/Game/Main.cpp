@@ -32,7 +32,7 @@ int main() {
 	
 	// Add camera
 	ICameraSceneNode *camera = smgr->addCameraSceneNodeFPS(0, 100, 0.1);
-	camera->setPosition(vector3df(0, 70, -100));
+	camera->setPosition(vector3df(350, 250, 300));
 	camera->setTarget(vector3df(0, 0, 0));	
 
 	level = new Level(smgr, "../Assets/level.irr");	
@@ -49,12 +49,13 @@ int main() {
 	//default node setup
 	IMeshSceneNode* node = smgr->addMeshSceneNode(mesh);	
 	node->setMaterialTexture(0, irrDriver->getTexture("../Assets/sydney.bmp"));	
+	node->setPosition(vector3df(0,100,80));
 
 	//createa a new rigidbody from earlier made node
-	btRigidBody *b =helper->createBody(node, 1);
-
+	btRigidBody *b =helper->createBody(node,Shape_Type::CAPSULE, 1);
+	b->setAngularFactor(btVector3(0,1,0));
 	//apply impulse in direction and position off. Use linear velocitiy, or something, for movement.
-	b->applyImpulse(btVector3(-30, 30, 0), btVector3(0, 0, 0));	
+	b->applyImpulse(btVector3(0, 40, -20), btVector3(0,0,0));	
 
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;

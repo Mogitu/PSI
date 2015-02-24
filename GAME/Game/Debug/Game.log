@@ -1,12 +1,15 @@
-﻿Build started 23-2-2015 18:11:48.
+﻿Build started 24-2-2015 20:19:37.
      1>Project "C:\Users\Maikel\Documents\GitHub\PSI\GAME\Game\Game.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(388,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (GameProject.vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BulletHelper.cpp
          BulletHelper.cpp
-     1>c:\users\maikel\documents\github\psi\game\game\bullethelper.cpp(84): warning C4244: 'argument' : conversion from 'double' to 'const btScalar', possible loss of data
-     1>c:\users\maikel\documents\github\psi\game\game\bullethelper.cpp(251): warning C4244: 'argument' : conversion from 'double' to 'const btScalar', possible loss of data
-     1>c:\users\maikel\documents\github\psi\game\game\bullethelper.cpp(283): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\maikel\documents\github\psi\game\game\bullethelper.cpp(101): warning C4244: 'argument' : conversion from 'double' to 'const btScalar', possible loss of data
+     1>c:\users\maikel\documents\github\psi\game\game\bullethelper.cpp(133): warning C4244: 'initializing' : conversion from 'double' to 'btScalar', possible loss of data
+     1>c:\users\maikel\documents\github\psi\game\game\bullethelper.cpp(134): warning C4244: 'initializing' : conversion from 'double' to 'btScalar', possible loss of data
+     1>c:\users\maikel\documents\github\psi\game\game\bullethelper.cpp(195): warning C4244: 'argument' : conversion from 'double' to 'const btScalar', possible loss of data
+     1>c:\users\maikel\documents\github\psi\game\game\bullethelper.cpp(248): warning C4244: 'argument' : conversion from 'double' to 'const btScalar', possible loss of data
+     1>c:\users\maikel\documents\github\psi\game\game\bullethelper.cpp(279): warning C4018: '<' : signed/unsigned mismatch
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\bin\Game.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib irrlicht.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\bin\Game.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\bin\Game.lib" /MACHINE:X86 Debug\BulletHelper.obj
          Debug\Level.obj
@@ -16,4 +19,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.79
+Time Elapsed 00:00:01.81
