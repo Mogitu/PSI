@@ -31,6 +31,7 @@ public:
 	BulletHelper();
 	~BulletHelper();
 
+	float gravityMultiplier;
 	btRigidBody *createBody(IMeshSceneNode* n, Shape_Type type,btScalar mass);
 	void updatePhysics(u32 deltaTime);
 	void updateRender(btRigidBody *object);
@@ -38,6 +39,8 @@ public:
 	void buildIrrLevel(Level *level);		
 
 private:
+
+	const float GRAVITY = -9.8f;
 	//constants for objects in a level
 	const std::string DYNAMIC_SPHERE = "DS";
 	const std::string DYNAMIC_CUBE = "DB";

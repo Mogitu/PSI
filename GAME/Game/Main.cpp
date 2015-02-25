@@ -52,8 +52,8 @@ int main() {
 	node->setPosition(vector3df(0,100,80));
 
 	//createa a new rigidbody from earlier made node
-	btRigidBody *b =helper->createBody(node,Shape_Type::CAPSULE, 1);
-	b->setAngularFactor(btVector3(0,1,0));
+	btRigidBody *b =helper->createBody(node,Shape_Type::CAPSULE, 10);
+	//b->setAngularFactor(btVector3(0,1,0));
 	//apply impulse in direction and position off. Use linear velocitiy, or something, for movement.
 	b->applyImpulse(btVector3(0, 40, -20), btVector3(0,0,0));	
 

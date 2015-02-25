@@ -2,13 +2,14 @@
 
 BulletHelper::BulletHelper()
 {
+	gravityMultiplier = 10;
 	// Initialize bullet
 	btDefaultCollisionConfiguration *collisionConfiguration = new btDefaultCollisionConfiguration();
 	btBroadphaseInterface *broadPhase = new btAxisSweep3(btVector3(-1000, -1000, -1000), btVector3(1000, 1000, 1000));
 	btCollisionDispatcher *dispatcher = new btCollisionDispatcher(collisionConfiguration);
 	btSequentialImpulseConstraintSolver *Solver = new btSequentialImpulseConstraintSolver();
 	world = new btDiscreteDynamicsWorld(dispatcher, broadPhase, Solver, collisionConfiguration);
-	world->setGravity(btVector3(0,-10,0));
+	world->setGravity(btVector3(0,GRAVITY*gravityMultiplier,0));
 }
 
 BulletHelper::~BulletHelper()
@@ -80,7 +81,8 @@ btRigidBody *BulletHelper::createBody(IMeshSceneNode* node,Shape_Type type, btSc
 			body = createCube(node, mass);
 			break;
 	}
-	
+	body->setRestitution(0.8);
+	body->setFriction(0.6);
 	return body;	
 }
 
@@ -288,22 +290,30 @@ void BulletHelper::buildIrrLevel(Level *level)
 		if (namePrefix == DYNAMIC_CUBE)
 		{
 			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);			
-			tmp=createCube(p, 1);				
+			tmp=createCube(p, 50);			
+			tmp->setRestitution(0.8);
+			tmp->setFriction(0.6);
 		}
 		else if (namePrefix == STATIC_CUBE)
 		{
 			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
 			tmp=createCube(p, 0);
+			tmp->setRestitution(0.2);
+			tmp->setFriction(0.3);
 		}
 		else if (namePrefix == DYNAMIC_SPHERE)
 		{
 			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
-			tmp = createSphere(p, 1);
+			tmp = createSphere(p, 50);		
+			tmp->setRestitution(0.8);
+			tmp->setFriction(0.6);
 		}
 		else if (namePrefix == WORLD)
 		{
 			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
-			tmp = createTriangleBody(p);
+			tmp = createTriangleBody(p);		
+			tmp->setRestitution(0.8);
+			tmp->setFriction(0.6);
 		}
 		tmp = 0;
 	}	
