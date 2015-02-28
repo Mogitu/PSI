@@ -32,7 +32,7 @@ int main() {
 	
 	// Add camera
 	ICameraSceneNode *camera = smgr->addCameraSceneNodeFPS(0, 100, 0.1);
-	camera->setPosition(vector3df(350, 250, 300));
+	camera->setPosition(vector3df(-161, 100, -300));
 	camera->setTarget(vector3df(0, 0, 0));	
 
 	level = new Level(smgr, "../Assets/level.irr");	
