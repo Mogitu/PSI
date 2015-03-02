@@ -2,6 +2,8 @@
 #include "BulletHelper.h"
 #include  "Level.h"
 #include <cstdlib>
+#include "Player.h"
+#include "InputReceiver.h"
 
 using namespace irr;
 using namespace core;
@@ -21,9 +23,10 @@ int main() {
 	ILogger *irrLog;
 	Level *level;
 	BulletHelper* helper;
+	InputReceiver* input = new InputReceiver();
 
 	// Initialize irrlicht	
-	device = createDevice(video::EDT_OPENGL, dimension2d<u32>(800, 600), 32, false, false, false, 0);
+	device = createDevice(video::EDT_OPENGL, dimension2d<u32>(800, 600), 32, false, false, false, input);
 	guiEnv = device->getGUIEnvironment();
 	irrTimer = device->getTimer();
 	smgr = device->getSceneManager();
@@ -59,16 +62,23 @@ int main() {
 	
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
-	while (device->run()) {
+
+	Player p(smgr, irrDriver, helper, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 1);
+
+	while (device->run()) 
+	{
 		deltaTime = irrTimer->getTime() - timeStamp;
 		timeStamp = irrTimer->getTime();
 		helper->updatePhysics(deltaTime);
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
 		guiEnv->drawAll();
-		irrDriver->endScene();	
-		device->run();
+		irrDriver->endScene();
+
+		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
+			device->closeDevice();
 	}
+
 	device->drop();
 
 	return 0;

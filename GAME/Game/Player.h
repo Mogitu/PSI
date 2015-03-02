@@ -1,19 +1,20 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#include "AnimatedModel.h"
 #include "InputReceiver.h"
+#include <btBulletCollisionCommon.h>
+#include "BulletHelper.h"
 
-class Player : public AnimatedModel
+class Player
 {
 private:
 	InputReceiver* input;
-	f32 const movement_Speed = 100.f;
+	btRigidBody* body;
+	scene::IAnimatedMeshSceneNode* node;
+
 public:
-	Player(ISceneManager* smgr, IVideoDriver* driver, InputReceiver* input, io::path meshName, io::path textureName, vector3df position);
-	Player(ISceneManager* smgr, IVideoDriver* driver, InputReceiver* input, io::path meshName, io::path textureName, vector3df position, vector3df rotation);
-	Player(ISceneManager* smgr, IVideoDriver* driver, InputReceiver* input, io::path meshName, io::path textureName, vector3df position, vector3df rotation, vector3df scale);
-	void Initialize(InputReceiver* input);
+	Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass,vector3df position = vector3df(0, 0, 0), vector3df rotation = vector3df(0, 0, 0), vector3df scale = vector3df(1, 1, 1));
+	void Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position = vector3df(0, 0, 0), vector3df rotation = vector3df(0, 0, 0), vector3df scale = vector3df(1, 1, 1));
 	void Update(f32 frameDeltaTime);
 	void PlayerMovement(f32 frameDeltaTime);
 };

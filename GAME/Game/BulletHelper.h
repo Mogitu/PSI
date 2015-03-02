@@ -32,7 +32,7 @@ public:
 	~BulletHelper();
 
 	float gravityMultiplier;
-	btRigidBody *createBody(IMeshSceneNode* n, Shape_Type type,btScalar mass);
+	btRigidBody *createBody(ISceneNode* n, Shape_Type type,btScalar mass);
 	void updatePhysics(u32 deltaTime);
 	void updateRender(btRigidBody *object);
 	void clearObjects();
@@ -54,12 +54,13 @@ private:
 	btBroadphaseInterface *broadPhase;
 	btCollisionDispatcher *dispatcher;
 	btSequentialImpulseConstraintSolver *solver;	
-	btRigidBody *createCube(IMeshSceneNode* node, btScalar mass);
-	btRigidBody *createSphere(IMeshSceneNode* node, btScalar mass);
-	btRigidBody *createTriangleBody(IMeshSceneNode *node);
-	btRigidBody *createConvexTriangleBody(IMeshSceneNode *node);
-	btRigidBody *createCapsule(IMeshSceneNode *node, btScalar mass);
+	btRigidBody *createCube(ISceneNode* node, btScalar mass);
+	btRigidBody *createSphere(ISceneNode* node, btScalar mass);
+	btRigidBody *createTriangleBody(ISceneNode *node);
+	btRigidBody *createConvexTriangleBody(ISceneNode *node);
+	btRigidBody *createCapsule(ISceneNode *node, btScalar mass);
 	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, const vector3df& scaling);
+	IMesh* getMesh(ISceneNode* node);
 };
 
 

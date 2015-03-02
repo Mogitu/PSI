@@ -62,7 +62,7 @@ void BulletHelper::updateRender(btRigidBody *object) {
 }
 
 
-btRigidBody *BulletHelper::createBody(IMeshSceneNode* node,Shape_Type type, btScalar mass) {	
+btRigidBody *BulletHelper::createBody(ISceneNode* node,Shape_Type type, btScalar mass) {	
 	btRigidBody *body = 0;
 
 	switch (type)
@@ -87,7 +87,7 @@ btRigidBody *BulletHelper::createBody(IMeshSceneNode* node,Shape_Type type, btSc
 }
 
 // Create a box rigid body
-btRigidBody *BulletHelper::createCube(IMeshSceneNode* node, btScalar mass)
+btRigidBody *BulletHelper::createCube(ISceneNode* node, btScalar mass)
 {		
 	// Set the initial position of the object	
 	btTransform transform;
@@ -119,7 +119,7 @@ btRigidBody *BulletHelper::createCube(IMeshSceneNode* node, btScalar mass)
 	return rigidBody;
 }
 
-btRigidBody *BulletHelper::createCapsule(IMeshSceneNode *node, btScalar mass)
+btRigidBody *BulletHelper::createCapsule(ISceneNode *node, btScalar mass)
 {	
 	// Set the initial position of the object	
 	btTransform transform;
@@ -154,9 +154,9 @@ btRigidBody *BulletHelper::createCapsule(IMeshSceneNode *node, btScalar mass)
 }
 
 
-btRigidBody *BulletHelper::createTriangleBody(IMeshSceneNode *node)
+btRigidBody *BulletHelper::createTriangleBody(ISceneNode *node)
 {	
-	btTriangleMesh* triMesh = ConvertIrrMeshToBulletTriangleMesh(node->getMesh(), node->getScale());
+	btTriangleMesh* triMesh = ConvertIrrMeshToBulletTriangleMesh(getMesh(node), node->getScale());
 
 	btBvhTriangleMeshShape* shape = new btBvhTriangleMeshShape(triMesh,true);	
 
@@ -181,9 +181,8 @@ btRigidBody *BulletHelper::createTriangleBody(IMeshSceneNode *node)
 	return rigidBody;
 }
 
-
-btRigidBody *BulletHelper::createConvexTriangleBody(IMeshSceneNode *node)
-{		
+btRigidBody *BulletHelper::createConvexTriangleBody(ISceneNode *node)
+{	
 	// Set the initial position of the object
 	btTransform transform;
 	transform.setIdentity();
@@ -196,7 +195,7 @@ btRigidBody *BulletHelper::createConvexTriangleBody(IMeshSceneNode *node)
 	// Create the shape
 	btVector3 HalfExtents(node->getTransformedBoundingBox().getExtent().X*0.5, node->getTransformedBoundingBox().getExtent().Y*0.5, node->getTransformedBoundingBox().getExtent().Z*0.5);
 
-	btTriangleMesh* trimesh = ConvertIrrMeshToBulletTriangleMesh(node->getMesh(), node->getScale());
+	btTriangleMesh* trimesh = ConvertIrrMeshToBulletTriangleMesh(getMesh(node), node->getScale());
 	btConvexShape* shape = new btConvexTriangleMeshShape(trimesh);
 	// Add mass
 	btVector3 localInertia;
@@ -238,7 +237,7 @@ btTriangleMesh *BulletHelper::ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, co
 };
 
 
-btRigidBody *BulletHelper::createSphere(IMeshSceneNode* node, btScalar mass)
+btRigidBody *BulletHelper::createSphere(ISceneNode* node, btScalar mass)
 {
 	// Set the initial position of the object
 	btTransform transform;
@@ -289,32 +288,40 @@ void BulletHelper::buildIrrLevel(Level *level)
 		
 		if (namePrefix == DYNAMIC_CUBE)
 		{
-			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);			
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);			
 			tmp=createCube(p, 50);			
 			tmp->setRestitution(0.8);
 			tmp->setFriction(0.6);
 		}
 		else if (namePrefix == STATIC_CUBE)
 		{
-			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
 			tmp=createCube(p, 0);
 			tmp->setRestitution(0.2);
 			tmp->setFriction(0.3);
 		}
 		else if (namePrefix == DYNAMIC_SPHERE)
 		{
-			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
 			tmp = createSphere(p, 50);		
 			tmp->setRestitution(0.8);
 			tmp->setFriction(0.6);
 		}
 		else if (namePrefix == WORLD)
 		{
-			IMeshSceneNode *p = (IMeshSceneNode*)level->getNamedNode(name);
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
 			tmp = createTriangleBody(p);		
 			tmp->setRestitution(0.8);
 			tmp->setFriction(0.6);
 		}
 		tmp = 0;
-	}	
+	}
+}
+
+IMesh* BulletHelper::getMesh(ISceneNode* node)
+{
+	if (node->getType() == ESCENE_NODE_TYPE::ESNT_MESH)
+		return static_cast<IMeshSceneNode*>(node)->getMesh();
+	else
+		return static_cast<IAnimatedMeshSceneNode*>(node)->getMesh();
 }

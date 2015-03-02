@@ -1,23 +1,29 @@
 #include "Player.h"
 
-Player::Player(ISceneManager* smgr, IVideoDriver* driver, InputReceiver* input, io::path meshName, io::path textureName, vector3df position) : AnimatedModel(smgr, driver, meshName, textureName, position)
+Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
 {
-	this->Initialize(input);
+	this->Initialize(smgr, driver, helper, input, meshName, textureName, bodyType, bodyMass, position, rotation, scale);
 }
 
-Player::Player(ISceneManager* smgr, IVideoDriver* driver, InputReceiver* input, io::path meshName, io::path textureName, vector3df position, vector3df rotation) : AnimatedModel(smgr, driver, meshName, textureName, position, rotation)
-{
-	this->Initialize(input);
-}
-
-Player::Player(ISceneManager* smgr, IVideoDriver* driver, InputReceiver* input, io::path meshName, io::path textureName, vector3df position, vector3df rotation, vector3df scale) : AnimatedModel(smgr, driver, meshName, textureName, position, rotation, scale)
-{
-	this->Initialize(input);
-}
-
-void Player::Initialize(InputReceiver* input)
+void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
 {
 	this->input = input;
+	IAnimatedMesh* mesh = smgr->getMesh(meshName);
+	
+	node = smgr->addAnimatedMeshSceneNode(mesh);
+
+	if (node)
+	{
+		node->setPosition(position);
+		node->setRotation(rotation);
+		node->setScale(scale);
+		
+		node->setMaterialFlag(EMF_LIGHTING, false);
+		node->setMD2Animation(scene::EMAT_STAND);
+		node->setMaterialTexture(0, driver->getTexture(textureName));
+	}
+	
+	body = helper->createBody(node, bodyType, bodyMass);
 }
 
 void Player::Update(f32 frameDeltaTime)
@@ -27,19 +33,13 @@ void Player::Update(f32 frameDeltaTime)
 
 void Player::PlayerMovement(f32 frameDeltaTime)
 {
-	vector3df vel;
 
-	if (input->IsKeyDown(KEY_KEY_W))
-		vel.Z += movement_Speed * frameDeltaTime;
-	else if (input->IsKeyDown(KEY_KEY_S))
-		vel.Z -= movement_Speed * frameDeltaTime;
+	//if (input->IsKeyDown(KEY_KEY_W))
+	//	body->setLinearVelocity(btVector3(50, 0, 0));
+	/*else if (input->IsKeyDown(KEY_KEY_S))
 
 	if (input->IsKeyDown(KEY_KEY_A))
-		vel.X -= movement_Speed * frameDeltaTime;
 	else if (input->IsKeyDown(KEY_KEY_D))
-		vel.X += movement_Speed * frameDeltaTime;
+	*/
 
-	this->addVelocity(vel);
-
-	UpdatePos();
 }
