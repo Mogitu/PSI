@@ -56,7 +56,7 @@ int main() {
 	//b->setAngularFactor(btVector3(0,1,0));
 	//apply impulse in direction and position off. Use linear velocitiy, or something, for movement.
 	b->applyImpulse(btVector3(0, 40, -20), btVector3(0,0,0));	
-
+	
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 	while (device->run()) {
@@ -66,7 +66,7 @@ int main() {
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
 		guiEnv->drawAll();
-		irrDriver->endScene();
+		irrDriver->endScene();	
 		device->run();
 	}
 	device->drop();
