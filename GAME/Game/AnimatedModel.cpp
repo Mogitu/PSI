@@ -23,6 +23,7 @@ void AnimatedModel::Initialize(ISceneManager* smgr, IVideoDriver* driver, io::pa
 		return;
 
 	aNode = smgr->addAnimatedMeshSceneNode(aMesh);
+	
 
 	if (aNode)
 	{
@@ -38,6 +39,9 @@ void AnimatedModel::Initialize(ISceneManager* smgr, IVideoDriver* driver, io::pa
 
 AnimatedModel::~AnimatedModel()
 {
-	delete this->aMesh;
-	delete this->aNode;
+	//I dont know anymore :S
+	if (!this->aMesh)
+		delete this->aMesh;
+	if (!this->aNode)
+		delete this->aNode;
 }
