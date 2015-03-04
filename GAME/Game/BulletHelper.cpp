@@ -44,6 +44,12 @@ void BulletHelper::clearObjects() {
 	objects.clear();
 }
 
+
+btDiscreteDynamicsWorld *BulletHelper::getWorld()
+{
+	return world;
+}
+
 // Passes bullet's orientation to irrlicht
 void BulletHelper::updateRender(btRigidBody *object) {
 	ISceneNode *node = static_cast<ISceneNode *>(object->getUserPointer());
@@ -64,7 +70,7 @@ void BulletHelper::updateRender(btRigidBody *object) {
 
 btRigidBody *BulletHelper::createBody(IMeshSceneNode* node,Shape_Type type, btScalar mass) {	
 	btRigidBody *body = 0;
-
+	
 	switch (type)
 	{
 		case CAPSULE:
@@ -317,4 +323,31 @@ void BulletHelper::buildIrrLevel(Level *level)
 		}
 		tmp = 0;
 	}	
+}
+
+btVector3 BulletHelper::extractForwardVector(const btRigidBody *b)
+{
+	btScalar matrix[16];
+	b->getWorldTransform().getOpenGLMatrix(matrix);
+	btVector3 forward = btVector3(matrix[0], matrix[1], matrix[2]);
+	return forward;
+}
+
+
+CustomContactResultCallback::CustomContactResultCallback()
+{
+
+}
+
+btScalar CustomContactResultCallback::addSingleResult(btManifoldPoint& cp,
+	const btCollisionObjectWrapper* colObj0Wrap,
+	int partId0,
+	int index0,
+	const btCollisionObjectWrapper* colObj1Wrap,
+	int partId1,
+	int index1)
+{			
+	
+	//Response handling will be done in here.
+	return 1;
 }
