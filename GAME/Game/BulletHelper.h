@@ -37,6 +37,9 @@ public:
 	void updateRender(btRigidBody *object);
 	void clearObjects();
 	void buildIrrLevel(Level *level);		
+	btDiscreteDynamicsWorld *getWorld();
+	btVector3 extractForwardVector(const btRigidBody *body);
+	void removeObject(btRigidBody *body);
 
 private:
 
@@ -61,6 +64,22 @@ private:
 	btRigidBody *createCapsule(ISceneNode *node, btScalar mass);
 	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, const vector3df& scaling);
 	IMesh* getMesh(ISceneNode* node);
+};
+
+class CustomContactResultCallback : public btCollisionWorld::ContactResultCallback
+{
+public:
+	//An idea is to pass the constructor a context object where all required variables etc are located.
+	CustomContactResultCallback();
+
+	btScalar addSingleResult(btManifoldPoint& cp,
+		const btCollisionObjectWrapper* colObj0Wrap,
+		int partId0,
+		int index0,
+		const btCollisionObjectWrapper* colObj1Wrap,
+		int partId1,
+		int index1);
+
 };
 
 
