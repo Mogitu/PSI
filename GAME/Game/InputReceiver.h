@@ -17,6 +17,7 @@ public:
 
 		return false;
 	}
+
 	virtual bool IsKeyDown(EKEY_CODE keyCode) const
 	{
 		return KeyIsDown[keyCode];
