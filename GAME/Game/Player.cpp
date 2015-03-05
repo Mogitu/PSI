@@ -45,8 +45,8 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 {
 	btVector3 vel(0,0,0);
 
-	//Needs more restriction (now you can move while you're not grounded)
-
+	//TODO: Needs more restriction (now you can move while you're not grounded)
+	//TODO: Need forward vector
 	if (input->IsKeyDown(KEY_KEY_W))
 		vel += btVector3(0, 0, 50);
 	else if (input->IsKeyDown(KEY_KEY_S))
@@ -57,7 +57,7 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 	else if (input->IsKeyDown(KEY_KEY_D))
 		vel += btVector3(50, 0, 0);
 
-	
+	//TODO: We want to jump not fly (sadly >:( ) -José
 	if (input->IsKeyDown(KEY_SPACE))
 		vel += btVector3(0, 500, 0);
 

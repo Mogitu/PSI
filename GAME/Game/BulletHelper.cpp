@@ -61,7 +61,6 @@ void BulletHelper::updateRender(btRigidBody *object) {
 	node->setRotation(euler);
 }
 
-
 btRigidBody *BulletHelper::createBody(ISceneNode* node,Shape_Type type, btScalar mass) {	
 	btRigidBody *body = 0;
 
@@ -81,6 +80,7 @@ btRigidBody *BulletHelper::createBody(ISceneNode* node,Shape_Type type, btScalar
 			body = createCube(node, mass);
 			break;
 	}
+	
 	body->setRestitution(0.8);
 	body->setFriction(0.6);
 	return body;	
