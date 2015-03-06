@@ -3,12 +3,19 @@
 
 Projectile::Projectile(ISceneManager *smgr, BulletHelper *h) :smgr(smgr), h(h)
 {
-	init();
+	init();	
+}
+
+Projectile::~Projectile()
+{
+
 }
 
 
 void Projectile::init()
 {
+	aliveTime = 0;
+	alive = true;
 	mesh = smgr->getGeometryCreator()->createSphereMesh(5,16,16);
 	node = smgr->addMeshSceneNode(mesh);
 	node->setPosition(vector3df(0,20,0));
@@ -21,7 +28,7 @@ void Projectile::fire(btVector3 &pos, btVector3 &dir)
 	btTransform t;	
 	t.setOrigin(pos);
 	body->setWorldTransform(t);
-	body->applyCentralImpulse(dir*10);
+	body->applyCentralImpulse(dir*4000);
 }
 
 
@@ -31,14 +38,16 @@ void Projectile::update(u32 deltaTime)
 	{
 		return;
 	}
-	aliveTime += deltaTime;		
+	aliveTime += deltaTime;
+	if (aliveTime >=5000)
+	{
+		kill();
+	}
 }
 
 void Projectile::kill()
 {
-	alive = false;
-	body->setActivationState(0);
-	body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	h->deactivateObject(body);
 }
 
 void Projectile::resurrect()

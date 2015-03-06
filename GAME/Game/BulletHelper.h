@@ -39,7 +39,7 @@ public:
 	void buildIrrLevel(Level *level);		
 	btDiscreteDynamicsWorld *getWorld();
 	btVector3 extractForwardVector(const btRigidBody *body);
-	void removeObject(btRigidBody *body);
+	void deactivateObject(btRigidBody *body);
 
 private:
 

@@ -28,7 +28,6 @@ void BulletHelper::clearObjects() {
 
 	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator) {
 		btRigidBody *Object = *Iterator;
-
 		// Delete irrlicht node
 		ISceneNode *Node = static_cast<ISceneNode *>(Object->getUserPointer());
 		Node->remove();
@@ -44,6 +43,20 @@ void BulletHelper::clearObjects() {
 	objects.clear();
 }
 
+void BulletHelper::deactivateObject(btRigidBody *b)
+{
+	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator) {
+		btRigidBody *object = *Iterator;
+		if (object==b)
+		{					
+			ISceneNode *node = static_cast<ISceneNode *>(object->getUserPointer());
+			node->setVisible(false);
+			object->setActivationState(0);
+			object->setCollisionFlags(object->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		}
+	}
+}
+
 
 btDiscreteDynamicsWorld *BulletHelper::getWorld()
 {
@@ -52,7 +65,7 @@ btDiscreteDynamicsWorld *BulletHelper::getWorld()
 
 // Passes bullet's orientation to irrlicht
 void BulletHelper::updateRender(btRigidBody *object) {
-	ISceneNode *node = static_cast<ISceneNode *>(object->getUserPointer());
+	ISceneNode *node = static_cast<ISceneNode *>(object->getUserPointer());	
 
 	// Set position
 	btVector3 point = object->getCenterOfMassPosition();
@@ -277,8 +290,8 @@ void BulletHelper::updatePhysics(u32 TDeltaTime) {
 
 	// Relay the object's orientation to irrlicht
 	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator) 
-	{
-		updateRender(*Iterator);
+	{ 
+		updateRender(*Iterator);	
 	}
 }
 

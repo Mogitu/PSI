@@ -83,9 +83,7 @@ int main() {
 	//default node setup
 	IMeshSceneNode* node = smgr->addMeshSceneNode(mesh);	
 	node->setMaterialTexture(0, irrDriver->getTexture("../Assets/sydney.bmp"));	
-	node->setPosition(vector3df(0,50,0));	
-
-	Projectile *p = new Projectile(smgr, helper);
+	node->setPosition(vector3df(0,50,0));		
 
 	//createa a new rigidbody from earlier made node
 	btRigidBody *b =helper->createBody(node,Shape_Type::CAPSULE, 10000);	
@@ -141,17 +139,15 @@ int main() {
 			}
 
 			if (receiver.IsKeyDown(irr::KEY_KEY_E))
-			{				
-				p->fire(b->getWorldTransform().getOrigin(), helper->extractForwardVector(b));
-			}
-			if (receiver.IsKeyDown(irr::KEY_KEY_P))
-			{		
-					p->kill();			
-			}
+			{								
+					Projectile *p = new Projectile(smgr, helper);
+					p->fire(b->getWorldTransform().getOrigin() + helper->extractForwardVector(b) * 40, helper->extractForwardVector(b));
+					projectiles.push_back(p);
+			}			
 
-			if (receiver.IsKeyDown(irr::KEY_KEY_O))
-			{
-				p->resurrect();
+			for (list<Projectile *>::Iterator Iterator = projectiles.begin(); Iterator != projectiles.end(); ++Iterator) {
+				Projectile *Object = *Iterator;
+				Object->update(deltaTime);
 			}
 		}	
 	}
