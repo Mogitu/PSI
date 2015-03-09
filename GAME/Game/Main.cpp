@@ -49,7 +49,7 @@ int main() {
 
 	helper = new BulletHelper();
 	helper->buildIrrLevel(level);
-<<<<<<< HEAD
+
 	
 	//Default mesh from demos
 	IMesh* mesh = smgr->getMesh("../Assets/sydney.md2");		
@@ -58,8 +58,7 @@ int main() {
 	IMeshSceneNode* node = smgr->addMeshSceneNode(mesh);	
 	node->setMaterialTexture(0, irrDriver->getTexture("../Assets/sydney.bmp"));	
 	node->setPosition(vector3df(0,50,0));		
-=======
->>>>>>> origin/Player
+
 
 	//Create the game world
 	GameWorld* gWorld = new GameWorld();
@@ -80,57 +79,18 @@ int main() {
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
 		guiEnv->drawAll();
-<<<<<<< HEAD
+
 		irrDriver->endScene();	
 
 		//Update input and player
-		if (b)
-		{
-			b->setAngularVelocity(btVector3(0, 0, 0));
-			if (receiver.IsKeyDown(irr::KEY_KEY_W))
-			{
-				b->applyCentralImpulse(helper->extractForwardVector(b) * 2000);
-			}
-			else if (receiver.IsKeyDown(irr::KEY_KEY_S))
-			{
+		
 
-				b->applyCentralImpulse(-helper->extractForwardVector(b) * 2000);
-			}
-
-			if (receiver.IsKeyDown(irr::KEY_KEY_A))
-			{
-
-				b->setAngularVelocity(btVector3(0, -5, 0));
-			}
-			else if (receiver.IsKeyDown(irr::KEY_KEY_D))
-			{
-				b->setAngularVelocity(btVector3(0, 5, 0));
-			}
-
-			if (receiver.IsKeyDown(irr::KEY_KEY_Q))
-			{
-				b->applyCentralImpulse(btVector3(0, 6000, 0));
-			}
-
-			if (receiver.IsKeyDown(irr::KEY_KEY_E))
-			{								
-					Projectile *p = new Projectile(smgr, helper);
-					p->fire(b->getWorldTransform().getOrigin() + helper->extractForwardVector(b) * 40, helper->extractForwardVector(b));
-					projectiles.push_back(p);
-			}			
-
-			for (list<Projectile *>::Iterator Iterator = projectiles.begin(); Iterator != projectiles.end(); ++Iterator) {
-				Projectile *Object = *Iterator;
-				Object->update(deltaTime);
-			}
-		}	
-=======
 		irrDriver->endScene();
 
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();
->>>>>>> origin/Player
+
 	}
 	device->drop();
 	return 0;
