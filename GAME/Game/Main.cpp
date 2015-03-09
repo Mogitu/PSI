@@ -1,65 +1,90 @@
 #include <irrlicht.h>
-#include "Player.h"
+#include <cstdlib>
+#include "BulletHelper.h"
+#include "Level.h"
+#include "GameWorld.h"
 #include "InputReceiver.h"
+#include "Projectile.h"
+#include "Player.h"
 
 using namespace irr;
-
 using namespace core;
 using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
 
-u32 then;
-f32 getFrameDeltaTime(IrrlichtDevice* device)
-{
-	// Work out a frame delta time.
-	const u32 now = device->getTimer()->getTime();
-	const f32 frameDeltaTime = (f32)(now - then) / 1000.f; // Time in seconds
+int main() {
 
-	then = now;
+	list<Projectile*> projectiles;
 
-	return frameDeltaTime;
-}
+	IrrlichtDevice *device;
+	IVideoDriver *irrDriver;
+	ISceneManager *smgr;
+	IGUIEnvironment *guiEnv;
+	IFileSystem *irrFile;
+	ITimer *irrTimer;
+	ILogger *irrLog;
+	Level *level;
+	BulletHelper* helper;
+	InputReceiver* input = new InputReceiver();
 
-int main()
-{
-	InputReceiver input;
+	// Initialize irrlicht	
+	device = createDevice(video::EDT_OPENGL, dimension2d<u32>(800, 600), 32, false, false, false, input);
+	guiEnv = device->getGUIEnvironment();
+	irrTimer = device->getTimer();
+	smgr = device->getSceneManager();
+	irrDriver = device->getVideoDriver();
+	device->getCursorControl()->setVisible(0);
 
-	IrrlichtDevice *device =
-		createDevice(video::EDT_OPENGL, dimension2d<u32>(640, 480), 16,
-		false, false, false, &input);
+	// Add camera
+	ICameraSceneNode *camera = smgr->addCameraSceneNodeFPS(0, 100, 0.1);
+	camera->setPosition(vector3df(-161, 100, -150));
+	camera->setTarget(vector3df(0, 0, 0));
 	
-	if (!device)
-		return 1;
+	level = new Level(smgr, "../Assets/level.irr");	
 
-	device->setWindowCaption(L"Hello World! - Irrlicht Engine Demo");
+	// Create the initial scene
+	smgr->addLightSceneNode(0, core::vector3df(2, 5, -2), SColorf(4, 4, 4, 1));
 
-	IVideoDriver* driver = device->getVideoDriver();
-	ISceneManager* smgr = device->getSceneManager();
-	IGUIEnvironment* guienv = device->getGUIEnvironment();
+	helper = new BulletHelper();
+	helper->buildIrrLevel(level);
 
-	/*guienv->addStaticText(L"Hello World! This is the Irrlicht OPENGL renderer!",
-		rect<s32>(10, 10, 260, 22), true);*/
-	Player p(smgr, driver, &input, "../Assets/sydney.md2", "../Assets/sydney.bmp", vector3df());
+	//Create the game world
+	GameWorld* gWorld = new GameWorld();
+	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
 
-	smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
+	camera->setTarget(player->getNodePosition());
+	
+	// Main loop
+	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
+	while (device->run()) {
+		//basic stuff
+		deltaTime = irrTimer->getTime() - timeStamp;
+		timeStamp = irrTimer->getTime();
 
-	then = device->getTimer()->getTime();
-	while (device->run())
-	{
-		driver->beginScene(true, true, SColor(255, 100, 101, 140));
+		gWorld->update(deltaTime);
+		helper->updatePhysics(deltaTime);
 
-		p.Update(getFrameDeltaTime(device));
-
+		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
-		guienv->drawAll();
+		guiEnv->drawAll();
+		irrDriver->endScene();
 
-		driver->endScene();
+		//Close Device
+		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
+			device->closeDevice();
 	}
-
 	device->drop();
-
 	return 0;
 }
+
+
+
+
+
+
+
+
+
 
