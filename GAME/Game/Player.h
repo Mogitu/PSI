@@ -14,7 +14,6 @@ class Player : public IGameObject
 {
 private:
 	InputReceiver* input;
-	btRigidBody* body;
 	scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	ISceneManager* smgr;

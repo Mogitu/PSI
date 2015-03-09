@@ -290,7 +290,7 @@ void BulletHelper::updatePhysics(u32 TDeltaTime) {
 	// Relay the object's orientation to irrlicht
 	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator) 
 	{ 
-		updateRender(*Iterator);	
+		//updateRender(*Iterator);	
 	}
 }
 

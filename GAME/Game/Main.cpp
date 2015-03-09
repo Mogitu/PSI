@@ -63,8 +63,11 @@ int main() {
 		deltaTime = irrTimer->getTime() - timeStamp;
 		timeStamp = irrTimer->getTime();
 
+		helper->getWorld()->stepSimulation(deltaTime * 0.001f, 60);
 		gWorld->update(deltaTime);
-		helper->updatePhysics(deltaTime);
+
+		
+		//helper->updatePhysics(deltaTime);
 
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();

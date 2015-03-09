@@ -2,6 +2,7 @@
 #define I_GAME_OBJECT_H
 
 #include <irrlicht.h>
+#include "BulletHelper.h"
 
 enum GameObjectType
 {
@@ -13,6 +14,7 @@ class IGameObject
 {
 public:
 	bool isAlive;
+	btRigidBody *body;
 	virtual ~IGameObject(){}
 	virtual void Initialize() = 0;
 	virtual void Update(irr::u32 frameDeltaTime) = 0;
