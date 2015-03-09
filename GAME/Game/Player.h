@@ -31,6 +31,7 @@ public:
 	void PlayerMovement(u32 frameDeltaTime);
 	void Fire();
 	vector3df getNodePosition();
+	scene::IAnimatedMeshSceneNode* getNode();
 	GameObjectType getType();
 };
 

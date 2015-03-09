@@ -6,6 +6,7 @@
 #include "InputReceiver.h"
 #include "Projectile.h"
 #include "Player.h"
+#include <math.h> 
 
 using namespace irr;
 using namespace core;
@@ -13,6 +14,61 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
+using namespace std;
+
+//Camera
+ICameraSceneNode *camera;
+
+//needed to see the mousemovement
+vector2di middleScreenPosition;
+vector2di cursorChange;
+
+//add some limitations to the y rotation (0) and (0.45f)
+f32 yMin = 0;
+f32 yMax = 0.45f;
+//current angle of the camera
+f32 angle = 0;
+//rotate speed (0.05)
+f32 yRotateSpeed = 0.05;
+//if the pivot of the node to follow is to low/high, you can adjust it with heightmodifier(50)
+f32 heightModifier = 50;
+//distance to the node(100)
+f32 cameradistance = 100;
+//fps, has nothing to do with cameras but is needed since way to much fps makes the camera a bit laggy(60)
+u32 fps = 60;
+
+void updateCamera(IrrlichtDevice *device,vector3df nodePosition,f32 frameDeltaTime)
+{
+	//get the change of position since the last frame
+	cursorChange = middleScreenPosition.operator-(device->getCursorControl()->getPosition());
+
+	//reset the position to the middle of the screen
+	device->getCursorControl()->setPosition(0.5f, 0.5f);
+
+
+	//retarget the camera since the player could have moved
+	camera->setTarget(vector3df(0, heightModifier, 0));
+
+	//angle stuff
+	angle += ((f32)cursorChange.Y)*frameDeltaTime / 1000*yRotateSpeed;
+	if (angle > yMax)angle = yMax;
+	if (angle < yMin)angle = yMin;
+	//get the old position of the camera
+	vector3df pos = camera->getPosition();
+	pos = vector3df(-cos(angle), sin(angle), 0);
+	pos.operator*=(cameradistance);
+	//if needed, the x rotation
+	//pos.rotateXZBy(cursorChange.X * frameDeltaTime, nodePosition);
+
+	//reposition the camera
+	camera->setPosition(pos.operator+(vector3df(0, heightModifier, 0)));
+	//retarget to change the rotation
+	camera->setTarget(vector3df(0, heightModifier, 0));
+	
+	std::cout << pos.X << "," << pos.Y << "," << pos.Z << " en " << pos.getLength() << " en " << angle << " en " << (f32)cursorChange.Y << endl;
+}
+
+
 
 int main() {
 
@@ -38,9 +94,10 @@ int main() {
 	device->getCursorControl()->setVisible(0);
 
 	// Add camera
-	ICameraSceneNode *camera = smgr->addCameraSceneNodeFPS(0, 100, 0.1);
-	camera->setPosition(vector3df(-161, 100, -150));
-	camera->setTarget(vector3df(0, 0, 0));
+	camera = smgr->addCameraSceneNode(0);
+	camera->setPosition(vector3df(100, 100, 0));
+	device->getCursorControl()->setPosition(0.5f, 0.5f);
+	middleScreenPosition = device->getCursorControl()->getPosition();
 	
 	level = new Level(smgr, "../Assets/level.irr");	
 
@@ -53,25 +110,25 @@ int main() {
 	//Create the game world
 	GameWorld* gWorld = new GameWorld();
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
-
-	camera->setTarget(player->getNodePosition());
-	
+	camera->setParent(player->getNode());
+	camera->setTarget(vector3df(0,0,0));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 	while (device->run()) {
 		//basic stuff
 		deltaTime = irrTimer->getTime() - timeStamp;
+		//applying the fps
+		if (deltaTime < 1000/fps)
+			continue;
 		timeStamp = irrTimer->getTime();
-
 		gWorld->update(deltaTime);
 		helper->updatePhysics(deltaTime);
+		updateCamera(device, player->getNodePosition(), (f32)deltaTime);
 
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
 		guiEnv->drawAll();
-
 		irrDriver->endScene();	
-
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();

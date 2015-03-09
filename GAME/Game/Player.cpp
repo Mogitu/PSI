@@ -121,3 +121,8 @@ GameObjectType Player::getType()
 {
 	return GameObjectType::PLAYER;
 }
+
+IAnimatedMeshSceneNode* Player::getNode()
+{
+	return node;
+}
