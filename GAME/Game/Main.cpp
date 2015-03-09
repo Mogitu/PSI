@@ -7,6 +7,7 @@
 #include "Projectile.h"
 #include "Player.h"
 #include <math.h> 
+#include "ParticleSettings.h"
 
 using namespace irr;
 using namespace core;
@@ -83,6 +84,7 @@ int main() {
 	Level *level;
 	BulletHelper* helper;
 	InputReceiver* input = new InputReceiver();
+	
 
 	// Initialize irrlicht	
 	device = createDevice(video::EDT_OPENGL, dimension2d<u32>(800, 600), 32, false, false, false, input);
@@ -105,7 +107,8 @@ int main() {
 
 	helper = new BulletHelper();
 	helper->buildIrrLevel(level);
-
+	ParticleSettings settings(device,"../Assets/testEffect.xml");
+	
 	//Create the game world
 	GameWorld* gWorld = new GameWorld();
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));

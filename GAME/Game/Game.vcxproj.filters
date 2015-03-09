@@ -45,6 +45,9 @@
     <ClCompile Include="GameWorld.cpp">
       <Filter>Source Files\mywork</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level.h">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="IGameObject.h">
       <Filter>Header Files\mywork</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSettings.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
