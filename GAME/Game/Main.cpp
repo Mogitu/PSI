@@ -50,16 +50,6 @@ int main() {
 	helper = new BulletHelper();
 	helper->buildIrrLevel(level);
 
-	
-	//Default mesh from demos
-	IMesh* mesh = smgr->getMesh("../Assets/sydney.md2");		
-	
-	//default node setup
-	IMeshSceneNode* node = smgr->addMeshSceneNode(mesh);	
-	node->setMaterialTexture(0, irrDriver->getTexture("../Assets/sydney.bmp"));	
-	node->setPosition(vector3df(0,50,0));		
-
-
 	//Create the game world
 	GameWorld* gWorld = new GameWorld();
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
@@ -82,16 +72,11 @@ int main() {
 
 		irrDriver->endScene();	
 
-		//Update input and player
-		
-
-		irrDriver->endScene();
-
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();
-
 	}
+
 	device->drop();
 	return 0;
 }
