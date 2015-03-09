@@ -8,13 +8,13 @@ Projectile::Projectile(ISceneManager *smgr, BulletHelper *h) :smgr(smgr), h(h)
 
 Projectile::~Projectile()
 {
-	//delete node;
+	
 }
 
 void Projectile::Initialize()
 {
 	aliveTime = 0;
-	maxLifeTime = 1;
+	maxLifeTime = 3;
 	speed = 3000;
 	isAlive = true;
 	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);

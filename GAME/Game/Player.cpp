@@ -63,7 +63,7 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 	
 	//TODO: Needs more restriction (now you can move while you're not grounded)
 	if (input->IsKeyDown(KEY_KEY_W))
-		vel = forward * 5;
+		vel = forward * 50;
 	else if (input->IsKeyDown(KEY_KEY_S))
 		vel = forward * -5;
 
@@ -75,7 +75,7 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 	//TODO: Justjumped isn't used now
 	if (input->IsKeyDown(KEY_SPACE) && isGrounded() && !justJumped)
 	{
-		vel += btVector3(0, 500, 0);
+		vel += btVector3(0, 2000, 0);
 		//justJumped = true;
 	}
 
