@@ -34,13 +34,20 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files\mywork</Filter>
     </ClCompile>
-    <ClCompile Include="GameWorld.cpp">
-      <Filter>Source Files\mywork</Filter>
-=======
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Projectile.cpp">
       <Filter>Source Files</Filter>
->>>>>>> d28c3838f1bd40c5e27d4f0b168665f7f30bad29
     </ClCompile>
+    <ClCompile Include="GameWorld.cpp">
+      <Filter>Source Files\mywork</Filter>
+    </ClCompile>
+=======
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+>>>>>>> ad66dd7df100a9ebac717bcefb5687317c37894d
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level.h">
@@ -49,7 +56,13 @@
     <ClInclude Include="BulletHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
 <<<<<<< HEAD
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="InputReceiver.h">
       <Filter>Header Files\mywork</Filter>
     </ClInclude>
@@ -61,10 +74,8 @@
     </ClInclude>
     <ClInclude Include="IGameObject.h">
       <Filter>Header Files\mywork</Filter>
-=======
-    <ClInclude Include="Projectile.h">
-      <Filter>Header Files</Filter>
->>>>>>> d28c3838f1bd40c5e27d4f0b168665f7f30bad29
     </ClInclude>
+=======
+>>>>>>> ad66dd7df100a9ebac717bcefb5687317c37894d
   </ItemGroup>
 </Project>
