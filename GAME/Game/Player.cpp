@@ -4,6 +4,7 @@
 Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
 {
 	this->Initialize(smgr, driver, helper, world, input, meshName, textureName, bodyType, bodyMass, position, rotation, scale);
+	this->world = world;
 }
 
 void Player::Initialize()
@@ -16,8 +17,7 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 	justJumped = false;
 	this->input = input;
 	this->helper = helper;
-	this->smgr = smgr;
-	p = new Projectile(smgr, helper);
+	this->smgr = smgr;	
 	oldMousePos = input->GetMouseState().Position;
 
 	IAnimatedMesh* mesh = smgr->getMesh(meshName);
@@ -86,9 +86,10 @@ void Player::Fire()
 {
 	if (input->IsKeyDown(KEY_KEY_E))
 	{
-		p->fire(body->getWorldTransform().getOrigin(), helper->extractForwardVector(body));
-	}
-	
+		Projectile *p = new Projectile(smgr, helper);
+		p->fire(body->getWorldTransform().getOrigin() + helper->extractForwardVector(body)*30, helper->extractForwardVector(body));
+		world->addGameObject(p);	
+	}	
 }
 
 bool Player::isGrounded()

@@ -18,8 +18,8 @@ private:
 	scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	ISceneManager* smgr;
-	Projectile *p;
 	vector2di oldMousePos;
+	GameWorld *world;
 
 	bool justJumped;
 	bool isGrounded();
