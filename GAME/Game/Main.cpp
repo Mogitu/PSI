@@ -42,7 +42,13 @@ Lets start!
 After we have set up the IDE, the compiler will know where to find the Irrlicht
 Engine header files so we can include it now in our code.
 */
+
 #include <irrlicht.h>
+#include "driverChoice.h"
+
+#ifdef _MSC_VER
+#pragma comment(lib, "Irrlicht.lib")
+#endif
 
 /*
 In the Irrlicht Engine, everything can be found in the namespace 'irr'. So if
@@ -69,11 +75,52 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+//camera object
+ICameraSceneNode *camera;
+
+
+class CAppReceiver : public IEventReceiver
+{
+private:
+	bool KeyDown[KEY_KEY_CODES_COUNT]; 
+		
+public:    
+	CAppReceiver() 
+	{
+		for (int i = 0; i < KEY_KEY_CODES_COUNT; i++) 
+			KeyDown[i] = false;
+	}
+			
+	virtual bool OnEvent(const SEvent& event)    
+	{
+		switch (event.EventType) 
+		{
+			case EET_KEY_INPUT_EVENT: 
+				KeyDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
+				break;
+			default:
+				break;
+		}
+			return false;
+	}
+	virtual bool isKeyDown(EKEY_CODE keyCode)const    
+	{
+			return KeyDown[keyCode];
+	}
+	virtual bool isKeyUp(EKEY_CODE keyCode)const    
+	{
+		return !KeyDown[keyCode];
+	}
+};
+
 /*
 This is the main method. We can now use main() on every platform.
 */
 int main()
 {
+	video::E_DRIVER_TYPE driverType = driverChoiceConsole();
+	std::cout << "blabla";
+	std::cout << "blabla";
 	/*
 	The most important function of the engine is the createDevice()
 	function. The IrrlichtDevice is created by it, which is the root
@@ -107,10 +154,11 @@ int main()
 	Always check the return value to cope with unsupported drivers,
 	dimensions, etc.
 	*/
+	CAppReceiver receiver;
 	IrrlichtDevice *device =
-		createDevice(video::EDT_OPENGL, dimension2d<u32>(640, 480), 16,
-		false, false, false, 0);
-
+		createDevice(driverType, dimension2d<u32>(640, 480), 32,false,
+		false, false, &receiver);
+	device->getCursorControl()->setVisible(false);
 	if (!device)
 		return 1;
 
@@ -186,19 +234,34 @@ int main()
 	(0, 30, -40). The camera looks from there to (0,5,0), which is
 	approximately the place where our md2 model is.
 	*/
-	smgr->addCameraSceneNode(node, vector3df(0, 90, -40), vector3df(0, 5, 0));
-
+	camera = smgr->addCameraSceneNode(node2);
+	camera->setPosition(core::vector3df(0, 90, -40));
+	smgr->setActiveCamera(camera);
+	vector2di lastCursorPosition = device->getCursorControl()->getPosition();
+	vector3di cursorChange;
 	int lastFPS = -1;
 	u32 then = device->getTimer()->getTime();
-	const f32 fadeRate = 0.1f;
 	while (device->run())
 	{
 		const u32 now = device->getTimer()->getTime();
 		const f32 frameDeltaTime = (f32)(now - then);
 		then = now;
-		driver->beginScene(true, true, SColor(255, 100, 101, 140));
+		cursorChange.X = lastCursorPosition.X - device->getCursorControl()->getPosition().X;
+		cursorChange.Y = lastCursorPosition.Y - device->getCursorControl()->getPosition().Y;
+		device->getCursorControl()->setPosition(0.5f, 0.5f);
+		lastCursorPosition = device->getCursorControl()->getPosition();
+
 		
+
+		driver->setViewPort(rect<s32>(0, 0, 640, 480));
+		driver->beginScene(true, true, SColor(255, 100, 101, 140));
 		node->setPosition(node->getPosition() + vector3df(0,0.01,0)*frameDeltaTime);
+		smgr->setActiveCamera(camera);
+		vector3df pos = camera->getPosition();
+		pos.rotateYZBy(cursorChange.Y * frameDeltaTime, vector3df(0,0,0));
+		pos.rotateXZBy(cursorChange.X * frameDeltaTime, vector3df(0, 0, 0));
+		camera->setTarget(node2->getAbsolutePosition());
+		camera->setPosition(pos);
 		smgr->drawAll();
 		guienv->drawAll();
 
@@ -217,6 +280,8 @@ int main()
 
 	return 0;
 }
+
+
 
 /*
 That's it. Compile and run.
