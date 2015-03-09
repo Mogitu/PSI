@@ -1,5 +1,7 @@
 #include "BulletHelper.h"
 
+#ifndef PROJECTILE_H
+#define PROJECTILE_H
 class Projectile
 {
 public:
@@ -10,7 +12,7 @@ public:
 	void kill();
 	void resurrect();
 	bool alive;
-	void update(u32 duration);	
+	void update(u32 duration);
 
 private:
 	ISceneManager *smgr;
@@ -21,3 +23,6 @@ private:
 	btRigidBody *body;
 	u32 aliveTime;
 };
+#endif // !PROJECTILE_H
+
+

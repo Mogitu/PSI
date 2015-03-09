@@ -76,8 +76,11 @@
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Player.cpp" />
+=======
     <ClCompile Include="Projectile.cpp" />
+>>>>>>> d28c3838f1bd40c5e27d4f0b168665f7f30bad29
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletHelper.h" />
@@ -85,8 +88,11 @@
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="Level.h" />
+<<<<<<< HEAD
     <ClInclude Include="Player.h" />
+=======
     <ClInclude Include="Projectile.h" />
+>>>>>>> d28c3838f1bd40c5e27d4f0b168665f7f30bad29
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
