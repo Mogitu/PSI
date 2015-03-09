@@ -33,8 +33,8 @@ public:
 
 	float gravityMultiplier;
 	btRigidBody *createBody(ISceneNode* n, Shape_Type type,btScalar mass);
-	void updatePhysics(u32 deltaTime);
-	void updateRender(btRigidBody *object);
+	//void updatePhysics(u32 deltaTime);
+	//void updateRender(btRigidBody *object);
 	void clearObjects();
 	void buildIrrLevel(Level *level);		
 	btDiscreteDynamicsWorld *getWorld();

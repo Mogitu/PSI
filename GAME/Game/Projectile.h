@@ -10,7 +10,7 @@ public:
 	Projectile(ISceneManager *smgr, BulletHelper *h);
 	~Projectile();	
 	void fire(btVector3 &pos, btVector3 &direction);
-	void kill();
+	virtual void kill();
 	void resurrect();
 	virtual void Initialize();
 	virtual void Update(u32 deltaTime);	
@@ -19,8 +19,7 @@ private:
 	ISceneManager *smgr;
 	IMeshSceneNode *node;
 	IMesh *mesh;
-	BulletHelper *h;	
-	btRigidBody *body;
+	BulletHelper *h;		
 	u32 aliveTime;
 	u32 speed;
 	u32 maxLifeTime;

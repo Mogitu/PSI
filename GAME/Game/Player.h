@@ -14,7 +14,6 @@ class Player : public IGameObject
 {
 private:
 	InputReceiver* input;
-	btRigidBody* body;
 	scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	ISceneManager* smgr;
@@ -30,6 +29,7 @@ public:
 	void Update(u32 frameDeltaTime);
 	void PlayerMovement(u32 frameDeltaTime);
 	void Fire();
+	virtual void kill();
 	vector3df getNodePosition();
 	scene::IAnimatedMeshSceneNode* getNode();
 	GameObjectType getType();

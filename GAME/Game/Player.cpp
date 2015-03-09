@@ -5,6 +5,7 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 {
 	this->Initialize(smgr, driver, helper, world, input, meshName, textureName, bodyType, bodyMass, position, rotation, scale);
 	this->world = world;
+	isAlive = true;
 }
 
 void Player::Initialize()
@@ -111,6 +112,19 @@ bool Player::isGrounded()
 		justJumped = false;
 
 	return false;
+}
+
+void Player::kill()
+{
+	//h->deactivateObject(body);
+	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	Node->remove();
+	// Remove the object from the world
+	helper->getWorld()->removeRigidBody(body);
+	// Free memory
+	delete body->getMotionState();
+	delete body->getCollisionShape();
+	delete body;
 }
 
 vector3df Player::getNodePosition()
