@@ -23,9 +23,15 @@ void GameWorld::update(u32 frameDeltaTime)
 	for (core::list<IGameObject *>::Iterator Iterator = gameObjects.begin(); Iterator != gameObjects.end(); ++Iterator)
 	{
 		IGameObject* gameObject = *Iterator;
-
 		gameObject->Update(frameDeltaTime);
 		updatePhysics(gameObject->body);
+		if (!gameObject->isAlive)
+		{
+			gameObject->kill();
+			gameObjects.erase(Iterator);
+			delete gameObject;
+			return;			
+		}			
 	}
 }
 

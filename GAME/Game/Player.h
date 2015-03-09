@@ -29,6 +29,7 @@ public:
 	void Update(u32 frameDeltaTime);
 	void PlayerMovement(u32 frameDeltaTime);
 	void Fire();
+	virtual void kill();
 	vector3df getNodePosition();
 	GameObjectType getType();
 };

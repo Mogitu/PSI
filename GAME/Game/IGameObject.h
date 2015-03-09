@@ -18,6 +18,7 @@ public:
 	virtual ~IGameObject(){}
 	virtual void Initialize() = 0;
 	virtual void Update(irr::u32 frameDeltaTime) = 0;
+	virtual void kill()=0;
 	virtual GameObjectType getType() const
 	{
 		return GameObjectType::UNKNOWN;

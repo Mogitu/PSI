@@ -62,7 +62,7 @@ btDiscreteDynamicsWorld *BulletHelper::getWorld()
 {
 	return world;
 }
-
+/*
 // Passes bullet's orientation to irrlicht
 void BulletHelper::updateRender(btRigidBody *object) {
 	ISceneNode *node = static_cast<ISceneNode *>(object->getUserPointer());	
@@ -79,6 +79,20 @@ void BulletHelper::updateRender(btRigidBody *object) {
 	euler *= RADTODEG;
 	node->setRotation(euler);
 }
+
+// Runs the physics simulation.
+// - TDeltaTime tells the simulation how much time has passed since the last frame so the simulation can run independently of the frame rate.
+void BulletHelper::updatePhysics(u32 TDeltaTime) {
+
+	world->stepSimulation(TDeltaTime * 0.001f, 60);
+
+	// Relay the object's orientation to irrlicht
+	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator)
+	{
+		//updateRender(*Iterator);	
+	}
+}
+*/
 
 btRigidBody *BulletHelper::createBody(ISceneNode* node,Shape_Type type, btScalar mass) {	
 	btRigidBody *body = 0;
@@ -281,18 +295,7 @@ btRigidBody *BulletHelper::createSphere(ISceneNode* node, btScalar mass)
 	return rigidBody;
 }
 
-// Runs the physics simulation.
-// - TDeltaTime tells the simulation how much time has passed since the last frame so the simulation can run independently of the frame rate.
-void BulletHelper::updatePhysics(u32 TDeltaTime) {
 
-	world->stepSimulation(TDeltaTime * 0.001f, 60);
-
-	// Relay the object's orientation to irrlicht
-	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator) 
-	{ 
-		//updateRender(*Iterator);	
-	}
-}
 
 void BulletHelper::buildIrrLevel(Level *level)
 {	

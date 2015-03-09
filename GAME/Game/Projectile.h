@@ -10,7 +10,7 @@ public:
 	Projectile(ISceneManager *smgr, BulletHelper *h);
 	~Projectile();	
 	void fire(btVector3 &pos, btVector3 &direction);
-	void kill();
+	virtual void kill();
 	void resurrect();
 	virtual void Initialize();
 	virtual void Update(u32 deltaTime);	
