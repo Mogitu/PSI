@@ -17,7 +17,7 @@ private:
 	scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	ISceneManager* smgr;
-	vector2di oldMousePos;
+	vector2di centerScreenPosition;
 	GameWorld *world;
 
 	bool justJumped;
@@ -30,9 +30,12 @@ public:
 	void PlayerMovement(u32 frameDeltaTime);
 	void Fire();
 	virtual void kill();
-	vector3df getNodePosition();
+	const vector3df& getNodePosition() const;
+	const vector3df& getNodeAbsolutePosition() const;
 	scene::IAnimatedMeshSceneNode* getNode();
 	GameObjectType getType();
+
+	scene::IAnimatedMeshSceneNode*& n = node;
 };
 
 #endif // !__PLAYER_H__
