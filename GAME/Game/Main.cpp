@@ -24,17 +24,17 @@ ICameraSceneNode *camera;
 vector2di middleScreenPosition;
 vector2di cursorChange;
 
-//add some limitations to the y rotation (0) and (0.45f)
-f32 yMin = 0;
-f32 yMax = 0.45f;
+//add some limitations to the y rotation (-0.2) and (0.45)
+f32 yMin = -0.2;
+f32 yMax = 0.45;
 //current angle of the camera
 f32 angle = 0;
 //rotate speed (0.05)
 f32 yRotateSpeed = 0.05;
-//if the pivot of the node to follow is to low/high, you can adjust it with heightmodifier(50)
-f32 heightModifier = 50;
-//distance to the node(100)
-f32 cameradistance = 100;
+//if the pivot of the node to follow is to low/high, you can adjust it with heightmodifier(35)
+f32 heightModifier = 35;
+//distance to the node(150)
+f32 cameradistance = 150;
 //fps, has nothing to do with cameras but is needed since way to much fps makes the camera a bit laggy(60)
 u32 fps = 60;
 
@@ -47,15 +47,14 @@ void updateCamera(IrrlichtDevice *device,vector3df nodePosition,f32 frameDeltaTi
 	device->getCursorControl()->setPosition(0.5f, 0.5f);
 
 	//retarget the camera since the player could have moved
-	camera->setTarget(vector3df(0, heightModifier, 0));
+	camera->setTarget(nodePosition.operator+(vector3df(0, heightModifier, 0)));
 
 	//angle stuff
 	angle += ((f32)cursorChange.Y)*frameDeltaTime / 1000*yRotateSpeed;
 	if (angle > yMax)angle = yMax;
 	if (angle < yMin)angle = yMin;
 	//get the old position of the camera
-	vector3df pos = camera->getPosition();
-	pos = vector3df(-cos(angle), sin(angle), 0);
+	vector3df pos = vector3df(-cos(angle), sin(angle), 0);
 	pos.operator*=(cameradistance);
 	//if needed, the x rotation
 	//pos.rotateXZBy(cursorChange.X * frameDeltaTime, nodePosition);
@@ -63,7 +62,7 @@ void updateCamera(IrrlichtDevice *device,vector3df nodePosition,f32 frameDeltaTi
 	//reposition the camera
 	camera->setPosition(pos.operator+(vector3df(0, heightModifier, 0)));
 	//retarget to change the rotation
-	camera->setTarget(vector3df(0, heightModifier, 0));
+	camera->setTarget(nodePosition.operator+(vector3df(0, heightModifier, 0)));
 }
 
 
