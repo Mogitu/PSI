@@ -21,7 +21,7 @@ void Enemy::Kill(float beginanim, float endanim, float animationspeed)
 {
 	node->setFrameLoop(beginanim, endanim);
 	node->setAnimationSpeed(animationspeed);
-	std::cout << node->getEndFrame();
+
 	if (node->getFrameNr() == node->getEndFrame()) 
 	{
 		node->remove();

@@ -64,8 +64,6 @@ void updateCamera(IrrlichtDevice *device,vector3df nodePosition,f32 frameDeltaTi
 	camera->setPosition(pos.operator+(vector3df(0, heightModifier, 0)));
 	//retarget to change the rotation
 	camera->setTarget(vector3df(0, heightModifier, 0));
-
-	std::cout << pos.X << "," << pos.Y << "," << pos.Z << " en " << pos.getLength() << " en " << angle << " en " << (f32)cursorChange.Y << endl;
 }
 
 

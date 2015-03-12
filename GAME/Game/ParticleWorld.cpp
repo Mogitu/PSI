@@ -1,5 +1,9 @@
 #include "ParticleWorld.h"
 
+IVideoDriver* ParticleWorld::driver;
+ISceneManager* ParticleWorld::smgr;
+
+
 void ParticleWorld::setDriver(IVideoDriver* d)
 {
 	driver = d;
