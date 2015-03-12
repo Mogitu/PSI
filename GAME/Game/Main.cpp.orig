@@ -38,7 +38,7 @@ f32 cameradistance = 150;
 //fps, has nothing to do with cameras but is needed since way to much fps makes the camera a bit laggy(60)
 u32 fps = 60;
 
-void updateCamera(IrrlichtDevice *device,vector3df nodePosition,f32 frameDeltaTime)
+void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDeltaTime)
 {
 	//get the change of position since the last frame
 	cursorChange = middleScreenPosition.operator-(device->getCursorControl()->getPosition());
@@ -63,15 +63,13 @@ void updateCamera(IrrlichtDevice *device,vector3df nodePosition,f32 frameDeltaTi
 	camera->setPosition(pos.operator+(vector3df(0, heightModifier, 0)));
 	//retarget to change the rotation
 <<<<<<< HEAD
-	camera->setTarget(vector3df(0, heightModifier, 0));
-=======
 	camera->setTarget(nodePosition.operator+(vector3df(0, heightModifier, 0)));
+=======
+	camera->setTarget(vector3df(0, heightModifier, 0));
 	
 	//std::cout << pos.X << "," << pos.Y << "," << pos.Z << " en " << pos.getLength() << " en " << angle << " en " << (f32)cursorChange.Y << endl;
->>>>>>> 6612fe88e05424a0428d837edc9cbb615bfb789e
+>>>>>>> cb41b31744b372f054230dcffe84b4637d4c7020
 }
-
-
 
 int main() {
 
@@ -95,6 +93,9 @@ int main() {
 	smgr = device->getSceneManager();
 	irrDriver = device->getVideoDriver();
 	device->getCursorControl()->setVisible(0);
+
+	device->getCursorControl()->setPosition(0.5f, 0.5f);
+	input->MouseState.Position.set(device->getCursorControl()->getPosition().X, device->getCursorControl()->getPosition().Y);
 
 	// Add camera
 	camera = smgr->addCameraSceneNode(0);
@@ -129,9 +130,13 @@ int main() {
 		core::dimension2df(20.f, 20.f));     
 
 	camera->setParent(player->getNode());
+<<<<<<< HEAD
 	camera->setTarget(vector3df(0,0,0));
 
 	camera->setTarget(player->getNodePosition());
+=======
+	camera->setTarget(player->getNodeAbsolutePosition());
+>>>>>>> cb41b31744b372f054230dcffe84b4637d4c7020
 
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
@@ -144,7 +149,8 @@ int main() {
 		timeStamp = irrTimer->getTime();
 
 		gWorld->update(deltaTime);		
-		updateCamera(device, player->getNodePosition(), (f32)deltaTime);
+		updateCamera(device, player->getNodeAbsolutePosition(), (f32)deltaTime);
+		camera->setTarget(player->getNodeAbsolutePosition());
 		helper->getWorld()->stepSimulation(deltaTime * 0.001f, 60);
 		gWorld->update(deltaTime);
 

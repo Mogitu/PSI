@@ -19,7 +19,7 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 	this->input = input;
 	this->helper = helper;
 	this->smgr = smgr;	
-	oldMousePos = input->GetMouseState().Position;
+	centerScreenPosition = input->GetMouseState().Position;
 
 	IAnimatedMesh* mesh = smgr->getMesh(meshName);
 	
@@ -51,7 +51,7 @@ void Player::Update(u32 frameDeltaTime)
 	PlayerMovement(frameDeltaTime);
 	Fire();
 
-	oldMousePos = input->GetMouseState().Position;
+	node->updateAbsolutePosition();
 }
 
 void Player::PlayerMovement(u32 frameDeltaTime)
@@ -60,17 +60,19 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 	btVector3 turningVel(0, 0, 0);
 	btVector3 forward = helper->extractForwardVector(this->body);
 	this->body->setAngularVelocity(btVector3(0, 0, 0));
-	
+
 	//TODO: Needs more restriction (now you can move while you're not grounded)
 	if (input->IsKeyDown(KEY_KEY_W))
-		vel = forward * 5;
+		vel = forward * 50;
 	else if (input->IsKeyDown(KEY_KEY_S))
-		vel = forward * -5;
+		vel = forward * -50;
 
-	if (input->IsKeyDown(KEY_KEY_A))
-		turningVel = btVector3(0, -5, 0);
-	else if (input->IsKeyDown(KEY_KEY_D))
-		turningVel = btVector3(0, 5, 0);
+	int diff = 0;
+	
+	if (centerScreenPosition.X != input->GetMouseState().Position.X + 5)
+		diff = -(centerScreenPosition.X - (input->GetMouseState().Position.X + 5)) / 2;
+
+	turningVel = btVector3(0, diff, 0);
 
 	//TODO: Justjumped isn't used now
 	if (input->IsKeyDown(KEY_SPACE) && isGrounded() && !justJumped)
@@ -127,9 +129,14 @@ void Player::kill()
 	delete body;
 }
 
-vector3df Player::getNodePosition()
+const vector3df& Player::getNodePosition() const
 {
 	return node->getPosition();
+}
+
+const vector3df& Player::getNodeAbsolutePosition() const
+{
+	return node->getAbsolutePosition();
 }
 
 GameObjectType Player::getType()
