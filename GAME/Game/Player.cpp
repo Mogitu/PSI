@@ -63,9 +63,9 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 	
 	//TODO: Needs more restriction (now you can move while you're not grounded)
 	if (input->IsKeyDown(KEY_KEY_W))
-		vel = forward * 5;
+		vel = forward * 5 * frameDeltaTime;
 	else if (input->IsKeyDown(KEY_KEY_S))
-		vel = forward * -5;
+		vel = forward * -5 * frameDeltaTime;
 
 	if (input->IsKeyDown(KEY_KEY_A))
 		turningVel = btVector3(0, -5, 0);

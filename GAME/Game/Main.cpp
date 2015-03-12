@@ -7,6 +7,7 @@
 #include "Projectile.h"
 #include "Player.h"
 #include <math.h> 
+#include "Enemy.h"
 
 using namespace irr;
 using namespace core;
@@ -84,6 +85,7 @@ int main() {
 	Level *level;
 	BulletHelper* helper;
 	InputReceiver* input = new InputReceiver();
+	
 
 	// Initialize irrlicht	
 	device = createDevice(video::EDT_OPENGL, dimension2d<u32>(800, 600), 32, false, false, false, input);
@@ -116,7 +118,8 @@ int main() {
 
 	camera->setTarget(player->getNodePosition());
 
-
+	Enemy* enemy1 = new Enemy(smgr,irrDriver, helper, gWorld, "../Assets/RockGolem.x", "../Assets/GolemTex_v10.png", Shape_Type::CAPSULE, 300, vector3df(200,100,100), vector3df(0,0,0), vector3df(10,10,10));
+	enemy1->SetDeath(1100,1230, 24);
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 	while (device->run()) {
