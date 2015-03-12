@@ -1,21 +1,13 @@
-#include <irrlicht.h>
+#include "Common.h"
 #include <cstdlib>
-#include "BulletHelper.h"
 #include "Level.h"
 #include "GameWorld.h"
-#include "InputReceiver.h"
 #include "Projectile.h"
 #include "Player.h"
 #include "ParticleWorld.h"
 #include <math.h> 
 
-using namespace irr;
-using namespace core;
-using namespace scene;
-using namespace video;
-using namespace io;
-using namespace gui;
-using namespace std;
+using namespace Common;
 
 //Camera
 ICameraSceneNode *camera;
@@ -68,28 +60,9 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 int main() {
 
 	list<Projectile*> projectiles;
-
-	IrrlichtDevice *device;
-	IVideoDriver *irrDriver;
-	ISceneManager *smgr;
-	IGUIEnvironment *guiEnv;
-	IFileSystem *irrFile;
-	ITimer *irrTimer;
-	ILogger *irrLog;
 	Level *level;
-	BulletHelper* helper;
-	InputReceiver* input = new InputReceiver();
 
-	// Initialize irrlicht	
-	device = createDevice(video::EDT_OPENGL, dimension2d<u32>(800, 600), 32, false, false, false, input);
-	guiEnv = device->getGUIEnvironment();
-	irrTimer = device->getTimer();
-	smgr = device->getSceneManager();
-	irrDriver = device->getVideoDriver();
-	device->getCursorControl()->setVisible(0);
-
-	device->getCursorControl()->setPosition(0.5f, 0.5f);
-	input->MouseState.Position.set(device->getCursorControl()->getPosition().X, device->getCursorControl()->getPosition().Y);
+	initIrrlicht();
 
 	// Add camera
 	camera = smgr->addCameraSceneNode(0);
@@ -109,11 +82,9 @@ int main() {
 	GameWorld* gWorld = new GameWorld();
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
 	//Set up Particle World
-	ParticleWorld::setDriver(irrDriver);
-	ParticleWorld::setSMGR(smgr);
 
-	IParticleSystemSceneNode* ps = ParticleWorld::createParticleSystem(vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
-	ParticleWorld::createBoxParticle(ps, 
+	/*IParticleSystemSceneNode* ps = ParticleManager::createParticleSystem(vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
+	ParticleManager::createBoxParticle(ps,
 		core::aabbox3d<f32>(-7, 0, -7, 7, 1, 7), 
 		core::vector3df(0.0f, 0.06f, 0.0f),  
 		80, 100,                             
@@ -121,7 +92,7 @@ int main() {
 		video::SColor(0, 255, 255, 255),     
 		800, 2000, 0,                        
 		core::dimension2df(10.f, 10.f),      
-		core::dimension2df(20.f, 20.f));     
+		core::dimension2df(20.f, 20.f));*/
 
 	camera->setParent(player->getNode());
 	camera->setTarget(player->getNodeAbsolutePosition());
