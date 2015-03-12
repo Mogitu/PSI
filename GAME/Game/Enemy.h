@@ -4,6 +4,7 @@
 #include <irrlicht.h>
 #include <iostream>
 #include <string>
+#include "BulletHelper.h"
 
 class Enemy
 {

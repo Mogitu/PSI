@@ -3,56 +3,62 @@
 
 Projectile::Projectile(ISceneManager *smgr, BulletHelper *h) :smgr(smgr), h(h)
 {
-	init();	
+	Initialize();	
 }
 
 Projectile::~Projectile()
 {
-
+	//delete node;
 }
 
-
-void Projectile::init()
+void Projectile::Initialize()
 {
 	aliveTime = 0;
-	alive = true;
-	mesh = smgr->getGeometryCreator()->createSphereMesh(5,16,16);
+	maxLifeTime = 1;
+	speed = 3000;
+	isAlive = true;
+	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
 	node = smgr->addMeshSceneNode(mesh);
-	node->setPosition(vector3df(0,20,0));
-	body = h->createBody(node, Shape_Type::SPHERE, 10);	
+	node->setPosition(vector3df(0, 20, 0));
+	body = h->createBody(node, Shape_Type::SPHERE, 10);
 }
+
+void Projectile::Update(u32 deltaTime)
+{	
+	aliveTime += deltaTime;
+	if (aliveTime >= maxLifeTime*1000)
+	{
+		isAlive = false;
+	}
+}
+
+
 
 void Projectile::fire(btVector3 &pos, btVector3 &dir)
 {	
-	alive = true;
+	isAlive = true;
 	btTransform t;	
 	t.setOrigin(pos);
 	body->setWorldTransform(t);
-	body->applyCentralImpulse(dir*4000);
-}
-
-
-void Projectile::update(u32 deltaTime)
-{
-	if (!alive)
-	{
-		return;
-	}
-	aliveTime += deltaTime;
-	if (aliveTime >=5000)
-	{
-		kill();
-	}
+	body->applyCentralImpulse(dir*speed);
 }
 
 void Projectile::kill()
 {
-	h->deactivateObject(body);
+	//h->deactivateObject(body);
+	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	Node->remove();
+	// Remove the object from the world
+	h->getWorld()->removeRigidBody(body);
+	// Free memory
+	delete body->getMotionState();
+	delete body->getCollisionShape();
+	delete body;
 }
 
 void Projectile::resurrect()
 {
-	alive = true;
+	isAlive = true;
 	body->setActivationState(1);
 	body->setCollisionFlags(0);
 }

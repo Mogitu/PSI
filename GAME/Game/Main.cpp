@@ -108,8 +108,13 @@ int main() {
 	//Create the game world
 	GameWorld* gWorld = new GameWorld();
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
+
 	camera->setParent(player->getNode());
 	camera->setTarget(vector3df(0,0,0));
+
+	camera->setTarget(player->getNodePosition());
+
+
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 	while (device->run()) {
@@ -119,9 +124,11 @@ int main() {
 		if (deltaTime < 1000/fps)
 			continue;
 		timeStamp = irrTimer->getTime();
-		gWorld->update(deltaTime);
-		helper->updatePhysics(deltaTime);
+
+		gWorld->update(deltaTime);		
 		updateCamera(device, player->getNodePosition(), (f32)deltaTime);
+		helper->getWorld()->stepSimulation(deltaTime * 0.001f, 60);
+		gWorld->update(deltaTime);
 
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
