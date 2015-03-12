@@ -14,12 +14,11 @@ class Player : public IGameObject
 {
 private:
 	InputReceiver* input;
-	btRigidBody* body;
 	scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	ISceneManager* smgr;
-	Projectile *p;
-	vector2di oldMousePos;
+	vector2di centerScreenPosition;
+	GameWorld *world;
 
 	bool justJumped;
 	bool isGrounded();
@@ -30,8 +29,13 @@ public:
 	void Update(u32 frameDeltaTime);
 	void PlayerMovement(u32 frameDeltaTime);
 	void Fire();
-	vector3df getNodePosition();
+	virtual void kill();
+	const vector3df& getNodePosition() const;
+	const vector3df& getNodeAbsolutePosition() const;
+	scene::IAnimatedMeshSceneNode* getNode();
 	GameObjectType getType();
+
+	scene::IAnimatedMeshSceneNode*& n = node;
 };
 
 #endif // !__PLAYER_H__
