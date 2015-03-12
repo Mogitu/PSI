@@ -6,6 +6,7 @@
 #include "InputReceiver.h"
 #include "Projectile.h"
 #include "Player.h"
+#include "ParticleWorld.h"
 #include <math.h> 
 
 using namespace irr;
@@ -45,7 +46,6 @@ void updateCamera(IrrlichtDevice *device,vector3df nodePosition,f32 frameDeltaTi
 	//reset the position to the middle of the screen
 	device->getCursorControl()->setPosition(0.5f, 0.5f);
 
-
 	//retarget the camera since the player could have moved
 	camera->setTarget(vector3df(0, heightModifier, 0));
 
@@ -64,7 +64,7 @@ void updateCamera(IrrlichtDevice *device,vector3df nodePosition,f32 frameDeltaTi
 	camera->setPosition(pos.operator+(vector3df(0, heightModifier, 0)));
 	//retarget to change the rotation
 	camera->setTarget(vector3df(0, heightModifier, 0));
-	
+
 	std::cout << pos.X << "," << pos.Y << "," << pos.Z << " en " << pos.getLength() << " en " << angle << " en " << (f32)cursorChange.Y << endl;
 }
 
@@ -110,12 +110,25 @@ int main() {
 	//Create the game world
 	GameWorld* gWorld = new GameWorld();
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
+	//Set up Particle World
+	ParticleWorld::setDriver(irrDriver);
+	ParticleWorld::setSMGR(smgr);
+
+	IParticleSystemSceneNode* ps = ParticleWorld::createParticleSystem(vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
+	ParticleWorld::createBoxParticle(ps, 
+		core::aabbox3d<f32>(-7, 0, -7, 7, 1, 7), 
+		core::vector3df(0.0f, 0.06f, 0.0f),  
+		80, 100,                             
+		video::SColor(0, 255, 255, 255),     
+		video::SColor(0, 255, 255, 255),     
+		800, 2000, 0,                        
+		core::dimension2df(10.f, 10.f),      
+		core::dimension2df(20.f, 20.f));     
 
 	camera->setParent(player->getNode());
 	camera->setTarget(vector3df(0,0,0));
 
 	camera->setTarget(player->getNodePosition());
-
 
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
