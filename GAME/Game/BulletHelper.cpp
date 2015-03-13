@@ -181,8 +181,7 @@ btRigidBody *BulletHelper::createCapsule(ISceneNode *node, btScalar mass)
 
 	world->addRigidBody(rigidBody);
 	objects.push_back(rigidBody);
-	//std::cout << HalfExtents.getX() << "  " << HalfExtents.getY() << " " << HalfExtents.getZ()<< " "<<  Node->getName() << std::endl;
-	std::cout << node->getScale().Y << std::endl;
+	
 	return rigidBody;
 }
 
