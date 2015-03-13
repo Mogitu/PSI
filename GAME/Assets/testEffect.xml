@@ -1,6 +1,3 @@
 <?xml version="1.0"?>
-<Particle name="Blood">
-	<Size>9</Size>
-	<Color>Green</hp>
-	<Shape>Box</xp>
-</Particle>
+<minStartSize value="1">
+<maxStartSize value="5">

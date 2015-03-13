@@ -48,6 +48,9 @@
     <ClCompile Include="ParticleWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files\mywork</Filter>
     </ClInclude>
     <ClInclude Include="ParticleWorld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

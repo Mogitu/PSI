@@ -8,7 +8,6 @@
 #include "Player.h"
 #include "ParticleWorld.h"
 #include <math.h> 
-#include "ParticleSettings.h"
 
 using namespace irr;
 using namespace core;
@@ -20,9 +19,11 @@ using namespace std;
 
 //Camera
 ICameraSceneNode *camera;
+
 //needed to see the mousemovement
 vector2di middleScreenPosition;
 vector2di cursorChange;
+
 //add some limitations to the y rotation (-0.2) and (0.45)
 f32 yMin = -0.2;
 f32 yMax = 0.45;
@@ -39,44 +40,30 @@ u32 fps = 60;
 
 void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDeltaTime)
 {
-	/*
 	//get the change of position since the last frame
 	cursorChange = middleScreenPosition.operator-(device->getCursorControl()->getPosition());
 
 	//reset the position to the middle of the screen
 	device->getCursorControl()->setPosition(0.5f, 0.5f);
 
-
 	//retarget the camera since the player could have moved
 	camera->setTarget(nodePosition.operator+(vector3df(0, heightModifier, 0)));
 
 	//angle stuff
-	angle += ((f32)cursorChange.Y)*frameDeltaTime / 1000*yRotateSpeed;
+	angle += ((f32)cursorChange.Y)*frameDeltaTime / 1000 * yRotateSpeed;
 	if (angle > yMax)angle = yMax;
 	if (angle < yMin)angle = yMin;
 	//get the old position of the camera
 	vector3df pos = vector3df(-cos(angle), sin(angle), 0);
-	vector3df pos = camera->getPosition();
-	pos = vector3df(-cos(angle), sin(angle), 0);
 	pos.operator*=(cameradistance);
 	//if needed, the x rotation
-	pos.rotateXZBy(cursorChange.X * frameDeltaTime, nodePosition);
 	//pos.rotateXZBy(cursorChange.X * frameDeltaTime, nodePosition);
 
 	//reposition the camera
 	camera->setPosition(pos.operator+(vector3df(0, heightModifier, 0)));
 	//retarget to change the rotation
 	camera->setTarget(nodePosition.operator+(vector3df(0, heightModifier, 0)));
-	
-	std::cout << pos.X << "," << pos.Y << "," << pos.Z << " en " << pos.getLength() << " en " << angle << " en " << (f32)cursorChange.Y << endl;
-	camera->setRotation(p->getNode()->getRotation());
-	vector3df forward(h->extractForwardVector(p->body).getX(), h->extractForwardVector(p->body).getY(), h->extractForwardVector(p->body).getZ());
-	vector3df newPos(p->getNodePosition() - forward * cameradistance);
-	camera->setPosition(vector3df(newPos.X, newPos.Y+heightModifier, newPos.Z));
-	camera->setTarget(p->getNodePosition());
 }
-
-
 
 int main() {
 
@@ -92,7 +79,6 @@ int main() {
 	Level *level;
 	BulletHelper* helper;
 	InputReceiver* input = new InputReceiver();
-	
 
 	// Initialize irrlicht	
 	device = createDevice(video::EDT_OPENGL, dimension2d<u32>(800, 600), 32, false, false, false, input);
@@ -107,19 +93,18 @@ int main() {
 
 	// Add camera
 	camera = smgr->addCameraSceneNode(0);
-	
+	camera->setPosition(vector3df(100, 100, 0));
 	device->getCursorControl()->setPosition(0.5f, 0.5f);
 	middleScreenPosition = device->getCursorControl()->getPosition();
-	
-	level = new Level(smgr, "../Assets/level.irr");	
+
+	level = new Level(smgr, "../Assets/level.irr");
 
 	// Create the initial scene
 	smgr->addLightSceneNode(0, core::vector3df(2, 5, -2), SColorf(4, 4, 4, 1));
 
 	helper = new BulletHelper();
 	helper->buildIrrLevel(level);
-	ParticleSettings settings(device,"../Assets/testEffect.xml");
-	
+
 	//Create the game world
 	GameWorld* gWorld = new GameWorld();
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
@@ -128,21 +113,12 @@ int main() {
 	ParticleWorld::setSMGR(smgr);
 
 	IParticleSystemSceneNode* ps = ParticleWorld::createParticleSystem(vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
-	ParticleWorld::createBoxParticle(ps, 
-		core::aabbox3d<f32>(-7, 0, -7, 7, 1, 7), 
-		core::vector3df(0.0f, 0.06f, 0.0f),  
-		80, 100,                             
-		video::SColor(0, 255, 255, 255),     
-		video::SColor(0, 255, 255, 255),     
-		800, 2000, 0,                        
-		core::dimension2df(10.f, 10.f),      
-		core::dimension2df(20.f, 20.f));     
+	ParticleWorld::createBoxParticle(ps, "../Assets/testEffect.xml", device);
 
 	camera->setParent(player->getNode());
-	camera->setTarget(vector3df(0,0,0));
+	camera->setTarget(player->getNodeAbsolutePosition());
 
 	camera->setTarget(player->getNodePosition());
-
 
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
@@ -150,12 +126,10 @@ int main() {
 		//basic stuff
 		deltaTime = irrTimer->getTime() - timeStamp;
 		//applying the fps
-		if (deltaTime < 1000/fps)
+		if (deltaTime < 1000 / fps)
 			continue;
-		timeStamp = irrTimer->getTime();
-
-		gWorld->update(deltaTime);		
-		updateCamera(device, player->getNodePosition(), (f32)deltaTime);
+		timeStamp = irrTimer->getTime();		
+		updateCamera(device, player->getNodeAbsolutePosition(), (f32)deltaTime);
 		camera->setTarget(player->getNodeAbsolutePosition());
 		helper->getWorld()->stepSimulation(deltaTime * 0.001f, 60);
 		gWorld->update(deltaTime);
@@ -163,7 +137,7 @@ int main() {
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
 		guiEnv->drawAll();
-		irrDriver->endScene();	
+		irrDriver->endScene();
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();

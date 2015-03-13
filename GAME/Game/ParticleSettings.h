@@ -16,7 +16,8 @@ class ParticleSettings
 public:
 	ParticleSettings(IrrlichtDevice *device, stringw file);
 	~ParticleSettings();
-
+	int minStartSize;
+	int maxStartSize;
 
 private :
 	stringw settingsFile; // location of the xml, usually the

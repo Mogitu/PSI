@@ -1,4 +1,5 @@
 #include "ParticleWorld.h"
+#include "ParticleSettings.h"
 
 IVideoDriver* ParticleWorld::driver;
 ISceneManager* ParticleWorld::smgr;
@@ -40,6 +41,22 @@ IParticleSystemSceneNode* ParticleWorld::createParticleSystem(vector3df position
 void ParticleWorld::createBoxParticle(IParticleSystemSceneNode* ps, aabbox3d<f32> size, vector3df dir, u32 minRate, u32 maxRate, SColor minColor, SColor maxColor, u32 minTime, u32 maxTime, u32 angle, dimension2df minSize, dimension2df maxSize)
 {
 	IParticleEmitter* em = ps->createBoxEmitter(size, dir, minRate, maxRate, minColor, maxColor, minTime, maxTime, angle, minSize, maxSize);
+	ps->setEmitter(em);
+	em->drop();
+}
+
+void ParticleWorld::createBoxParticle(IParticleSystemSceneNode* ps, stringw file, IrrlichtDevice *device)
+{
+	ParticleSettings s(device,file);
+	IParticleEmitter* em = ps->createBoxEmitter(
+		core::aabbox3d<f32>(-7, 0, -7, 7, 1, 7),
+		core::vector3df(0.0f, 0.06f, 0.0f),
+		80, 100,
+		video::SColor(0, 255, 255, 255),
+		video::SColor(0, 255, 255, 255),
+		800, 2000, 0,
+		core::dimension2df(s.minStartSize,s.minStartSize),
+		core::dimension2df(s.maxStartSize,s.maxStartSize));
 	ps->setEmitter(em);
 	em->drop();
 }
