@@ -14,7 +14,7 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 }
 
 void Enemy::Initialize(){
-
+	
 }
 
 void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
@@ -28,7 +28,7 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 
 	//default node setup
 	node = smgr->addAnimatedMeshSceneNode(mesh);
-	
+	node->setName("Enemy");
 	if (node)
 	{
 		node->setPosition(position);

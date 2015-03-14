@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include "Level.h"
+#include "BulletHelper.h"
 
 using namespace irr;
 using namespace core;
@@ -65,22 +66,5 @@ private:
 	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, const vector3df& scaling);
 	IMesh* getMesh(ISceneNode* node);
 };
-
-class CustomContactResultCallback : public btCollisionWorld::ContactResultCallback
-{
-public:
-	//An idea is to pass the constructor a context object where all required variables etc are located.
-	CustomContactResultCallback();
-
-	btScalar addSingleResult(btManifoldPoint& cp,
-		const btCollisionObjectWrapper* colObj0Wrap,
-		int partId0,
-		int index0,
-		const btCollisionObjectWrapper* colObj1Wrap,
-		int partId1,
-		int index1);
-
-};
-
 
 #endif BULLETHELPER_H

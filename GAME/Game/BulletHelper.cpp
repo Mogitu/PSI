@@ -144,8 +144,7 @@ btRigidBody *BulletHelper::createCube(ISceneNode* node, btScalar mass)
 	
 	// Store a pointer to the irrlicht node so we can update it later
 	rigidBody->setUserPointer((void *)(node));
-	// Add it to the world
-
+	// Add it to the world	
 	world->addRigidBody(rigidBody);
 	objects.push_back(rigidBody);
 
@@ -355,20 +354,3 @@ btVector3 BulletHelper::extractForwardVector(const btRigidBody *b)
 	return forward;
 }
 
-CustomContactResultCallback::CustomContactResultCallback()
-{
-
-}
-
-btScalar CustomContactResultCallback::addSingleResult(btManifoldPoint& cp,
-	const btCollisionObjectWrapper* colObj0Wrap,
-	int partId0,
-	int index0,
-	const btCollisionObjectWrapper* colObj1Wrap,
-	int partId1,
-	int index1)
-{			
-	
-	//Response handling will be done in here.
-	return 1;
-}

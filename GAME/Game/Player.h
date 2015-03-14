@@ -34,6 +34,8 @@ public:
 	const vector3df& getNodeAbsolutePosition() const;
 	scene::IAnimatedMeshSceneNode* getNode();
 	GameObjectType getType();
+    u32 shootInterval;
+	u32 shootIntervalTimer;
 
 	scene::IAnimatedMeshSceneNode*& n = node;
 };

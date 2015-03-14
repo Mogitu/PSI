@@ -18,8 +18,10 @@ class GameWorld
 {
 private:
 	core::list<IGameObject*> gameObjects;
+	BulletHelper *helper;
+	IrrlichtDevice *device;
 public:
-	//GameWorld();
+	GameWorld(BulletHelper *h, IrrlichtDevice *device);
 	~GameWorld();
 	void clearGameObjects();
 	void update(u32 frameDeltaTime);

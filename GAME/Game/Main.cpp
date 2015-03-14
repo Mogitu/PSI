@@ -107,12 +107,10 @@ int main() {
 	helper->buildIrrLevel(level);
 
 	//Create the game world
-	GameWorld* gWorld = new GameWorld();
+	GameWorld* gWorld = new GameWorld(helper,device);
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
 	Enemy* enemy = new Enemy(smgr,irrDriver,helper,gWorld,"../Assets/RockGolem.x", "../Assets/GolemTex_v10.png",Shape_Type::CAPSULE,300,vector3df(100,100,0),vector3df(0,0,0),vector3df(10,10,10));
 	
-	//enemy->kill();
-
 	//Set up Particle World
 	ParticleWorld::setDriver(irrDriver);
 	ParticleWorld::setSMGR(smgr);

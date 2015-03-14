@@ -12,13 +12,14 @@ Projectile::~Projectile()
 }
 
 void Projectile::Initialize()
-{
+{	
 	aliveTime = 0;
 	maxLifeTime = 3;
 	speed = 3000;
 	isAlive = true;
 	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
 	node = smgr->addMeshSceneNode(mesh);
+	node->setName("Projectile");
 	node->setPosition(vector3df(0, 20, 0));
 	body = h->createBody(node, Shape_Type::SPHERE, 10);
 }
