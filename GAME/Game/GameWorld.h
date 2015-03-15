@@ -25,7 +25,7 @@ public:
 	~GameWorld();
 	void clearGameObjects();
 	void update(u32 frameDeltaTime);
-	void updatePhysics(btRigidBody *body);
+	//void updatePhysics(btRigidBody *body);
 	void addGameObject(IGameObject* gameObject);
 	void removeGameObject(IGameObject* gameObject);
 };
