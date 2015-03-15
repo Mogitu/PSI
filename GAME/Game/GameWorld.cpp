@@ -31,19 +31,21 @@ void GameWorld::update(u32 frameDeltaTime)
 	{
 		IGameObject* gameObject = *Iterator;
 		gameObject->Update(frameDeltaTime);
-		helper->updatePhysics(gameObject->body);	
+		helper->updatePhysics(gameObject->body);
+
+		stringw nodeName = gameObject->node->getName();
 		
-		if (!gameObject->isAlive)
+		if (!gameObject->isAlive || nodeName=="dead")
 		{
 			gameObject->kill();
 			gameObjects.erase(Iterator);
 			delete gameObject;
 			return;			
-		}		
+		}			
 	}
 	
 	//collision detection
-	//TODO: VERY SLOPPY, needs a serious improvement/refactor later on.
+	//TODO: VERY SLOPPY; in its current state this will need a lot of special case checks. Needs to be improved in later sprints.
 	int numManifolds = helper->getWorld()->getDispatcher()->getNumManifolds();
 	for (int i = 0; i<numManifolds; i++)
 	{
@@ -58,7 +60,7 @@ void GameWorld::update(u32 frameDeltaTime)
 		std::string nameB = nodeB->getName();
 		
 		if ((nameB == "Enemy"&&nameA == "Projectile") || (nameA == "Enemy"&&nameB == "Projectile"))
-		{			
+		{					
 			int numContacts = contactManifold->getNumContacts();
 			for (int j = 0; j<numContacts; j++)
 			{
@@ -72,6 +74,8 @@ void GameWorld::update(u32 frameDeltaTime)
 					IParticleSystemSceneNode* ps = ParticleWorld::createParticleSystem(vector3df(ptA.getX(),ptA.getY(), ptA.getZ()), vector3df(2, 2, 2), "../Assets/fire.bmp");
 					ParticleWorld::createBoxParticle(ps, "../Assets/testEffect.xml", device);
 				}
+				nodeA->setName("dead");
+				nodeB->setName("dead");
 			}
 		}		
 	}

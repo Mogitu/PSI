@@ -21,7 +21,7 @@ public:
 private:
 	irr::scene::ISceneManager *smgr;
 	irr::video::IVideoDriver *irrDriver;
-	irr::scene::IAnimatedMeshSceneNode* node;
+	//irr::scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	GameWorld *world;
 	float begindeath;

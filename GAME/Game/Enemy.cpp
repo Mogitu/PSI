@@ -63,13 +63,14 @@ void Enemy::SetDeath(float begindeath, float enddeath, float deathspeed)
 
 void Enemy::getcurrentframe()
 {
-	frameget = node->getFrameNr();
+	frameget = ((IAnimatedMeshSceneNode*)node)->getFrameNr();
 }
 
 void Enemy::kill()
 {
 	
 			ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+			isAlive = false;
 			Node->remove();
 			// Remove the object from the world
 			helper->getWorld()->removeRigidBody(body);

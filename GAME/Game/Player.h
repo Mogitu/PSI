@@ -14,7 +14,7 @@ class Player : public IGameObject
 {
 private:
 	InputReceiver* input;
-	scene::IAnimatedMeshSceneNode* node;
+	//scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	ISceneManager* smgr;
 	vector2di centerScreenPosition;
@@ -37,7 +37,7 @@ public:
     u32 shootInterval;
 	u32 shootIntervalTimer;
 
-	scene::IAnimatedMeshSceneNode*& n = node;
+	//scene::IAnimatedMeshSceneNode*& n = (IAnimatedMeshSceneNode*)node;
 };
 
 #endif // !__PLAYER_H__

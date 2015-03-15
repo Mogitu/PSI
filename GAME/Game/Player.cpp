@@ -35,7 +35,7 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 		node->setScale(scale);
 		
 		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMD2Animation(scene::EMAT_STAND);
+		((IAnimatedMeshSceneNode*)node)->setMD2Animation(scene::EMAT_STAND);
 		node->setMaterialTexture(0, driver->getTexture(textureName));
 	}
 	
@@ -155,5 +155,5 @@ GameObjectType Player::getType()
 
 IAnimatedMeshSceneNode* Player::getNode()
 {
-	return node;
+	return (IAnimatedMeshSceneNode*)node;
 }

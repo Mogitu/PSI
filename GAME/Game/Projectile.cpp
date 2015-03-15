@@ -49,6 +49,7 @@ void Projectile::kill()
 	//h->deactivateObject(body);
 	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 	Node->remove();
+	isAlive = false;
 	// Remove the object from the world
 	h->getWorld()->removeRigidBody(body);
 	// Free memory
