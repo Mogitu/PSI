@@ -5,7 +5,8 @@
 #include "Projectile.h"
 #include "Player.h"
 #include "ParticleManager.h"
-#include <math.h> 
+#include <math.h>
+#include "Enemy.h"
 
 using namespace Common;
 
@@ -42,7 +43,7 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 	camera->setTarget(nodePosition.operator+(vector3df(0, heightModifier, 0)));
 
 	//angle stuff
-	angle += ((f32)cursorChange.Y)*frameDeltaTime / 1000*yRotateSpeed;
+	angle += ((f32)cursorChange.Y)*frameDeltaTime / 1000 * yRotateSpeed;
 	if (angle > yMax)angle = yMax;
 	if (angle < yMin)angle = yMin;
 	//get the old position of the camera
@@ -68,8 +69,8 @@ int main() {
 	camera->setPosition(vector3df(100, 100, 0));
 	device->getCursorControl()->setPosition(0.5f, 0.5f);
 	middleScreenPosition = device->getCursorControl()->getPosition();
-	
-	level = new Level(smgr, "../Assets/level.irr");	
+
+	level = new Level(smgr, "../Assets/level.irr");
 
 	// Create the initial scene
 	smgr->addLightSceneNode(0, core::vector3df(2, 5, -2), SColorf(4, 4, 4, 1));
@@ -78,8 +79,11 @@ int main() {
 	helper->buildIrrLevel(level);
 
 	//Create the game world
-	GameWorld* gWorld = new GameWorld();
+	GameWorld* gWorld = new GameWorld(helper,device);
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
+	Enemy* enemy = new Enemy(smgr, irrDriver, helper, gWorld, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300, vector3df(100, 100, 0), vector3df(0, 0, 0), vector3df(1, 1, 1));
+	Enemy* enemy2 = new Enemy(smgr, irrDriver, helper, gWorld, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300, vector3df(100, 100, 20), vector3df(0, 0, 0), vector3df(1, 1, 1));
+	
 	
 	//Set up Particle World
 	ParticleManager::ParticleSystem* ps = ParticleManager::createParticleSystem(ParticleManager::ParticleTag::NONE, vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
@@ -97,11 +101,9 @@ int main() {
 		//basic stuff
 		deltaTime = irrTimer->getTime() - timeStamp;
 		//applying the fps
-		if (deltaTime < 1000/fps)
+		if (deltaTime < 1000 / fps)
 			continue;
-		timeStamp = irrTimer->getTime();
-
-		gWorld->update(deltaTime);		
+		timeStamp = irrTimer->getTime();		
 		updateCamera(device, player->getNodeAbsolutePosition(), (f32)deltaTime);
 		camera->setTarget(player->getNodeAbsolutePosition());
 		helper->getWorld()->stepSimulation(deltaTime * 0.001f, 60);
@@ -110,7 +112,7 @@ int main() {
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
 		guiEnv->drawAll();
-		irrDriver->endScene();	
+		irrDriver->endScene();
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();

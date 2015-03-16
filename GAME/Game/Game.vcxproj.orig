@@ -73,27 +73,34 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BulletHelper.cpp" />
-<<<<<<< HEAD
+    <ClCompile Include="Common.cpp" />
     <ClCompile Include="GameWorld.cpp" />
-=======
->>>>>>> ad66dd7df100a9ebac717bcefb5687317c37894d
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="ParticleManager.cpp" />
+=======
+    <ClCompile Include="ParticleSettings.cpp" />
+    <ClCompile Include="ParticleWorld.cpp" />
+>>>>>>> 59a908689172d7f7fe3ba0bcd4bbca6e90a9f554
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletHelper.h" />
-<<<<<<< HEAD
+    <ClInclude Include="Common.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="InputReceiver.h" />
-=======
-    <ClInclude Include="Enemy.h" />
->>>>>>> ad66dd7df100a9ebac717bcefb5687317c37894d
     <ClInclude Include="Level.h" />
+<<<<<<< HEAD
+    <ClInclude Include="ParticleManager.h" />
+=======
+    <ClInclude Include="ParticleSettings.h" />
+    <ClInclude Include="ParticleWorld.h" />
+>>>>>>> 59a908689172d7f7fe3ba0bcd4bbca6e90a9f554
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
   </ItemGroup>

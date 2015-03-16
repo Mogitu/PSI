@@ -6,6 +6,8 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	this->Initialize(smgr, driver, helper, world, input, meshName, textureName, bodyType, bodyMass, position, rotation, scale);
 	this->world = world;
 	isAlive = true;
+	shootInterval = 500;
+	shootIntervalTimer = 0;
 }
 
 void Player::Initialize()
@@ -15,6 +17,7 @@ void Player::Initialize()
 
 void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
 {
+
 	justJumped = false;
 	this->input = input;
 	this->helper = helper;
@@ -24,7 +27,7 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 	IAnimatedMesh* mesh = smgr->getMesh(meshName);
 	
 	node = smgr->addAnimatedMeshSceneNode(mesh);
-
+	node->setName("Player");
 	if (node)
 	{
 		node->setPosition(position);
@@ -32,7 +35,7 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 		node->setScale(scale);
 		
 		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMD2Animation(scene::EMAT_STAND);
+		((IAnimatedMeshSceneNode*)node)->setMD2Animation(scene::EMAT_STAND);
 		node->setMaterialTexture(0, driver->getTexture(textureName));
 	}
 	
@@ -49,7 +52,13 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 void Player::Update(u32 frameDeltaTime)
 {
 	PlayerMovement(frameDeltaTime);
-	Fire();
+	shootIntervalTimer += frameDeltaTime;
+	if (shootIntervalTimer>shootInterval)
+	{
+		shootIntervalTimer = 0;
+		Fire();
+	}
+	
 
 	node->updateAbsolutePosition();
 }
@@ -77,7 +86,7 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 	//TODO: Justjumped isn't used now
 	if (input->IsKeyDown(KEY_SPACE) && isGrounded() && !justJumped)
 	{
-		vel += btVector3(0, 500, 0);
+		vel += btVector3(0, 2000, 0);
 		//justJumped = true;
 	}
 
@@ -146,5 +155,5 @@ GameObjectType Player::getType()
 
 IAnimatedMeshSceneNode* Player::getNode()
 {
-	return node;
+	return (IAnimatedMeshSceneNode*)node;
 }
