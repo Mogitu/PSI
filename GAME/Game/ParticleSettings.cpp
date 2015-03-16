@@ -11,30 +11,58 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 	{
 		switch (xml->getNodeType())
 		{
-		case EXN_ELEMENT:
-		{
-			stringc nodeName = xml->getNodeName();
-			
-			if (nodeName.equals_ignore_case("minStartSize"))
+			case EXN_ELEMENT:
 			{
-				xml->read();
-				minStartSize = xml->getAttributeValueAsInt(L"value");
+				stringc nodeName = xml->getNodeName();
+
+				if (nodeName.equals_ignore_case("commonSettings"))
+				{
+					imagepath.append(xml->getAttributeValue(L"imagePath"));
+					minStartSize = xml->getAttributeValueAsInt(L"minStartSize");
+					
+					maxStartSize = xml->getAttributeValueAsInt(L"maxStartSize");
+					
+					type.append(xml->getAttributeValue(L"type"));
+					
+					duration = xml->getAttributeValueAsInt(L"duration") * 1000;//multiplier transforms ms to s;	
+					
+					direction.X = xml->getAttributeValueAsFloat(L"directionX");
+					direction.Y = xml->getAttributeValueAsFloat(L"directionY");
+					direction.Z = xml->getAttributeValueAsFloat(L"directionZ");			
+
+					minRate = xml->getAttributeValueAsInt(L"minRate");
+					maxRate = xml->getAttributeValueAsInt(L"maxRate");
+
+					minTime = xml->getAttributeValueAsFloat(L"minTime") * 1000;//multiplier transforms ms to s;	
+					maxTime = xml->getAttributeValueAsFloat(L"maxTime") * 1000;//multiplier transforms ms to s;	
+
+					minColor.setRed(xml->getAttributeValueAsInt(L"minColorR"));
+					minColor.setGreen(xml->getAttributeValueAsInt(L"minColorG"));
+					minColor.setBlue(xml->getAttributeValueAsInt(L"minColorB"));
+
+					maxColor.setRed(xml->getAttributeValueAsInt(L"maxColorR"));
+					maxColor.setGreen(xml->getAttributeValueAsInt(L"maxColorG"));
+					maxColor.setBlue(xml->getAttributeValueAsInt(L"maxColorB"));
+				}
+				else if (nodeName.equals_ignore_case("sphereSettings") && xml->getAttributeValueAsInt(L"value") == 1)
+				{					
+					sphereRadius = xml->getAttributeValueAsFloat(L"radius");										
+				}
+				else if (nodeName.equals_ignore_case("boxSettings") && xml->getAttributeValueAsInt(L"value") == 1)
+				{
+					boxSize.MinEdge.X= xml->getAttributeValueAsFloat(L"minX");
+					boxSize.MinEdge.Y = xml->getAttributeValueAsFloat(L"minY");
+					boxSize.MinEdge.Z = xml->getAttributeValueAsFloat(L"minZ");
+
+					boxSize.MaxEdge.X = xml->getAttributeValueAsFloat(L"maxX");
+					boxSize.MaxEdge.Y = xml->getAttributeValueAsFloat(L"maxY");
+					boxSize.MaxEdge.Z = xml->getAttributeValueAsFloat(L"maxZ");
+
+				}
 			}
-			else if (nodeName.equals_ignore_case("maxStartSize"))
-			{
-				xml->read();
-				maxStartSize = xml->getAttributeValueAsInt(L"value");
-			}	
-			else if (nodeName.equals_ignore_case("duration"))
-			{
-				xml->read();
-				duration = xml->getAttributeValueAsInt(L"value") * 1000;//multiplier transforms ms to s;
-			}
-		}
 		break;
 		}
-	}
-	cout << endl;
+	}	
 	delete xml;
 }
 

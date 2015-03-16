@@ -84,21 +84,34 @@ namespace ParticleManager
 		ParticleSettings s(Common::device, path);
 
 		//create system and emitter 
-		ParticleSystem *ps = createParticleSystem(ParticleManager::ParticleTag::NONE, position, vector3df(2, 2, 2), "../Assets/fire.bmp");		
-
-		ps->duration = s.duration;
-		createBoxParticle(ps,
-			aabbox3d<f32>(-7, 3, -7, 7, 6, 7), 
-			vector3df(0.0f, 0.0f, 0.0f), 
-			80, 100,
-			SColor(0, 255, 255, 255),
-			SColor(0, 255, 255, 255), 
-			800, 2000, 0,
-			dimension2df(s.minStartSize,s.minStartSize), 
-			dimension2df(s.maxStartSize,s.maxStartSize));
-
+		ParticleSystem *ps = createParticleSystem(ParticleManager::ParticleTag::NONE, position, vector3df(2, 2, 2), s.imagepath);
+		ps->duration = s.duration;	
+		//load an emitter type depending on the settings file
+		if (s.type=="box")
+		{
+			createBoxParticle(ps,
+				s.boxSize,
+				s.direction,
+				s.minRate, s.maxRate,
+				s.minColor,
+				s.maxColor,
+				s.minTime,s.maxTime, 0,
+				dimension2df(s.minStartSize, s.minStartSize),
+				dimension2df(s.maxStartSize, s.maxStartSize));			
+		}
+		else if (s.type=="sphere")
+		{
+			createSphereParticle(ps, position,
+				s.sphereRadius,
+				s.direction,
+				s.minRate,s.maxRate,
+				s.minColor,
+				s.maxColor,
+				s.minTime,s.maxTime, 0,
+				dimension2df(s.minStartSize, s.minStartSize),
+				dimension2df(s.maxStartSize, s.maxStartSize));				
+		}		
 		psList.push_back(ps);
-		
 	}
 
 	ParticleSystem* addParticleSystemNode(IParticleSystemSceneNode* ps, ParticleTag tag)

@@ -18,10 +18,21 @@ public:
 	~ParticleSettings();
 
 	stringw imagepath;
+	stringc type;
 	f32 minStartSize;
 	f32 maxStartSize;	
 	f32 duration;
-	
+	vector3df direction;
+	u32 minRate;
+	u32 maxRate;
+	f32 minTime;
+	f32 maxTime;
+	SColor minColor;
+	SColor maxColor;
+
+	u32 sphereRadius;
+
+	aabbox3d<f32> boxSize;
 
 private :
 
