@@ -1,7 +1,5 @@
 #include "GameWorld.h"
 #include "BulletHelper.h"
-#include "ParticleWorld.h"
-
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
 {
@@ -71,8 +69,6 @@ void GameWorld::update(u32 frameDeltaTime)
 					const btVector3& ptB = pt.getPositionWorldOnB();
 					const btVector3& normalOnB = pt.m_normalWorldOnB;
 					//std::cout << "Hit" << std::endl;
-					IParticleSystemSceneNode* ps = ParticleWorld::createParticleSystem(vector3df(ptA.getX(),ptA.getY(), ptA.getZ()), vector3df(2, 2, 2), "../Assets/fire.bmp");
-					ParticleWorld::createBoxParticle(ps, "../Assets/testEffect.xml", device);
 				}
 				nodeA->setName("dead");
 				nodeB->setName("dead");

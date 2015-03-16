@@ -80,10 +80,11 @@
     <ClCompile Include="Main.cpp" />
 <<<<<<< HEAD
     <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="ParticleSettings.cpp" />
 =======
     <ClCompile Include="ParticleSettings.cpp" />
-    <ClCompile Include="ParticleWorld.cpp" />
->>>>>>> 59a908689172d7f7fe3ba0bcd4bbca6e90a9f554
+    <ClCompile Include="ParticleManager.cpp" />
+>>>>>>> f739d3f13d4d0ce0ab07cb177826133203ef2f0d
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
   </ItemGroup>
@@ -97,10 +98,11 @@
     <ClInclude Include="Level.h" />
 <<<<<<< HEAD
     <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="ParticleSettings.h" />
 =======
     <ClInclude Include="ParticleSettings.h" />
-    <ClInclude Include="ParticleWorld.h" />
->>>>>>> 59a908689172d7f7fe3ba0bcd4bbca6e90a9f554
+    <ClInclude Include="ParticleManager.h" />
+>>>>>>> f739d3f13d4d0ce0ab07cb177826133203ef2f0d
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
   </ItemGroup>

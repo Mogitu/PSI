@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include "Level.h"
+#include "BulletHelper.h"
 
 using namespace irr;
 using namespace core;
@@ -38,7 +39,11 @@ public:
 	void buildIrrLevel(Level *level);		
 	btDiscreteDynamicsWorld *getWorld();
 	btVector3 extractForwardVector(const btRigidBody *body);
+<<<<<<< HEAD
 	btVector3 extractRightVector(const btRigidBody *body);
+	void deactivateObject(btRigidBody *body);
+=======
+>>>>>>> 59a908689172d7f7fe3ba0bcd4bbca6e90a9f554
 
 private:
 	const float GRAVITY = -9.8f;

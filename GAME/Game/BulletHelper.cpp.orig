@@ -328,6 +328,7 @@ btVector3 BulletHelper::extractForwardVector(const btRigidBody *b)
 	return forward;
 }
 
+<<<<<<< HEAD
 btVector3 BulletHelper::extractRightVector(const btRigidBody *b)
 {
 	btScalar matrix[16];
@@ -335,3 +336,23 @@ btVector3 BulletHelper::extractRightVector(const btRigidBody *b)
 	btVector3 right = btVector3(matrix[8], matrix[9], matrix[10]);
 	return right;
 }
+
+CustomContactResultCallback::CustomContactResultCallback()
+{
+
+}
+
+btScalar CustomContactResultCallback::addSingleResult(btManifoldPoint& cp,
+	const btCollisionObjectWrapper* colObj0Wrap,
+	int partId0,
+	int index0,
+	const btCollisionObjectWrapper* colObj1Wrap,
+	int partId1,
+	int index1)
+{			
+	
+	//Response handling will be done in here.
+	return 1;
+}
+=======
+>>>>>>> 59a908689172d7f7fe3ba0bcd4bbca6e90a9f554
