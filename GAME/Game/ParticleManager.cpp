@@ -84,7 +84,7 @@ namespace ParticleManager
 		ParticleSettings s(Common::device, path);
 
 		//create system and emitter 
-		ParticleSystem *ps = createParticleSystem(ParticleManager::ParticleTag::NONE, position, vector3df(2, 2, 2), s.imagepath);
+		ParticleSystem *ps = createParticleSystem(ParticleManager::ParticleTag::NONE, position, s.scale, s.imagepath);
 		ps->duration = s.duration;	
 		//load an emitter type depending on the settings file
 		if (s.type=="box")

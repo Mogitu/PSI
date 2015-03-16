@@ -18,6 +18,11 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 				if (nodeName.equals_ignore_case("commonSettings"))
 				{
 					imagepath.append(xml->getAttributeValue(L"imagePath"));
+
+					scale.X = xml->getAttributeValueAsFloat(L"scaleX");
+					scale.Y = xml->getAttributeValueAsFloat(L"scaleY");
+					scale.Z = xml->getAttributeValueAsFloat(L"scaleZ");
+
 					minStartSize = xml->getAttributeValueAsInt(L"minStartSize");
 					
 					maxStartSize = xml->getAttributeValueAsInt(L"maxStartSize");

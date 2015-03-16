@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <commonSettings
 	imagePath = "../Assets/fire.bmp"
+	scaleX = "1" scaleY="1" scaleZ="1"
 	minStartSize="1"
 	maxStartSize="5"
 	type="sphere"

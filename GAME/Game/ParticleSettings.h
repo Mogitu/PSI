@@ -23,6 +23,7 @@ public:
 	f32 maxStartSize;	
 	f32 duration;
 	vector3df direction;
+	vector3df scale;
 	u32 minRate;
 	u32 maxRate;
 	f32 minTime;
