@@ -6,26 +6,78 @@ using namespace scene;
 using namespace core;
 using namespace video;
 
-Enemy::Enemy(irr::scene::ISceneManager *smgr, irr::video::IVideoDriver *irrDriver, irr::io::path meshpath, irr::io::path texturepath, float x, float y, float z, float scalex, float scaley, float scalez) : smgr(smgr), irrDriver(irrDriver), node(), mesh()
+Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
 {
-	mesh = smgr->getMesh(meshpath);
+	this->Initialize(smgr, irrDriver, helper, world, meshpath, texturepath, bodyType, bodyMass, position, rotation, scale);
+	this->world = world;
+	isAlive = true;
+}
+
+void Enemy::Initialize(){
+	
+}
+
+void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
+{
+	this->helper = helper;
+	this->smgr = smgr;
+	this->irrDriver = irrDriver;
+
+
+	IAnimatedMesh* mesh = smgr->getMesh(meshpath);
 
 	//default node setup
 	node = smgr->addAnimatedMeshSceneNode(mesh);
-	node->setScale(vector3df(scalex,scaley,scalez));
-	node->setMaterialTexture(0, irrDriver->getTexture(texturepath));
-	node->setPosition(vector3df(x, y, z));
+	node->setName("Enemy");
+	if (node)
+	{
+		node->setPosition(position);
+		node->setRotation(rotation);
+		node->setScale(scale);
+		node->setMaterialFlag(EMF_LIGHTING, false);
+		node->setMaterialTexture(0, irrDriver->getTexture(texturepath));
+	}
+
+	body = helper->createBody(node, bodyType, bodyMass);
+
+	body->setRestitution(.1);
+	body->setFriction(.3);
+	//body->setLinearFactor(btVector3(0, 1, 0));
+	body->setAngularFactor(btVector3(0, 0, 0));
+
+	world->addGameObject(this);
+
 }
 
-void Enemy::Kill(float beginanim, float endanim, float animationspeed)
+void Enemy::Update(u32 frameDeltaTime)
 {
-	node->setFrameLoop(beginanim, endanim);
-	node->setAnimationSpeed(animationspeed);
-	//std::cout << node->getEndFrame();
-	if (node->getFrameNr() == node->getEndFrame()) 
-	{
-		node->remove();
-		node->drop();
-	}
+
+}
+
+void Enemy::SetDeath(float begindeath, float enddeath, float deathspeed)
+{
+	this->begindeath = begindeath;
+	this->enddeath = enddeath;
+	this->deathspeed = deathspeed;
+}
+
+void Enemy::getcurrentframe()
+{
+	frameget = ((IAnimatedMeshSceneNode*)node)->getFrameNr();
+}
+
+void Enemy::kill()
+{
+	
+			ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+			isAlive = false;
+			Node->remove();
+			// Remove the object from the world
+			helper->getWorld()->removeRigidBody(body);
+			// Free memory
+			delete body->getMotionState();
+			delete body->getCollisionShape();
+			delete body;
+		
 	
 }

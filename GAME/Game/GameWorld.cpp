@@ -1,5 +1,12 @@
 #include "GameWorld.h"
+#include "BulletHelper.h"
+#include "ParticleWorld.h"
 
+
+GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
+{
+
+}
 GameWorld::~GameWorld()
 {
 	clearGameObjects();
@@ -24,8 +31,11 @@ void GameWorld::update(u32 frameDeltaTime)
 	{
 		IGameObject* gameObject = *Iterator;
 		gameObject->Update(frameDeltaTime);
-		updatePhysics(gameObject->body);
-		if (!gameObject->isAlive)
+		helper->updatePhysics(gameObject->body);
+
+		stringw nodeName = gameObject->node->getName();
+		
+		if (!gameObject->isAlive || nodeName=="dead")
 		{
 			gameObject->kill();
 			gameObjects.erase(Iterator);
@@ -33,24 +43,45 @@ void GameWorld::update(u32 frameDeltaTime)
 			return;			
 		}			
 	}
+	
+	//collision detection
+	//TODO: VERY SLOPPY; in its current state this will need a lot of special case checks. Needs to be improved in later sprints.
+	int numManifolds = helper->getWorld()->getDispatcher()->getNumManifolds();
+	for (int i = 0; i<numManifolds; i++)
+	{
+		btPersistentManifold* contactManifold = helper->getWorld()->getDispatcher()->getManifoldByIndexInternal(i);
+		btCollisionObject* obA = (btCollisionObject*)contactManifold->getBody0();
+		btCollisionObject* obB = (btCollisionObject*)contactManifold->getBody1();
+
+		ISceneNode *nodeA =  (ISceneNode*)contactManifold->getBody0()->getUserPointer();
+		ISceneNode *nodeB = (ISceneNode*)contactManifold->getBody1()->getUserPointer();		
+
+		std::string nameA = nodeA->getName();
+		std::string nameB = nodeB->getName();
+		
+		if ((nameB == "Enemy"&&nameA == "Projectile") || (nameA == "Enemy"&&nameB == "Projectile"))
+		{					
+			int numContacts = contactManifold->getNumContacts();
+			for (int j = 0; j<numContacts; j++)
+			{
+				btManifoldPoint& pt = contactManifold->getContactPoint(j);
+				if (pt.getDistance()<0.f)
+				{
+					const btVector3& ptA = pt.getPositionWorldOnA();
+					const btVector3& ptB = pt.getPositionWorldOnB();
+					const btVector3& normalOnB = pt.m_normalWorldOnB;
+					//std::cout << "Hit" << std::endl;
+					IParticleSystemSceneNode* ps = ParticleWorld::createParticleSystem(vector3df(ptA.getX(),ptA.getY(), ptA.getZ()), vector3df(2, 2, 2), "../Assets/fire.bmp");
+					ParticleWorld::createBoxParticle(ps, "../Assets/testEffect.xml", device);
+				}
+				nodeA->setName("dead");
+				nodeB->setName("dead");
+			}
+		}		
+	}
 }
 
-void GameWorld::updatePhysics(btRigidBody *body)
-{
-	ISceneNode *node = static_cast<ISceneNode *>(body->getUserPointer());
 
-	// Set position
-	btVector3 point = body->getCenterOfMassPosition();
-	node->setPosition(vector3df((f32)point[0], (f32)point[1], (f32)point[2]));
-
-	// Set rotation
-	vector3df euler;
-	const btQuaternion& btQuat = body->getOrientation();
-	quaternion irrQuat(btQuat.getX(), btQuat.getY(), btQuat.getZ(), btQuat.getW());
-	irrQuat.toEuler(euler);
-	euler *= RADTODEG;
-	node->setRotation(euler);
-}
 
 void GameWorld::addGameObject(IGameObject* gameObject)
 {

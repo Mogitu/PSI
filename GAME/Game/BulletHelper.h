@@ -33,17 +33,14 @@ public:
 
 	float gravityMultiplier;
 	btRigidBody *createBody(ISceneNode* n, Shape_Type type,btScalar mass);
-	//void updatePhysics(u32 deltaTime);
-	//void updateRender(btRigidBody *object);
+	void updatePhysics(btRigidBody *body);	
 	void clearObjects();
 	void buildIrrLevel(Level *level);		
 	btDiscreteDynamicsWorld *getWorld();
 	btVector3 extractForwardVector(const btRigidBody *body);
 	btVector3 extractRightVector(const btRigidBody *body);
-	void deactivateObject(btRigidBody *body);
 
 private:
-
 	const float GRAVITY = -9.8f;
 	//constants for objects in a level
 	const std::string DYNAMIC_SPHERE = "DS";
@@ -66,22 +63,5 @@ private:
 	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, const vector3df& scaling);
 	IMesh* getMesh(ISceneNode* node);
 };
-
-class CustomContactResultCallback : public btCollisionWorld::ContactResultCallback
-{
-public:
-	//An idea is to pass the constructor a context object where all required variables etc are located.
-	CustomContactResultCallback();
-
-	btScalar addSingleResult(btManifoldPoint& cp,
-		const btCollisionObjectWrapper* colObj0Wrap,
-		int partId0,
-		int index0,
-		const btCollisionObjectWrapper* colObj1Wrap,
-		int partId1,
-		int index1);
-
-};
-
 
 #endif BULLETHELPER_H

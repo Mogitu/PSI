@@ -43,56 +43,30 @@ void BulletHelper::clearObjects() {
 	objects.clear();
 }
 
-void BulletHelper::deactivateObject(btRigidBody *b)
-{
-	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator) {
-		btRigidBody *object = *Iterator;
-		if (object==b)
-		{					
-			ISceneNode *node = static_cast<ISceneNode *>(object->getUserPointer());
-			node->setVisible(false);
-			object->setActivationState(0);
-			object->setCollisionFlags(object->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
-		}
-	}
-}
-
 
 btDiscreteDynamicsWorld *BulletHelper::getWorld()
 {
 	return world;
 }
-/*
-// Passes bullet's orientation to irrlicht
-void BulletHelper::updateRender(btRigidBody *object) {
-	ISceneNode *node = static_cast<ISceneNode *>(object->getUserPointer());	
+
+
+void BulletHelper::updatePhysics(btRigidBody *body)
+{
+	ISceneNode *node = static_cast<ISceneNode *>(body->getUserPointer());
 
 	// Set position
-	btVector3 point = object->getCenterOfMassPosition();
-	node->setPosition(vector3df((f32)point[0], (f32)point[1], (f32)point[2]));
+	btVector3 point = body->getCenterOfMassPosition();
+	node->setPosition(vector3df((f32)point.getX(), (f32)point.getY(), (f32)point.getZ()));
 
 	// Set rotation
 	vector3df euler;
-	const btQuaternion& btQuat = object->getOrientation();
+	const btQuaternion& btQuat = body->getOrientation();
 	quaternion irrQuat(btQuat.getX(), btQuat.getY(), btQuat.getZ(), btQuat.getW());
 	irrQuat.toEuler(euler);
 	euler *= RADTODEG;
 	node->setRotation(euler);
 }
 
-// Runs the physics simulation.
-// - TDeltaTime tells the simulation how much time has passed since the last frame so the simulation can run independently of the frame rate.
-void BulletHelper::updatePhysics(u32 TDeltaTime) {
-
-	world->stepSimulation(TDeltaTime * 0.001f, 60);
-
-	// Relay the object's orientation to irrlicht
-	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator)
-	{
-		//updateRender(*Iterator);	
-	}
-}
-*/
 
 btRigidBody *BulletHelper::createBody(ISceneNode* node,Shape_Type type, btScalar mass) {	
 	btRigidBody *body = 0;
@@ -144,8 +118,7 @@ btRigidBody *BulletHelper::createCube(ISceneNode* node, btScalar mass)
 	
 	// Store a pointer to the irrlicht node so we can update it later
 	rigidBody->setUserPointer((void *)(node));
-	// Add it to the world
-
+	// Add it to the world	
 	world->addRigidBody(rigidBody);
 	objects.push_back(rigidBody);
 
@@ -181,8 +154,7 @@ btRigidBody *BulletHelper::createCapsule(ISceneNode *node, btScalar mass)
 
 	world->addRigidBody(rigidBody);
 	objects.push_back(rigidBody);
-	//std::cout << HalfExtents.getX() << "  " << HalfExtents.getY() << " " << HalfExtents.getZ()<< " "<<  Node->getName() << std::endl;
-	std::cout << node->getScale().Y << std::endl;
+	
 	return rigidBody;
 }
 
@@ -299,7 +271,7 @@ btRigidBody *BulletHelper::createSphere(ISceneNode* node, btScalar mass)
 
 void BulletHelper::buildIrrLevel(Level *level)
 {	
-	for (int i = 0; i < level->getNodes().size(); i++)
+	for (u32 i = 0; i < level->getNodes().size(); i++)
 	{
 		btRigidBody *tmp = 0;
 		std::string name = level->getNodes()[i]->getName();
@@ -362,22 +334,4 @@ btVector3 BulletHelper::extractRightVector(const btRigidBody *b)
 	b->getWorldTransform().getOpenGLMatrix(matrix);
 	btVector3 right = btVector3(matrix[8], matrix[9], matrix[10]);
 	return right;
-}
-
-CustomContactResultCallback::CustomContactResultCallback()
-{
-
-}
-
-btScalar CustomContactResultCallback::addSingleResult(btManifoldPoint& cp,
-	const btCollisionObjectWrapper* colObj0Wrap,
-	int partId0,
-	int index0,
-	const btCollisionObjectWrapper* colObj1Wrap,
-	int partId1,
-	int index1)
-{			
-	
-	//Response handling will be done in here.
-	return 1;
 }

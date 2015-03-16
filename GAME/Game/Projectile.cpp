@@ -8,17 +8,18 @@ Projectile::Projectile(ISceneManager *smgr, BulletHelper *h) :smgr(smgr), h(h)
 
 Projectile::~Projectile()
 {
-	//delete node;
+	
 }
 
 void Projectile::Initialize()
-{
+{	
 	aliveTime = 0;
-	maxLifeTime = 1;
+	maxLifeTime = 3;
 	speed = 3000;
 	isAlive = true;
 	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
 	node = smgr->addMeshSceneNode(mesh);
+	node->setName("Projectile");
 	node->setPosition(vector3df(0, 20, 0));
 	body = h->createBody(node, Shape_Type::SPHERE, 10);
 }
@@ -48,6 +49,7 @@ void Projectile::kill()
 	//h->deactivateObject(body);
 	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 	Node->remove();
+	isAlive = false;
 	// Remove the object from the world
 	h->getWorld()->removeRigidBody(body);
 	// Free memory

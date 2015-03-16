@@ -15,6 +15,7 @@ class IGameObject
 public:
 	bool isAlive;
 	btRigidBody *body;
+	ISceneNode *node;
 	virtual ~IGameObject(){}
 	virtual void Initialize() = 0;
 	virtual void Update(irr::u32 frameDeltaTime) = 0;

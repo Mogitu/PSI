@@ -17,7 +17,7 @@ public:
 
 private:
 	ISceneManager *smgr;
-	IMeshSceneNode *node;
+	//IMeshSceneNode *node;
 	IMesh *mesh;
 	BulletHelper *h;		
 	u32 aliveTime;
