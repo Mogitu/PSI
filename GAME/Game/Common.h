@@ -15,15 +15,15 @@ using namespace std;
 
 namespace Common
 {
-	static IrrlichtDevice *device;
-	static IVideoDriver *irrDriver;
-	static ISceneManager *smgr;
-	static IGUIEnvironment *guiEnv;
-	static IFileSystem *irrFile;
-	static ITimer *irrTimer;
-	static ILogger *irrLog;
-	static InputReceiver* input = new InputReceiver();
-	static BulletHelper* helper;
+	extern IrrlichtDevice *device;
+	extern IVideoDriver *irrDriver;
+	extern ISceneManager *smgr;
+	extern IGUIEnvironment *guiEnv;
+	extern IFileSystem *irrFile;
+	extern ITimer *irrTimer;
+	extern ILogger *irrLog;
+	extern InputReceiver* input;// = new InputReceiver();
+	extern BulletHelper* helper;
 
 	static void initIrrlicht()
 	{

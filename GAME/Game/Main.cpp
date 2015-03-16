@@ -4,7 +4,7 @@
 #include "GameWorld.h"
 #include "Projectile.h"
 #include "Player.h"
-#include "ParticleWorld.h"
+#include "ParticleManager.h"
 #include <math.h> 
 
 using namespace Common;
@@ -63,7 +63,6 @@ int main() {
 	Level *level;
 
 	initIrrlicht();
-
 	// Add camera
 	camera = smgr->addCameraSceneNode(0);
 	camera->setPosition(vector3df(100, 100, 0));
@@ -83,16 +82,20 @@ int main() {
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
 	//Set up Particle World
 
-	/*IParticleSystemSceneNode* ps = ParticleManager::createParticleSystem(vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
-	ParticleManager::createBoxParticle(ps,
-		core::aabbox3d<f32>(-7, 0, -7, 7, 1, 7), 
-		core::vector3df(0.0f, 0.06f, 0.0f),  
+	ParticleManager::ParticleSystem* ps = ParticleManager::createParticleSystem(ParticleManager::ParticleTag::NONE, vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
+	ParticleManager::createBoxParticle(ps, aabbox3d<f32>(-7, 0, -7, 7, 1, 7), vector3df(0.0f, 0.06f, 0.0f), 80, 100, SColor(0, 255, 255, 255), SColor(0, 255, 255, 255), 800, 2000, 0, dimension2df(10.0f, 10.0f), dimension2df(20.0f, 20.f));
+
+	/*ParticleManager::createBoxParticle(ps,
+		aabbox3d<f32>(-7, 0, -7, 7, 1, 7), 
+		vector3df(0.0f, 0.06f, 0.0f),  
 		80, 100,                             
-		video::SColor(0, 255, 255, 255),     
-		video::SColor(0, 255, 255, 255),     
+		SColor(0, 255, 255, 255),     
+		SColor(0, 255, 255, 255),     
 		800, 2000, 0,                        
-		core::dimension2df(10.f, 10.f),      
-		core::dimension2df(20.f, 20.f));*/
+		dimension2df(10.f, 10.f),      
+		dimension2df(20.f, 20.f));*/
+
+	//ParticleManager::createSphereParticle(ps, vector3df(0, 0, 0), 5, vector3df(0.0f, 0.06f, 0.0f), 80, 100, SColor(0, 255, 255, 255), SColor(0, 255, 255, 255), 800, 2000, 0, dimension2df(10.0f, 10.0f), dimension2df(20.0f, 20.f));
 
 	camera->setParent(player->getNode());
 	camera->setTarget(player->getNodeAbsolutePosition());
