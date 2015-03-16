@@ -45,7 +45,10 @@
     <ClCompile Include="GameWorld.cpp">
       <Filter>Source Files\mywork</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleWorld.cpp">
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSettings.cpp">
@@ -80,7 +83,10 @@
     <ClInclude Include="IGameObject.h">
       <Filter>Header Files\mywork</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleWorld.h">
+    <ClInclude Include="Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSettings.h">

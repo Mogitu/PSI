@@ -73,24 +73,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BulletHelper.cpp" />
+    <ClCompile Include="Common.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ParticleSettings.cpp" />
-    <ClCompile Include="ParticleWorld.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletHelper.h" />
+    <ClInclude Include="Common.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="ParticleSettings.h" />
-    <ClInclude Include="ParticleWorld.h" />
+    <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
   </ItemGroup>
