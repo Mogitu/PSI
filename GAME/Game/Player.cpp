@@ -59,6 +59,8 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 	btVector3 vel(0, 0, 0);
 	btVector3 turningVel(0, 0, 0);
 	btVector3 forward = helper->extractForwardVector(this->body);
+	btVector3 right = helper->extractRightVector(this->body);
+
 	this->body->setAngularVelocity(btVector3(0, 0, 0));
 
 	//TODO: Needs more restriction (now you can move while you're not grounded)
@@ -66,6 +68,11 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 		vel = forward * 50;
 	else if (input->IsKeyDown(KEY_KEY_S))
 		vel = forward * -50;
+
+	if (input->IsKeyDown(KEY_KEY_A))
+		vel = right * 50;
+	else if (input->IsKeyDown(KEY_KEY_D))
+		vel = right * -50;
 
 	int diff = 0;
 	

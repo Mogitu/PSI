@@ -356,6 +356,14 @@ btVector3 BulletHelper::extractForwardVector(const btRigidBody *b)
 	return forward;
 }
 
+btVector3 BulletHelper::extractRightVector(const btRigidBody *b)
+{
+	btScalar matrix[16];
+	b->getWorldTransform().getOpenGLMatrix(matrix);
+	btVector3 right = btVector3(matrix[8], matrix[9], matrix[10]);
+	return right;
+}
+
 CustomContactResultCallback::CustomContactResultCallback()
 {
 
