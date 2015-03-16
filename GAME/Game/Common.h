@@ -22,7 +22,7 @@ namespace Common
 	extern IFileSystem *irrFile;
 	extern ITimer *irrTimer;
 	extern ILogger *irrLog;
-	extern InputReceiver* input;// = new InputReceiver();
+	extern InputReceiver* input;
 	extern BulletHelper* helper;
 
 	static void initIrrlicht()
