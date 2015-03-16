@@ -6,7 +6,7 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	this->Initialize(smgr, driver, helper, world, input, meshName, textureName, bodyType, bodyMass, position, rotation, scale);
 	this->world = world;
 	isAlive = true;
-	shootInterval = 500;
+	shootInterval = 250;//ms
 	shootIntervalTimer = 0;
 }
 
@@ -40,7 +40,7 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 	}
 	
 	body = helper->createBody(node, bodyType, bodyMass);
-
+	body->setActivationState(DISABLE_DEACTIVATION);
 	body->setRestitution(.1);
 	body->setFriction(.3);
 	//body->setLinearFactor(btVector3(0, 1, 0));

@@ -24,7 +24,12 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 			{
 				xml->read();
 				maxStartSize = xml->getAttributeValueAsInt(L"value");
-			}			
+			}	
+			else if (nodeName.equals_ignore_case("duration"))
+			{
+				xml->read();
+				duration = xml->getAttributeValueAsInt(L"value") * 1000;//multiplier transforms ms to s;
+			}
 		}
 		break;
 		}

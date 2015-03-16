@@ -21,7 +21,8 @@ void Projectile::Initialize()
 	node = smgr->addMeshSceneNode(mesh);
 	node->setName("Projectile");
 	node->setPosition(vector3df(0, 20, 0));
-	body = h->createBody(node, Shape_Type::SPHERE, 10);
+	body = h->createBody(node, Shape_Type::SPHERE,10);
+	body->setLinearFactor(btVector3(1, 0, 1));
 }
 
 void Projectile::Update(u32 deltaTime)

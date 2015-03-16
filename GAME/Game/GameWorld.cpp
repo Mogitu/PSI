@@ -1,5 +1,5 @@
 #include "GameWorld.h"
-#include "BulletHelper.h"
+
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
 {
@@ -70,6 +70,7 @@ void GameWorld::update(u32 frameDeltaTime)
 					const btVector3& normalOnB = pt.m_normalWorldOnB;
 					//std::cout << "Hit" << std::endl;
 				}
+				ParticleManager::createFullParticleEffect("../Assets/testEffect.xml", nodeA->getPosition());
 				nodeA->setName("dead");
 				nodeB->setName("dead");
 			}

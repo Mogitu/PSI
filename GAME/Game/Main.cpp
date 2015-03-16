@@ -86,8 +86,10 @@ int main() {
 	
 	
 	//Set up Particle World
-	ParticleManager::ParticleSystem* ps = ParticleManager::createParticleSystem(ParticleManager::ParticleTag::NONE, vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
-	ParticleManager::createBoxParticle(ps, aabbox3d<f32>(-7, 3, -7, 7, 6, 7), vector3df(0.0f, 0.0f, 0.0f), 80, 100, SColor(0, 255, 255, 255), SColor(0, 255, 255, 255), 800, 2000, 0, dimension2df(10.0f, 10.0f), dimension2df(20.0f, 20.f));
+	//ParticleManager::ParticleSystem* ps = ParticleManager::createParticleSystem(ParticleManager::ParticleTag::NONE, vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
+	//ParticleManager::createBoxParticle(ps, aabbox3d<f32>(-7, 3, -7, 7, 6, 7), vector3df(0.0f, 0.0f, 0.0f), 80, 100, SColor(0, 255, 255, 255), SColor(0, 255, 255, 255), 800, 2000, 0, dimension2df(10.0f, 10.0f), dimension2df(20.0f, 20.f));
+	//ParticleManager::createFullParticleEffect("");
+
 	//ParticleManager::createSphereParticle(ps, vector3df(0, 10, 0), 5, vector3df(0.0f, 0.0f, 0.0f), 80, 100, SColor(0, 255, 255, 255), SColor(0, 255, 255, 255), 800, 2000, 0, dimension2df(10.0f, 10.0f), dimension2df(10.0f, 10.0f));
 
 	camera->setParent(player->getNode());
@@ -108,7 +110,7 @@ int main() {
 		camera->setTarget(player->getNodeAbsolutePosition());
 		helper->getWorld()->stepSimulation(deltaTime * 0.001f, 60);
 		gWorld->update(deltaTime);
-
+		ParticleManager::update(deltaTime);
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
 		guiEnv->drawAll();

@@ -16,10 +16,15 @@ class ParticleSettings
 public:
 	ParticleSettings(IrrlichtDevice *device, stringw file);
 	~ParticleSettings();
-	int minStartSize;
-	int maxStartSize;
+
+	stringw imagepath;
+	f32 minStartSize;
+	f32 maxStartSize;	
+	f32 duration;
+	
 
 private :
+
 	stringw settingsFile; // location of the xml, usually the
 	irr::IrrlichtDevice* device;
 	

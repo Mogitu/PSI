@@ -4,6 +4,7 @@
 #include <irrlicht.h>
 #include "IGameObject.h"
 #include "BulletHelper.h"
+#include "ParticleManager.h"
 
 using namespace irr;
 using namespace core;

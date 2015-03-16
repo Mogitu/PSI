@@ -78,6 +78,29 @@ namespace ParticleManager
 		return nullptr;
 	}
 
+	void createFullParticleEffect(stringw path, vector3df position)
+	{
+		//create an instance that will load/contain all settings from a given path
+		ParticleSettings s(Common::device, path);
+
+		//create system and emitter 
+		ParticleSystem *ps = createParticleSystem(ParticleManager::ParticleTag::NONE, position, vector3df(2, 2, 2), "../Assets/fire.bmp");		
+
+		ps->duration = s.duration;
+		createBoxParticle(ps,
+			aabbox3d<f32>(-7, 3, -7, 7, 6, 7), 
+			vector3df(0.0f, 0.0f, 0.0f), 
+			80, 100,
+			SColor(0, 255, 255, 255),
+			SColor(0, 255, 255, 255), 
+			800, 2000, 0,
+			dimension2df(s.minStartSize,s.minStartSize), 
+			dimension2df(s.maxStartSize,s.maxStartSize));
+
+		psList.push_back(ps);
+		
+	}
+
 	ParticleSystem* addParticleSystemNode(IParticleSystemSceneNode* ps, ParticleTag tag)
 	{
 		ParticleSystem* pst = new ParticleSystem();
