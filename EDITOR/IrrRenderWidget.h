@@ -13,6 +13,7 @@ using namespace irr;
 using namespace core;
 using namespace scene;
 using namespace video;
+using namespace io;
 
 class IrrRenderWidget : public QWidget
 {
@@ -23,7 +24,7 @@ public:
     ~IrrRenderWidget();  
     void init();
     void resizeIrrWidget(int x, int y, int newWidth, int newHeight);
-
+    void exportToFile();
     ParticleManager* particleManager;
 
 
@@ -31,6 +32,7 @@ private:
     QWidget *irrRenderTarget;
     E_DRIVER_TYPE rendererType;
     ISceneManager* smgr;
+
 
 
 

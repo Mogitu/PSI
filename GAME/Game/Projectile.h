@@ -1,4 +1,5 @@
 #include "BulletHelper.h"
+#include "ParticleManager.h"
 #include "IGameObject.h"
 
 #ifndef PROJECTILE_H
@@ -23,6 +24,7 @@ private:
 	u32 aliveTime;
 	u32 speed;
 	u32 maxLifeTime;
+	ParticleManager::ParticleSystem *particleEffect;
 };
 #endif // !PROJECTILE_H
 

@@ -19,10 +19,12 @@ void Projectile::Initialize()
 	isAlive = true;
 	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
 	node = smgr->addMeshSceneNode(mesh);
-	node->setName("Projectile");
-	node->setPosition(vector3df(0, 20, 0));
+	node->setName("Projectile");	
+	//node->setPosition(vector3df(0, 20, 0));
 	body = h->createBody(node, Shape_Type::SPHERE,10);
 	body->setLinearFactor(btVector3(1, 0, 1));
+
+	
 }
 
 void Projectile::Update(u32 deltaTime)
@@ -38,6 +40,7 @@ void Projectile::Update(u32 deltaTime)
 
 void Projectile::fire(btVector3 &pos, btVector3 &dir)
 {	
+	ParticleManager::createFullParticleEffect("../Assets/shootEffect.xml", vector3df(pos.getX(),pos.getY(),pos.getZ()));
 	isAlive = true;
 	btTransform t;	
 	t.setOrigin(pos);
@@ -47,7 +50,11 @@ void Projectile::fire(btVector3 &pos, btVector3 &dir)
 
 void Projectile::kill()
 {
-	//h->deactivateObject(body);
+
+	//particleEffect->psNode->drop();
+	//delete particleEffect;
+	//particleEffect = 0;
+
 	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 	Node->remove();
 	isAlive = false;

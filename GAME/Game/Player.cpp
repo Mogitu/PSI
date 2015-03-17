@@ -58,8 +58,6 @@ void Player::Update(u32 frameDeltaTime)
 		shootIntervalTimer = 0;
 		Fire();
 	}
-	
-
 	node->updateAbsolutePosition();
 }
 
@@ -106,7 +104,8 @@ void Player::Fire()
 	if (input->IsKeyDown(KEY_KEY_E))
 	{
 		Projectile *p = new Projectile(smgr, helper);
-		p->fire(body->getWorldTransform().getOrigin() + helper->extractForwardVector(body)*30, helper->extractForwardVector(body));
+		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY()+20, body->getWorldTransform().getOrigin().getZ());
+		p->fire(pos + helper->extractForwardVector(body)*30, helper->extractForwardVector(body));
 		world->addGameObject(p);	
 	}	
 }

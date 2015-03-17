@@ -54,3 +54,8 @@ void MainWindow::on_PickBrightest_clicked()
 }
 
 
+
+void MainWindow::on_actionExport_triggered()
+{
+   irrRenderWidget->exportToFile();
+}

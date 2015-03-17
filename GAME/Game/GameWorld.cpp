@@ -70,11 +70,18 @@ void GameWorld::update(u32 frameDeltaTime)
 					const btVector3& normalOnB = pt.m_normalWorldOnB;
 					//std::cout << "Hit" << std::endl;
 				}
-				ParticleManager::createFullParticleEffect("../Assets/testEffect.xml", nodeA->getPosition());
+				ParticleManager::createFullParticleEffect("../Assets/killEnemyEffect.xml", nodeB->getPosition());
+				ParticleManager::createFullParticleEffect("../Assets/killEnemyEffect.xml", nodeA->getPosition());
 				nodeA->setName("dead");
 				nodeB->setName("dead");
 			}
 		}		
+
+		if ((nameB == "Enemy"&&nameA == "Player") || (nameA == "Enemy"&&nameB == "Player"))
+		{
+			ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeA->getPosition());
+			ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeB->getPosition());
+		}
 	}
 }
 

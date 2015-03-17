@@ -39,6 +39,7 @@ private slots:
     void on_ApplyAll_clicked();  
     void on_PickDarkest_clicked();
     void on_PickBrightest_clicked();
+    void on_actionExport_triggered();
 };
 
 #endif // MAINWINDOW_H

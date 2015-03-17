@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<commonSettings
+	imagePath = "../Assets/fire.bmp"
+	scaleX = "1" scaleY="1" scaleZ="1"
+	minStartSize="1" maxStartSize="5"
+	type="sphere"
+	duration="1"
+	directionX="0" directionY="0" directionZ="0"
+	minRate="100" maxRate="200"
+	minTime="0.5" maxTime="0.9"
+	minColorR="0" minColorG="0" minColorB="255"
+	maxColorR="0" maxColorG="0" maxColorB="255"
+/>
+<sphereSettings value ="1"
+	radius="10"	
+/>
+<boxSettings value = "0"
+	minX = "-7" minY="-5" minZ="-7"
+	maxX = "7" maxY= "5" maxZ="7"
+/>
+

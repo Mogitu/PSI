@@ -78,14 +78,19 @@ namespace ParticleManager
 		return nullptr;
 	}
 
-	void createFullParticleEffect(stringw path, vector3df position)
+	ParticleSystem* createFullParticleEffect(stringw path, vector3df position, ISceneNode *parent)
 	{
 		//create an instance that will load/contain all settings from a given path
 		ParticleSettings s(Common::device, path);
 
 		//create system and emitter 
 		ParticleSystem *ps = createParticleSystem(ParticleManager::ParticleTag::NONE, position, s.scale, s.imagepath);
+		
 		ps->duration = s.duration;	
+		if (parent)
+		{
+			ps->psNode->setParent(parent);
+		}		
 		//load an emitter type depending on the settings file
 		if (s.type=="box")
 		{
@@ -101,7 +106,7 @@ namespace ParticleManager
 		}
 		else if (s.type=="sphere")
 		{
-			createSphereParticle(ps, position,
+			createSphereParticle(ps, vector3df(),
 				s.sphereRadius,
 				s.direction,
 				s.minRate,s.maxRate,
@@ -112,6 +117,7 @@ namespace ParticleManager
 				dimension2df(s.maxStartSize, s.maxStartSize));				
 		}		
 		psList.push_back(ps);
+		return ps;
 	}
 
 	ParticleSystem* addParticleSystemNode(IParticleSystemSceneNode* ps, ParticleTag tag)
