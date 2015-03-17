@@ -42,43 +42,39 @@ IrrRenderWidget::~IrrRenderWidget()
     device->drop();
 }
 
+//Preliminary method to export a settings file
 void IrrRenderWidget::exportToFile()
 {
+    //setup te file system and the reader.
     IFileSystem *fs = device->getFileSystem();
     IXMLWriter *xml = fs->createXMLWriter("test.xml");
 
-    stringw name="ddddd";
-    stringw type;
+    //need to create the header first
     xml->writeXMLHeader();
-    xml->writeElement(L"commonSettings",false, L"imagePath",name.c_str());
-    xml->writeElement(L"commonSettings",false, L"ddddd",name.c_str());
 
-                      /*
-                                               L"\nscaleX", 1,L"scaleY",1,L"scaleZ",1,
-                                               L"\nminStartSize",1,L"maxStartSize",1,
-                                               L"\ntype",type.c_str(),
-                                               L"\nduration",1,
-                                               L"\ndirectionX",0,L"directionY",0,L"directionZ",0,
-                                               L"\nminRate",100,L"maxRate",200,
-                                               L"\nminTame",0.5,L"maxTime",0.9,
-                                               L"\nminColorR",255,L"minColorG",255,L"minColorB",255,
-                                               L"\nmaxColorR",255,L"maxColorG",255,L"maxColorB",255,L"",1);
-                                        */
+    //setup containers with settings
+    array<stringw> elements;
+    array<stringw> values;
+    elements.insert(L"testel");
+    values.insert(L"testval");
 
-    xml->writeLineBreak();
-
-
+    //finally write to the file
+    xml->writeElement(L"commonSettings",false,elements,values);
+    xml->writeLineBreak();   
 }
 
 
-
+//setup the widget
 void IrrRenderWidget::init()
 {
     if (device != 0)
     {
+        //create a new particle manager and setup the camera
         smgr = device->getSceneManager();
         particleManager = new ParticleManager(device);
         smgr->addCameraSceneNode(0, core::vector3df(0, -50, -100), core::vector3df(0, 5, 0));
+
+        //this will hand control over to the game/render loop
         startTimer(0);
     }
 }
@@ -87,6 +83,7 @@ void IrrRenderWidget::timerEvent(QTimerEvent* event)
 {
     if(device != 0)
     {
+        //render as usual with irrlicht
         device->getTimer()->tick();
 
         SColor color (0,0,0,0);
@@ -99,6 +96,8 @@ void IrrRenderWidget::timerEvent(QTimerEvent* event)
     }
 }
 
+//Handles resizing events
+//TODO: make it work....
 void IrrRenderWidget::resizeIrrWidget(int x, int y, int newWidth, int newHeight)
 {
     /*

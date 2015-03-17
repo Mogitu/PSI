@@ -29,7 +29,7 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 					
 					type.append(xml->getAttributeValue(L"type"));
 					
-					duration = xml->getAttributeValueAsInt(L"duration") * 1000;//multiplier transforms ms to s;	
+					duration = xml->getAttributeValueAsInt(L"duration");
 					
 					direction.X = xml->getAttributeValueAsFloat(L"directionX");
 					direction.Y = xml->getAttributeValueAsFloat(L"directionY");
@@ -38,8 +38,8 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 					minRate = xml->getAttributeValueAsInt(L"minRate");
 					maxRate = xml->getAttributeValueAsInt(L"maxRate");
 
-					minTime = xml->getAttributeValueAsFloat(L"minTime") * 1000;//multiplier transforms ms to s;	
-					maxTime = xml->getAttributeValueAsFloat(L"maxTime") * 1000;//multiplier transforms ms to s;	
+					minTime = xml->getAttributeValueAsFloat(L"minTime");
+					maxTime = xml->getAttributeValueAsFloat(L"maxTime");
 
 					minColor.setRed(xml->getAttributeValueAsInt(L"minColorR"));
 					minColor.setGreen(xml->getAttributeValueAsInt(L"minColorG"));
