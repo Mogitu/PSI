@@ -1,21 +1,47 @@
 <?xml version="1.0"?>
 <commonSettings
-	imagePath = "../Assets/fire.bmp"
+	imagePath = "../Assets/Cloud_01.bmp"
 	scaleX = "1" scaleY="1" scaleZ="1"
-	minStartSize="1" maxStartSize="5"
+	minStartSize="50" maxStartSize="50"
 	type="sphere"
-	duration="1"
-	directionX="0" directionY="0" directionZ="0"
-	minRate="100" maxRate="200"
-	minTime="0.5" maxTime="0.9"
-	minColorR="0" minColorG="0" minColorB="255"
-	maxColorR="0" maxColorG="0" maxColorB="255"
+	duration="10"
+	directionX="0" directionY="0" directionZ="0.5"
+	minRate="2" maxRate="2"
+	minTime="0.2" maxTime="0.2"
+	minColorR="255" minColorG="255" minColorB="255" minColorA="0"
+	maxColorR="255" maxColorG="255" maxColorB="255" maxColorA="0"
 />
 <sphereSettings value ="1"
-	radius="10"	
+	radius="100"	
 />
 <boxSettings value = "0"
 	minX = "-7" minY="-5" minZ="-7"
 	maxX = "7" maxY= "5" maxZ="7"
 />
+<AffectorSettings value = "1"
 
+	attraction="0"
+		attraction_pointX="0" attraction_pointY="0" attraction_pointZ="0"
+		attraction_speed="0"
+		attraction_attract="0"
+		attraction_affectX="0"
+		attraction_affectY="0"
+		attraction_affectZ="0"
+	
+	scale="1"
+		scale_scaleToWidth="100" scale_scaleToHeight="100"
+
+	
+	fade="1"
+		fade_targetColorR="0" fade_targetColorG="0" fade_targetColorG="0" fade_targetColorA="0"
+		fade_timeNeededToFadeOut="0.3ww"
+
+	gravity="0"
+		gravity_gravityX="0.05" gravity_gravityY="0.01" gravity_gravityZ="0"
+		gravity_timeForceLost="2"
+
+	rotation = "0"
+		rotation_speedX="0" rotation_speedY="0" rotation_speedZ="0" 
+		rotation_pivotPointX="0" rotation_pivotPointY="0" rotation_pivotPointZ="0"
+	
+/>

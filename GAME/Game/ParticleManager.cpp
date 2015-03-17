@@ -1,6 +1,8 @@
 #include "ParticleManager.h"
+#include <vector>
 
 using namespace Common;
+using namespace std;
 
 namespace ParticleManager
 {
@@ -90,7 +92,8 @@ namespace ParticleManager
 		if (parent)
 		{
 			ps->psNode->setParent(parent);
-		}		
+		}
+		ps->psNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
 		//load an emitter type depending on the settings file
 		if (s.type=="box")
 		{
@@ -115,7 +118,19 @@ namespace ParticleManager
 				s.minTime,s.maxTime, 0,
 				dimension2df(s.minStartSize, s.minStartSize),
 				dimension2df(s.maxStartSize, s.maxStartSize));				
-		}		
+		}	
+		//Adding the affectors
+		std::vector<IParticleAffector*> affectors;//list to make this part less big
+		if (s.scaleAF)affectors.push_back(ps->psNode->createScaleParticleAffector(s.scale_scaleTo));//adding affectors if they are needed
+		if (s.attraction)affectors.push_back(ps->psNode->createAttractionAffector(s.attraction_point, s.attraction_attract, s.attraction_affectX, s.attraction_affectY, s.attraction_affectZ));
+		if (s.fade)affectors.push_back(ps->psNode->createFadeOutParticleAffector(s.fade_targetColor, s.fade_timeNeededToFadeOut));
+		if (s.gravity)affectors.push_back(ps->psNode->createGravityAffector(s.gravity_gravity, s.gravity_timeForceLost));
+		if (s.rotation)affectors.push_back(ps->psNode->createRotationAffector(s.rotation_speed, s.rotation_pivotPoint));
+		for (std::vector<IParticleAffector*>::iterator affector = affectors.begin(); affector != affectors.end(); ++affector)
+		{
+			ps->psNode->addAffector(*affector);//Finally adding them
+			(*affector)->drop();//drop is needed
+		}
 		psList.push_back(ps);
 		return ps;
 	}
@@ -134,14 +149,6 @@ namespace ParticleManager
 	ParticleSystem* createParticleSystem(ParticleTag tag, vector3df position, vector3df scale, io::path texture, u32 textureLayer, E_MATERIAL_FLAG lightning, bool flagLight, E_MATERIAL_FLAG zwr, bool flagZWR, E_MATERIAL_TYPE eType, bool fadeOut)
 	{
 		IParticleSystemSceneNode* ps = smgr->addParticleSystemSceneNode(false);
-		
-			if (fadeOut)
-			{
-				IParticleAffector* paf = ps->createFadeOutParticleAffector();
-				ps->addAffector(paf);
-				paf->drop();
-			}
-		
 			ps->setPosition(position);
 			ps->setScale(scale);
 			ps->setMaterialFlag(lightning, flagLight);
