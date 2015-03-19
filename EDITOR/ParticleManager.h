@@ -15,12 +15,25 @@ class ParticleManager{
         ParticleManager(IrrlichtDevice* device);
         ~ParticleManager();
 
-        //vars
-        vector3di dark;
-        vector3di bright;
+        //common settings
+        stringw imagepath;
+        QString type;
+        f32 minStartSize;
+        f32 maxStartSize;
+        f32 duration;
+        vector3df direction;
+        vector3df scale;
+        u32 minRate;
+        u32 maxRate;
+        f32 minTime;
+        f32 maxTime;
+        SColor minColor;
+        SColor maxColor;
 
-        float minScale;
-        float maxScale;        
+        //sphere settings
+        u32 sphereRadius;
+        //box settings
+        aabbox3d<f32> boxSize;
 
         //functions
         void setColorBright(QColor& color);
@@ -36,7 +49,7 @@ class ParticleManager{
         IParticleAffector* particleAffector;
         IrrlichtDevice* device;
         ISceneManager* manager;
-        vector3df direction;
+
 
         //functions
         void init();
