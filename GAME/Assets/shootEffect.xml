@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <commonSettings
-	imagePath = "../Assets/flameD.bmp"
+	imagePath = "../Assets/flameD.png"
 	scaleX = "1" scaleY="1" scaleZ="1"
-	minStartSize="1" maxStartSize="5"
+	minStartSize="3" maxStartSize="5"
 	type="sphere"
-	duration="0.1"
+	duration="0.3"
 	directionX="0" directionY="0" directionZ="0"
 	minRate="200" maxRate="200"
 	minTime="0.3" maxTime="0.3"
@@ -12,7 +12,7 @@
 	maxColorR="255" maxColorG="180" maxColorB="0" maxColorA="255"
 />
 <sphereSettings value ="1"
-	radius="5"	
+	radius="3"	
 />
 <boxSettings value = "0"
 	minX = "-7" minY="-5" minZ="-7"
@@ -29,11 +29,11 @@
 		attraction_affectZ="0"
 	
 	scale="1"
-		scale_scaleToWidth="25" scale_scaleToHeight="25"
+		scale_scaleToWidth="5" scale_scaleToHeight="5"
 		
 	fade="0"
 		fade_targetColorR="255" fade_targetColorG="255" fade_targetColorG="255" fade_targetColorA="0"
-		fade_timeNeededToFadeOut="10"
+		fade_timeNeededToFadeOut="1000"
 
 	gravity="0"
 		gravity_gravityX="0" gravity_gravityY="0.01" gravity_gravityZ="0"

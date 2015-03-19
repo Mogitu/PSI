@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <commonSettings
-	imagePath = "../Assets/Cloud_01.bmp"
+	imagePath = "../Assets/Cloud_01.png"
 	scaleX = "1" scaleY="1" scaleZ="1"
-	minStartSize="50" maxStartSize="50"
+	minStartSize="15" maxStartSize="15"
 	type="sphere"
-	duration="10"
-	directionX="0" directionY="0" directionZ="0.5"
-	minRate="2" maxRate="2"
-	minTime="0.2" maxTime="0.2"
-	minColorR="255" minColorG="255" minColorB="255" minColorA="0"
-	maxColorR="255" maxColorG="255" maxColorB="255" maxColorA="0"
+	duration="1"
+	directionX="0" directionY="0.25" directionZ="0"
+	minRate="30" maxRate="30"
+	minTime="1" maxTime="1"
+	minColorR="255" minColorG="0" minColorB="0" minColorA="100"
+	maxColorR="150" maxColorG="0" maxColorB="0" maxColorA="100"
 />
 <sphereSettings value ="1"
-	radius="100"	
+	radius="10"	
 />
 <boxSettings value = "0"
 	minX = "-7" minY="-5" minZ="-7"
@@ -29,16 +29,16 @@
 		attraction_affectZ="0"
 	
 	scale="1"
-		scale_scaleToWidth="100" scale_scaleToHeight="100"
+		scale_scaleToWidth="0.2" scale_scaleToHeight="0.2"
 
 	
 	fade="1"
 		fade_targetColorR="0" fade_targetColorG="0" fade_targetColorG="0" fade_targetColorA="0"
-		fade_timeNeededToFadeOut="0.3ww"
+		fade_timeNeededToFadeOut="500"
 
-	gravity="0"
-		gravity_gravityX="0.05" gravity_gravityY="0.01" gravity_gravityZ="0"
-		gravity_timeForceLost="2"
+	gravity="1"
+		gravity_gravityX="0" gravity_gravityY="-0.25" gravity_gravityZ="0"
+		gravity_timeForceLost="500"
 
 	rotation = "0"
 		rotation_speedX="0" rotation_speedY="0" rotation_speedZ="0" 
