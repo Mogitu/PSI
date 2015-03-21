@@ -4,10 +4,10 @@
 	scaleX = "1" scaleY="1" scaleZ="1"
 	minStartSize="5" maxStartSize="8"
 	type="sphere"
-	duration="30"
+	duration="30000"
 	directionX="0" directionY="0" directionZ="0"
 	minRate="200" maxRate="200"
-	minTime="2" maxTime="4"
+	minTime="2000" maxTime="4000"
 	minColorR="205" minColorG="0" minColorB="0" minColorA="155"
 	maxColorR="205" maxColorG="180" maxColorB="0" maxColorA="255"
 />
