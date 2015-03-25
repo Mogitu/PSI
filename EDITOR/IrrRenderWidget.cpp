@@ -53,13 +53,55 @@ void IrrRenderWidget::exportToFile()
     xml->writeXMLHeader();
 
     //setup containers with settings
-    array<stringw> elements;
-    array<stringw> values;
-    elements.insert(L"testel");
-    values.insert(L"testval");
+    array<stringw> commonElements;
+    array<stringw> commonValues;
+    commonElements.push_back(L"imagePath");
+    commonElements.push_back(L"scaleX");
+    commonElements.push_back(L"scaleY");
+    commonElements.push_back(L"scaleZ");
+    commonElements.push_back(L"minStartSize");
+    commonElements.push_back(L"maxStartSize");
+    commonElements.push_back(L"type");
+    commonElements.push_back(L"duration");
+    commonElements.push_back(L"directionX");
+    commonElements.push_back(L"directionY");
+    commonElements.push_back(L"directionZ");
+    commonElements.push_back(L"minRate");
+    commonElements.push_back(L"maxRate");
+    commonElements.push_back(L"minTime");
+    commonElements.push_back(L"maxTime");
+    commonElements.push_back(L"minColorR");
+    commonElements.push_back(L"minColorG");
+    commonElements.push_back(L"minColorA");
+    commonElements.push_back(L"maxColorR");
+    commonElements.push_back(L"maxColorG");
+    commonElements.push_back(L"maxColorA");
+
+
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
+    commonValues.push_back(L"test");
 
     //finally write to the file
-    xml->writeElement(L"commonSettings",false,elements,values);
+    xml->writeElement(L"commonSettings",false,commonElements,commonValues);
     xml->writeLineBreak();   
 }
 
