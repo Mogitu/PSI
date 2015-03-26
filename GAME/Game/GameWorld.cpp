@@ -74,6 +74,7 @@ void GameWorld::update(u32 frameDeltaTime)
 				ParticleManager::createFullParticleEffect("../Assets/killEnemyEffect.xml", nodeA->getPosition());
 				nodeA->setName("dead");
 				nodeB->setName("dead");
+				Common::soundEngine->play2D("../Assets/Sounds/explosion.wav");
 			}
 		}		
 

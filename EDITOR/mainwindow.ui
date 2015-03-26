@@ -114,12 +114,12 @@
      </property>
      <item>
       <property name="text">
-       <string>Box</string>
+       <string>box</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Sphere</string>
+       <string>sphere</string>
       </property>
      </item>
     </widget>

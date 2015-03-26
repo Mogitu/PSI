@@ -243,8 +243,8 @@ public:
         labelMaxScale->setText(QApplication::translate("MainWindow", "Max Scale", 0));
         comboShape->clear();
         comboShape->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "Box", 0)
-         << QApplication::translate("MainWindow", "Sphere", 0)
+         << QApplication::translate("MainWindow", "box", 0)
+         << QApplication::translate("MainWindow", "sphere", 0)
         );
         labelShape->setText(QApplication::translate("MainWindow", "Shape", 0));
         PickBrightest->setText(QApplication::translate("MainWindow", "Change brightest", 0));
