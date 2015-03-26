@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    ui->setupUi(this);   
     colorPickerBright= new QColorDialog();
     colorPickerDark = new QColorDialog();
     InitIrrRenderWidget(ui->centralWidget->findChild<QWidget *>("ParticlePreviewWidget"));
@@ -36,28 +36,28 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 void MainWindow::on_ApplyAll_clicked()
 {
     //set all variables
-    irrRenderWidget->particleManager->setColorBright(colorPickerBright->currentColor());
-    irrRenderWidget->particleManager->setColorDark(colorPickerDark->currentColor());
-    irrRenderWidget->particleManager->setDirection(ui->dirX->text().toFloat(),ui->dirY->text().toFloat(),ui->dirZ->text().toFloat());
+    irrRenderWidget->particleSettings->setColorBright(colorPickerBright->currentColor());
+    irrRenderWidget->particleSettings->setColorDark(colorPickerDark->currentColor());
+    irrRenderWidget->particleSettings->setDirection(ui->dirX->text().toFloat(),ui->dirY->text().toFloat(),ui->dirZ->text().toFloat());
 
-    irrRenderWidget->particleManager->minStartSize = ui->lineMinScale->text().toFloat();
-    irrRenderWidget->particleManager->maxStartSize = ui->lineMaxScale->text().toFloat();
+    irrRenderWidget->particleSettings->minStartSize = ui->lineMinScale->text().toFloat();
+    irrRenderWidget->particleSettings->maxStartSize = ui->lineMaxScale->text().toFloat();
 
-    irrRenderWidget->particleManager->minRate = ui->lineMinRate->text().toFloat();
-    irrRenderWidget->particleManager->maxRate = ui->lineMaxRate->text().toFloat();
+    irrRenderWidget->particleSettings->minRate = ui->lineMinRate->text().toFloat();
+    irrRenderWidget->particleSettings->maxRate = ui->lineMaxRate->text().toFloat();
 
-    irrRenderWidget->particleManager->minTime = ui->lineMinTime->text().toFloat();
-    irrRenderWidget->particleManager->maxTime = ui->lineMaxTime->text().toFloat();
+    irrRenderWidget->particleSettings->minTime = ui->lineMinTime->text().toFloat();
+    irrRenderWidget->particleSettings->maxTime = ui->lineMaxTime->text().toFloat();
 
-    irrRenderWidget->particleManager->duration = ui->lineDuration->text().toFloat();
-    irrRenderWidget->particleManager->type = ui->comboShape->currentText();
+    irrRenderWidget->particleSettings->duration = ui->lineDuration->text().toFloat();
+    irrRenderWidget->particleSettings->type = ui->comboShape->currentText();
 
-    irrRenderWidget->particleManager->boxSize.MinEdge = vector3df(ui->lineMinBoxX->text().toFloat(),ui->lineMinBoxY->text().toFloat(),ui->lineMinBoxZ->text().toFloat());
-    irrRenderWidget->particleManager->boxSize.MaxEdge = vector3df(ui->lineMaxBoxX->text().toFloat(),ui->lineMaxBoxY->text().toFloat(),ui->lineMaxBoxZ->text().toFloat());
+    irrRenderWidget->particleSettings->boxSize.MinEdge = vector3df(ui->lineMinBoxX->text().toFloat(),ui->lineMinBoxY->text().toFloat(),ui->lineMinBoxZ->text().toFloat());
+    irrRenderWidget->particleSettings->boxSize.MaxEdge = vector3df(ui->lineMaxBoxX->text().toFloat(),ui->lineMaxBoxY->text().toFloat(),ui->lineMaxBoxZ->text().toFloat());
 
-    irrRenderWidget->particleManager->sphereRadius = ui->lineSpereRadius->text().toFloat();
+    irrRenderWidget->particleSettings->sphereRadius = ui->lineSpereRadius->text().toFloat();
     //create the emitter
-    irrRenderWidget->particleManager->createEmitter();
+    irrRenderWidget->particleSettings->createEmitter();
 }
 
 void MainWindow::on_PickDarkest_clicked()
@@ -72,5 +72,9 @@ void MainWindow::on_PickBrightest_clicked()
 
 void MainWindow::on_actionExport_triggered()
 {
-   irrRenderWidget->exportToFile();
+    QString filename = QFileDialog::getSaveFileName();
+    QFile f( filename );
+    f.open( QIODevice::WriteOnly );
+    irrRenderWidget->particleSettings->exportToFile(filename.toStdWString().c_str(),  ui);
+    f.close();
 }

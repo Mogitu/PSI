@@ -96,7 +96,7 @@ int main() {
 	camera->setTarget(player->getNodeAbsolutePosition());
 
 	camera->setTarget(player->getNodePosition());
-
+	Common::soundEngine->play2D("../Assets/Sounds/getout.ogg");
 	//create flame
 	ParticleManager::createFullParticleEffect("../Assets/Flame1.xml", vector3df(0,9,0));
 	ParticleManager::createFullParticleEffect("../Assets/Flame2.xml", vector3df(0, 9, 0));

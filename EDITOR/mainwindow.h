@@ -6,6 +6,7 @@
 
 #include <QMainWindow>
 #include <qcolordialog.h>
+#include <qfiledialog.h>
 #include "IrrRenderWidget.h"
 
 namespace Ui {

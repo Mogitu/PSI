@@ -1,5 +1,3 @@
-
-
 #include "IrrRenderWidget.h"
 
 IrrRenderWidget::IrrRenderWidget(QWidget *irrRenderTarget, bool softwareRenderer)
@@ -42,70 +40,6 @@ IrrRenderWidget::~IrrRenderWidget()
     device->drop();
 }
 
-//Preliminary method to export a settings file
-void IrrRenderWidget::exportToFile()
-{
-    //setup te file system and the reader.
-    IFileSystem *fs = device->getFileSystem();
-    IXMLWriter *xml = fs->createXMLWriter("test.xml");
-
-    //need to create the header first
-    xml->writeXMLHeader();
-
-    //setup containers with settings
-    array<stringw> commonElements;
-    array<stringw> commonValues;
-    commonElements.push_back(L"imagePath");
-    commonElements.push_back(L"scaleX");
-    commonElements.push_back(L"scaleY");
-    commonElements.push_back(L"scaleZ");
-    commonElements.push_back(L"minStartSize");
-    commonElements.push_back(L"maxStartSize");
-    commonElements.push_back(L"type");
-    commonElements.push_back(L"duration");
-    commonElements.push_back(L"directionX");
-    commonElements.push_back(L"directionY");
-    commonElements.push_back(L"directionZ");
-    commonElements.push_back(L"minRate");
-    commonElements.push_back(L"maxRate");
-    commonElements.push_back(L"minTime");
-    commonElements.push_back(L"maxTime");
-    commonElements.push_back(L"minColorR");
-    commonElements.push_back(L"minColorG");
-    commonElements.push_back(L"minColorA");
-    commonElements.push_back(L"maxColorR");
-    commonElements.push_back(L"maxColorG");
-    commonElements.push_back(L"maxColorA");
-
-
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-    commonValues.push_back(L"test");
-
-    //finally write to the file
-    xml->writeElement(L"commonSettings",false,commonElements,commonValues);
-    xml->writeLineBreak();   
-}
-
-
 //setup the widget
 void IrrRenderWidget::init()
 {
@@ -113,7 +47,7 @@ void IrrRenderWidget::init()
     {
         //create a new particle manager and setup the camera
         smgr = device->getSceneManager();
-        particleManager = new ParticleManager(device);
+        particleSettings = new ParticleSettings(device);
         smgr->addCameraSceneNode(0, core::vector3df(0, -50, -100), core::vector3df(0, 5, 0));
 
         //this will hand control over to the game/render loop
