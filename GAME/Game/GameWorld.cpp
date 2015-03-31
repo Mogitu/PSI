@@ -106,3 +106,13 @@ void GameWorld::removeGameObject(IGameObject* gameObject)
 		}
 	}
 }
+
+void GameWorld::setPlayer(IGameObject *p)
+{
+	player = p;
+}
+
+IGameObject *GameWorld::getPlayer()
+{
+	return player;
+}

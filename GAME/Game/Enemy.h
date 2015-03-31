@@ -18,6 +18,7 @@ public:
 	void SetDeath(float begindeath = 0, float enddeath = 0, float deathspeed = 25);
 	void getcurrentframe();
 	virtual void kill();
+	void shoot();
 private:
 	irr::scene::ISceneManager *smgr;
 	irr::video::IVideoDriver *irrDriver;
@@ -28,6 +29,9 @@ private:
 	float enddeath;
 	float deathspeed;
 	float frameget;
+
+	float shootTimer;
+	float shootTimerMax;
 };
 
 #endif ENEMY_H

@@ -6,6 +6,7 @@
 #include "BulletHelper.h"
 #include "ParticleManager.h"
 
+
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -21,6 +22,7 @@ private:
 	core::list<IGameObject*> gameObjects;
 	BulletHelper *helper;
 	IrrlichtDevice *device;
+	IGameObject *player;
 public:
 	GameWorld(BulletHelper *h, IrrlichtDevice *device);
 	~GameWorld();
@@ -29,6 +31,9 @@ public:
 	//void updatePhysics(btRigidBody *body);
 	void addGameObject(IGameObject* gameObject);
 	void removeGameObject(IGameObject* gameObject);
+	void setPlayer(IGameObject *p);
+	IGameObject *getPlayer();
+	
 };
 
 #endif // !Game_World_H
