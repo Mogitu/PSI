@@ -100,7 +100,6 @@ int main() {
 	//create flame
 	ParticleManager::createFullParticleEffect("../Assets/Flame1.xml", vector3df(0,9,0));
 	ParticleManager::createFullParticleEffect("../Assets/Flame2.xml", vector3df(0, 9, 0));
-	ParticleManager::createFullParticleEffect("../Assets/export.xml", vector3df(0, 40, 0));
 	
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;

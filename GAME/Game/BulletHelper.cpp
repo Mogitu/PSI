@@ -1,4 +1,5 @@
 #include "BulletHelper.h"
+#include "ParticleManager.h"
 
 BulletHelper::BulletHelper()
 {
@@ -280,6 +281,7 @@ void BulletHelper::buildIrrLevel(Level *level)
 
 		std::string namePrefix = name.substr(0, 2);		
 		
+		
 		if (namePrefix == DYNAMIC_CUBE)
 		{
 			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);			
@@ -307,6 +309,13 @@ void BulletHelper::buildIrrLevel(Level *level)
 			tmp = createTriangleBody(p);		
 			tmp->setRestitution(0.8);
 			tmp->setFriction(0.6);
+		}
+		else if (namePrefix == PARTICLE)
+		{
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);		
+			stringw last = core::stringw(name.c_str());			
+			stringw path = "../Assets/";					
+			ParticleManager::createFullParticleEffect(path.append(last.subString(4,last.size()).append(".xml")), p->getPosition());
 		}
 		tmp = 0;
 	}
