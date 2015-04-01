@@ -15,8 +15,8 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	isAlive = true;
 	shootTimer = 0;
 	shootTimerMax = 2;
-	shootingRange = 300;
-	walkSpeed = 100;
+	shootingRange = 200;
+	walkSpeed = 75;
 }
 
 void Enemy::Initialize(){
@@ -101,7 +101,17 @@ void Enemy::followPlayer()
 	btTransform currentTrans = body->getCenterOfMassTransform();	
 
 	btVector3 dir = (btVector3(player->node->getPosition().X,50,player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z)).normalize();
+	
+	f32 deltaX = player->node->getPosition().X - node->getPosition().X;
+	f32 deltaZ = player->node->getPosition().Z - node->getPosition().Z;
 
+	f32 angleInRad= atan2(deltaZ, deltaX);
+
+	btQuaternion rot;
+	rot.setRotation(btVector3(0,1,0),-angleInRad);
+	currentTrans.setRotation(rot);
+
+	body->setCenterOfMassTransform(currentTrans);
 	body->applyCentralImpulse(dir*walkSpeed);
 }
 
