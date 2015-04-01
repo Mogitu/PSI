@@ -8,6 +8,7 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	isAlive = true;
 	shootInterval = 250;//ms
 	shootIntervalTimer = 0;
+	world->setPlayer(this);
 }
 
 void Player::Initialize()

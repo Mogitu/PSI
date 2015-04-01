@@ -11,11 +11,12 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 {
 	this->Initialize(smgr, irrDriver, helper, world, meshpath, texturepath, bodyType, bodyMass, position, rotation, scale);
 	this->world = world;
+	player = world->getPlayer();
 	isAlive = true;
 	shootTimer = 0;
 	shootTimerMax = 2;
-	shootingRange = 300;//4m
-	walkSpeed = 500;
+	shootingRange = 300;
+	walkSpeed = 100;
 }
 
 void Enemy::Initialize(){
@@ -50,28 +51,29 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 }
 
 void Enemy::Update(u32 frameDeltaTime)
-{
-	shootTimer += frameDeltaTime;
-	
-	if (shootTimer>=shootTimerMax*1000)
-	{		
-		shootTimer = 0;
-		shoot();
+{	
+	shootTimer += frameDeltaTime;	
+	if (player && player->isAlive)
+	{
+		if (shootTimer >= shootTimerMax * 1000 && player)
+		{
+			shootTimer = 0;
+			shoot();
+		}
+		followPlayer();
 	}	
-
-	followPlayer();
 }
 
 //TODO: make more readable...
 void Enemy::shoot()
 {
-	IGameObject *player = world->getPlayer();
+	
 	f32 dist = node->getPosition().getDistanceFrom(player->node->getPosition());
 	if(dist<shootingRange)
 	{
 		Projectile *projectile = new Projectile(smgr, helper);
 		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
-		btVector3 offSet(helper->extractForwardVector(projectile->body) * 30);
+		btVector3 offSet((btVector3(player->node->getPosition().X, 50, player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z)).normalize() * 30);
 		vector3df playerToEnemy = (player->node->getPosition() - node->getPosition()) - vector3df(offSet.getX(), offSet.getY(), offSet.getZ());
 		playerToEnemy.normalize();
 		btVector3 direction(playerToEnemy.X, playerToEnemy.Y, playerToEnemy.Z);
@@ -95,31 +97,23 @@ void Enemy::getcurrentframe()
 
 void Enemy::followPlayer()
 {
-	IGameObject *player = world->getPlayer();
-
 	btTransform playerTransform = player->body->getCenterOfMassTransform();
-	btTransform currentTrans = body->getCenterOfMassTransform();
+	btTransform currentTrans = body->getCenterOfMassTransform();	
 
-	btQuaternion rotation = playerTransform.getRotation();	
-	btQuaternion jan = -playerTransform.getRotation();	
+	btVector3 dir = (btVector3(player->node->getPosition().X,50,player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z)).normalize();
 
-	currentTrans.setRotation(jan);
-
-	body->setCenterOfMassTransform(currentTrans);
-
-	btVector3 dir = helper->extractForwardVector(body);
 	body->applyCentralImpulse(dir*walkSpeed);
 }
 
 void Enemy::kill()
 {	
-			ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
-			isAlive = false;
-			Node->remove();
-			// Remove the object from the world
-			helper->getWorld()->removeRigidBody(body);
-			// Free memory
-			delete body->getMotionState();
-			delete body->getCollisionShape();
-			delete body;		
+	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	isAlive = false;
+	Node->remove();
+	// Remove the object from the world
+	helper->getWorld()->removeRigidBody(body);
+	// Free memory
+	delete body->getMotionState();
+	delete body->getCollisionShape();
+	delete body;		
 }
