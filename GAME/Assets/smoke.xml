@@ -8,7 +8,7 @@
 	directionX="0" directionY="0" directionZ="0"
 	minRate="200" maxRate="200"
 	minTime="2000" maxTime="4000"
-	minColorR="240" minColorG="240" minColorB="240" minColorA="155"
+	minColorR="0" minColorG="0" minColorB="0" minColorA="255"
 	maxColorR="255" maxColorG="255" maxColorB="255" maxColorA="255"
 />
 <sphereSettings value ="1"

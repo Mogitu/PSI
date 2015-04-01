@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <commonSettings
-	imagePath = "../Assets/lightning.jpg"
-	scaleX = "0.1" scaleY="0.1" scaleZ="0.1"
-	minStartSize="20" maxStartSize="20"
+	imagePath = "../Assets/particleTexture.png"
+	scaleX = "8" scaleY="8" scaleZ="8"
+	minStartSize="4" maxStartSize="4"
 	type="sphere"
 	duration="30000"
 	directionX="0" directionY="0" directionZ="0"
-	minRate="1" maxRate="3"
+	minRate="200" maxRate="200"
 	minTime="2000" maxTime="4000"
-	minColorR="240" minColorG="240" minColorB="240" minColorA="155"
-	maxColorR="255" maxColorG="255" maxColorB="255" maxColorA="255"
+	minColorR="255" minColorG="255" minColorB="255" minColorA="150"
+	maxColorR="255" maxColorG="255" maxColorB="255" maxColorA="0"
 />
 <sphereSettings value ="1"
 	radius="8"	
@@ -29,18 +29,18 @@
 		attraction_affectZ="0"
 	
 	scale="1"
-		scale_scaleToWidth="1" scale_scaleToHeight="1"
+		scale_scaleToWidth="0.01" scale_scaleToHeight="3"
 		
-	fade="0"
+	fade="1"
 		fade_targetColorR="0" fade_targetColorG="0" fade_targetColorG="0" fade_targetColorA="0"
 		fade_timeNeededToFadeOut="1000"
 
-	gravity="0"
-		gravity_gravityX="0.029" gravity_gravityY="0.029" gravity_gravityZ="0"
+	gravity="1"
+		gravity_gravityX="-0.01" gravity_gravityY="-0.01" gravity_gravityZ="0"
 		gravity_timeForceLost="2000"
 
 	rotation = "0"
-		rotation_speedX="1" rotation_speedY="1" rotation_speedZ="1" 
+		rotation_speedX="0" rotation_speedY="0" rotation_speedZ="0" 
 		rotation_pivotPointX="0" rotation_pivotPointY="0" rotation_pivotPointZ="0"
 	
 />

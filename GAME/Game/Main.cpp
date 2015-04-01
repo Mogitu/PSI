@@ -102,8 +102,9 @@ int main() {
 	ParticleManager::createFullParticleEffect("../Assets/Flame2.xml", vector3df(0, 9, 0));
 	ParticleManager::createFullParticleEffect("../Assets/smoke.xml",vector3df(0,9,12));
 	ParticleManager::createFullParticleEffect("../Assets/Rain.xml", vector3df(0, 100, 0));
-	//ParticleManager::createFullParticleEffect("../Assets/Lightning.xml", vector3df(0, 100, 0));
+	ParticleManager::createFullParticleEffect("../Assets/Lightning.xml", vector3df(0, 100, 0));
 	ParticleManager::createFullParticleEffect("../Assets/sparks.xml", vector3df(0, 100, 0));
+	ParticleManager::createFullParticleEffect("../Assets/Snow.xml", vector3df(0, 100, 0));
 
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;

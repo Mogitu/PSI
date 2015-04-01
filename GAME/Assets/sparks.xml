@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <commonSettings
-	imagePath = "../Assets/sparks.jpg"
-	scaleX = "2" scaleY="2" scaleZ="2"
-	minStartSize="0.1" maxStartSize="20"
+	imagePath = "../Assets/fire.bmp"
+	scaleX = "1" scaleY="1" scaleZ="1"
+	minStartSize="0.2" maxStartSize="2"
 	type="sphere"
 	duration="30000"
 	directionX="0" directionY="0" directionZ="0"
