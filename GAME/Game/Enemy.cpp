@@ -14,6 +14,8 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	isAlive = true;
 	shootTimer = 0;
 	shootTimerMax = 2;
+	shootingRange = 300;//4m
+	walkSpeed = 500;
 }
 
 void Enemy::Initialize(){
@@ -50,25 +52,33 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 void Enemy::Update(u32 frameDeltaTime)
 {
 	shootTimer += frameDeltaTime;
+	
 	if (shootTimer>=shootTimerMax*1000)
-	{
+	{		
 		shootTimer = 0;
 		shoot();
-	}
+	}	
+
+	followPlayer();
 }
 
 //TODO: make more readable...
 void Enemy::shoot()
 {
-	Projectile *p = new Projectile(smgr, helper);
-	btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());	
-	btVector3 offSet(helper->extractForwardVector(p->body) * 30);
-	vector3df n = (world->getPlayer()->node->getPosition() -node->getPosition())-vector3df(offSet.getX(),offSet.getY(),offSet.getZ());
-	n.normalize();
-	btVector3 ja(n.X, n.Y, n.Z);
-	p->fire(pos+ offSet, ja);
-	world->addGameObject(p);
-	Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");
+	IGameObject *player = world->getPlayer();
+	f32 dist = node->getPosition().getDistanceFrom(player->node->getPosition());
+	if(dist<shootingRange)
+	{
+		Projectile *projectile = new Projectile(smgr, helper);
+		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
+		btVector3 offSet(helper->extractForwardVector(projectile->body) * 30);
+		vector3df playerToEnemy = (player->node->getPosition() - node->getPosition()) - vector3df(offSet.getX(), offSet.getY(), offSet.getZ());
+		playerToEnemy.normalize();
+		btVector3 direction(playerToEnemy.X, playerToEnemy.Y, playerToEnemy.Z);
+		projectile->fire(pos + offSet, direction);
+		world->addGameObject(projectile);
+		Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");
+	}	
 }
 
 void Enemy::SetDeath(float begindeath, float enddeath, float deathspeed)
@@ -83,6 +93,24 @@ void Enemy::getcurrentframe()
 	frameget = ((IAnimatedMeshSceneNode*)node)->getFrameNr();
 }
 
+void Enemy::followPlayer()
+{
+	IGameObject *player = world->getPlayer();
+
+	btTransform playerTransform = player->body->getCenterOfMassTransform();
+	btTransform currentTrans = body->getCenterOfMassTransform();
+
+	btQuaternion rotation = playerTransform.getRotation();	
+	btQuaternion jan = -playerTransform.getRotation();	
+
+	currentTrans.setRotation(jan);
+
+	body->setCenterOfMassTransform(currentTrans);
+
+	btVector3 dir = helper->extractForwardVector(body);
+	body->applyCentralImpulse(dir*walkSpeed);
+}
+
 void Enemy::kill()
 {	
 			ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
@@ -94,5 +122,4 @@ void Enemy::kill()
 			delete body->getMotionState();
 			delete body->getCollisionShape();
 			delete body;		
-	
 }

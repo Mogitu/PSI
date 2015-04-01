@@ -25,13 +25,17 @@ private:
 	//irr::scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	GameWorld *world;
+	float shootingRange;
 	float begindeath;
 	float enddeath;
 	float deathspeed;
 	float frameget;
 
+	void followPlayer();
+
 	float shootTimer;
 	float shootTimerMax;
+	float walkSpeed;
 };
 
 #endif ENEMY_H
