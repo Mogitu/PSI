@@ -72,3 +72,5 @@ Temporary Items
 *.app
 /GAME/Game/Debug/
 
+EDITOR/EDITOR.pro.user
+build-EDITOR-Desktop_Qt_5_4_1_MSVC2013_32bit-Debug/
