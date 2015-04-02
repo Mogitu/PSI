@@ -25,13 +25,14 @@ void ParticleSettings::init()
     minTime =200;
     maxTime =300;
 
-    sphereRadius =10;
-    boxSize.MinEdge=vector3df(-7,0,-7);
-    boxSize.MaxEdge = vector3df(7,1,7);
+    sphereCenter = vector3df(0, 0, 0);
+    sphereRadius = 10;
+    boxSize.MinEdge=vector3df(-7, 0, -7);
+    boxSize.MaxEdge = vector3df(7, 1, 7);
 
-    minColor.set(0,255,255,255);
-    maxColor.set(0,255,255,255);
-    direction.set(0,0.06,0);
+    minColor.set(0, 255, 255, 255);
+    maxColor.set(0, 255, 255, 255);
+    direction.set(0, 0.06, 0);
     createParticle();
 }
 
@@ -91,7 +92,7 @@ void ParticleSettings::createEmitter()
     particleNode->clearParticles();
 
     //create emitter based on selection
-    if(type.toStdString()=="Box")
+    if(type.toStdString() == "box")
     {
         particleEmitter = particleNode->createBoxEmitter(
                             boxSize,
@@ -104,10 +105,10 @@ void ParticleSettings::createEmitter()
                             dimension2df(maxStartSize,maxStartSize));
 
     }
-    else if(type.toStdString()=="Sphere")
+    else if(type.toStdString() == "sphere")
     {
         particleEmitter = particleNode->createSphereEmitter(
-                            vector3df(0,0,0),
+                            sphereCenter,
                             sphereRadius,
                             direction,
                             minRate, maxRate,
@@ -202,4 +203,9 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
     xml->writeLineBreak();
     //Need to drop, if we dont the xml wont be written at all.
     xml->drop();
+}
+
+void ParticleSettings::loadTexture(QString path)
+{
+    particleNode->setMaterialTexture(0, device->getVideoDriver()->getTexture(qPrintable(path)));
 }

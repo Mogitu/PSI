@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
     colorPickerBright= new QColorDialog();
     colorPickerDark = new QColorDialog();
     InitIrrRenderWidget(ui->centralWidget->findChild<QWidget *>("ParticlePreviewWidget"));
+
+    openShapeBox(ui->comboShape->currentText());
 }
 
 MainWindow::~MainWindow()
@@ -54,6 +56,7 @@ void MainWindow::on_ApplyAll_clicked()
     irrRenderWidget->particleSettings->boxSize.MinEdge = vector3df(ui->lineMinBoxX->text().toFloat(),ui->lineMinBoxY->text().toFloat(),ui->lineMinBoxZ->text().toFloat());
     irrRenderWidget->particleSettings->boxSize.MaxEdge = vector3df(ui->lineMaxBoxX->text().toFloat(),ui->lineMaxBoxY->text().toFloat(),ui->lineMaxBoxZ->text().toFloat());
 
+    irrRenderWidget->particleSettings->sphereCenter = vector3df(ui->centerBoxX->text().toFloat(), ui->centerBoxY->text().toFloat(), ui->centerBoxZ->text().toFloat());
     irrRenderWidget->particleSettings->sphereRadius = ui->lineSpereRadius->text().toFloat();
     //create the emitter
     irrRenderWidget->particleSettings->createEmitter();
@@ -76,4 +79,35 @@ void MainWindow::on_actionExport_triggered()
     f.open( QIODevice::WriteOnly );
     irrRenderWidget->particleSettings->exportToFile(filename.toStdWString().c_str(),  ui);
     f.close();
+}
+
+void MainWindow::on_comboShape_currentIndexChanged(const QString &text)
+{
+   openShapeBox(text);
+}
+
+void MainWindow::openShapeBox(const QString text)
+{
+    if(text.toStdString() == "box")
+    {
+        ui->groupBoxSettings->setVisible(true);
+        ui->groupSphereSettings->setVisible(false);
+    }
+    else if(text.toStdString() == "sphere")
+    {
+        ui->groupSphereSettings->setVisible(true);
+        ui->groupBoxSettings->setVisible(false);
+    }
+}
+
+void MainWindow::on_loadTexture_clicked()
+{
+    QString file = QFileDialog::getOpenFileName(this, tr("Open File"));
+    if(!file.isNull() && !file.isEmpty())
+    {
+        irrRenderWidget->particleSettings->loadTexture(file);
+        ui->lineTexture->setText(file);
+    }
+    else
+        ui->lineTexture->setText("No file found!");
 }

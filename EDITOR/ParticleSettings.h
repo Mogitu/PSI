@@ -33,6 +33,7 @@ class ParticleSettings{
         SColor maxColor;
 
         //sphere settings
+        vector3df sphereCenter;
         u32 sphereRadius;
         //box settings
         aabbox3d<f32> boxSize;
@@ -44,6 +45,7 @@ class ParticleSettings{
         void createParticle();
         void createEmitter();
         void exportToFile(stringw fileName, Ui_MainWindow *ui);
+        void loadTexture(QString path);
 
     private:        
         //vars
