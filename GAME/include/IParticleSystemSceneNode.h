@@ -72,6 +72,9 @@ public:
  	//! as the node will care about this otherwise automatically.
 	virtual void doParticleSystem(u32 time) = 0;
 
+	//! Renders the node.
+	virtual void render() = 0;
+
 	//! Gets the particle emitter, which creates the particles.
 	/** \return The particle emitter. Can be 0 if none is set. */
 	virtual IParticleEmitter* getEmitter() =0;

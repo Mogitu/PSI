@@ -22,6 +22,9 @@ namespace scene
 		//! Direction and speed of the particle
 		core::vector3df vector;
 
+		//! Rotationn of the particle (Added by Bas)
+		core::vector3df rotation;
+
 		//! Start life time of the particle
 		u32 startTime;
 

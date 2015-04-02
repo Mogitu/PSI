@@ -19,6 +19,12 @@
     <Filter Include="Header Files\mywork">
       <UniqueIdentifier>{4c2bd706-4af3-4aac-8e5c-512d984fd023}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ParticleStuff">
+      <UniqueIdentifier>{d974f6ca-bf2a-4a53-8327-a3117c2f4ab6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ParticleStuff">
+      <UniqueIdentifier>{7733b564-2653-482b-8693-e18528af9995}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -53,6 +59,48 @@
     </ClCompile>
     <ClCompile Include="ParticleSettings.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleAnimatedMeshSceneNodeEmitter.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticlePointEmitter.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleRingEmitter.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleRotationAffector.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleScaleAffector.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleSphereEmitter.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleSystemSceneNode.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleAttractionAffector.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleBoxEmitter.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleCylinderEmitter.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleFadeOutAffector.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleGravityAffector.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleMeshEmitter.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="os.cpp">
+      <Filter>Source Files\ParticleStuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +139,48 @@
     </ClInclude>
     <ClInclude Include="ParticleSettings.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleAttractionAffector.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleBoxEmitter.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleCylinderEmitter.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleFadeOutAffector.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleGravityAffector.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleMeshEmitter.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticlePointEmitter.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleRingEmitter.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleRotationAffector.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleScaleAffector.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleSphereEmitter.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleSystemSceneNode.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleAnimatedMeshSceneNodeEmitter.h">
+      <Filter>Header Files\ParticleStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="os.h">
+      <Filter>Header Files\ParticleStuff</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
