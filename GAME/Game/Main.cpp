@@ -80,9 +80,9 @@ int main() {
 
 	//Create the game world
 	GameWorld* gWorld = new GameWorld(helper,device);
-	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));
-	Enemy* enemy = new Enemy(smgr, irrDriver, helper, gWorld, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300, vector3df(100, 100, 0), vector3df(0, 0, 0), vector3df(1, 1, 1));
-	Enemy* enemy2 = new Enemy(smgr, irrDriver, helper, gWorld, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300, vector3df(100, 100, 20), vector3df(0, 0, 0), vector3df(1, 1, 1));
+	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));	
+	Enemy* enemy = new Enemy(smgr, irrDriver, helper, gWorld, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300, vector3df(-120, 100, 0), vector3df(0, 0, 0), vector3df(1, 1, 1));
+	//Enemy* enemy2 = new Enemy(smgr, irrDriver, helper, gWorld, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300, vector3df(-120, 100, 20), vector3df(0, 0, 0), vector3df(1, 1, 1));
 	
 	
 	//Set up Particle World
@@ -100,7 +100,6 @@ int main() {
 	//create flame
 	ParticleManager::createFullParticleEffect("../Assets/Flame1.xml", vector3df(0,9,0));
 	ParticleManager::createFullParticleEffect("../Assets/Flame2.xml", vector3df(0, 9, 0));
-	ParticleManager::createFullParticleEffect("../Assets/export.xml", vector3df(0, 40, 0));
 	
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;

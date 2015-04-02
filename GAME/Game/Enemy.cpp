@@ -1,5 +1,6 @@
 #include "irrlicht.h"
 #include "Enemy.h"
+#include "Projectile.h"
 
 using namespace irr;
 using namespace scene;
@@ -10,7 +11,12 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 {
 	this->Initialize(smgr, irrDriver, helper, world, meshpath, texturepath, bodyType, bodyMass, position, rotation, scale);
 	this->world = world;
+	player = world->getPlayer();
 	isAlive = true;
+	shootTimer = 0;
+	shootTimerMax = 2;
+	shootingRange = 200;
+	walkSpeed = 75;
 }
 
 void Enemy::Initialize(){
@@ -22,7 +28,6 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	this->helper = helper;
 	this->smgr = smgr;
 	this->irrDriver = irrDriver;
-
 
 	IAnimatedMesh* mesh = smgr->getMesh(meshpath);
 
@@ -37,21 +42,45 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 		node->setMaterialFlag(EMF_LIGHTING, false);
 		node->setMaterialTexture(0, irrDriver->getTexture(texturepath));
 	}
-
 	body = helper->createBody(node, bodyType, bodyMass);
-
 	body->setRestitution(.1);
 	body->setFriction(.3);
 	//body->setLinearFactor(btVector3(0, 1, 0));
 	body->setAngularFactor(btVector3(0, 0, 0));
-
 	world->addGameObject(this);
-
 }
 
 void Enemy::Update(u32 frameDeltaTime)
-{
+{	
+	shootTimer += frameDeltaTime;	
+	if (player && player->isAlive)
+	{
+		if (shootTimer >= shootTimerMax * 1000 && player)
+		{
+			shootTimer = 0;
+			shoot();
+		}
+		followPlayer();
+	}	
+}
 
+//TODO: make more readable...
+void Enemy::shoot()
+{
+	
+	f32 dist = node->getPosition().getDistanceFrom(player->node->getPosition());
+	if(dist<shootingRange)
+	{
+		Projectile *projectile = new Projectile(smgr, helper);
+		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
+		btVector3 offSet((btVector3(player->node->getPosition().X, 50, player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z)).normalize() * 30);
+		vector3df playerToEnemy = (player->node->getPosition() - node->getPosition()) - vector3df(offSet.getX(), offSet.getY(), offSet.getZ());
+		playerToEnemy.normalize();
+		btVector3 direction(playerToEnemy.X, playerToEnemy.Y, playerToEnemy.Z);
+		projectile->fire(pos + offSet, direction);
+		world->addGameObject(projectile);
+		Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");
+	}	
 }
 
 void Enemy::SetDeath(float begindeath, float enddeath, float deathspeed)
@@ -66,18 +95,35 @@ void Enemy::getcurrentframe()
 	frameget = ((IAnimatedMeshSceneNode*)node)->getFrameNr();
 }
 
-void Enemy::kill()
+void Enemy::followPlayer()
 {
+	btTransform playerTransform = player->body->getCenterOfMassTransform();
+	btTransform currentTrans = body->getCenterOfMassTransform();	
+
+	btVector3 dir = (btVector3(player->node->getPosition().X,50,player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z)).normalize();
 	
-			ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
-			isAlive = false;
-			Node->remove();
-			// Remove the object from the world
-			helper->getWorld()->removeRigidBody(body);
-			// Free memory
-			delete body->getMotionState();
-			delete body->getCollisionShape();
-			delete body;
-		
-	
+	f32 deltaX = player->node->getPosition().X - node->getPosition().X;
+	f32 deltaZ = player->node->getPosition().Z - node->getPosition().Z;
+
+	f32 angleInRad= atan2(deltaZ, deltaX);
+
+	btQuaternion rot;
+	rot.setRotation(btVector3(0,1,0),-angleInRad);
+	currentTrans.setRotation(rot);
+
+	body->setCenterOfMassTransform(currentTrans);
+	body->applyCentralImpulse(dir*walkSpeed);
+}
+
+void Enemy::kill()
+{	
+	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	isAlive = false;
+	Node->remove();
+	// Remove the object from the world
+	helper->getWorld()->removeRigidBody(body);
+	// Free memory
+	delete body->getMotionState();
+	delete body->getCollisionShape();
+	delete body;		
 }

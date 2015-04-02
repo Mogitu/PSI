@@ -1,12 +1,9 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-
 #include "InputReceiver.h"
-#include <btBulletCollisionCommon.h>
 #include "BulletHelper.h"
 #include "IGameObject.h"
-#include "BulletHelper.h"
 #include "GameWorld.h"
 #include "Projectile.h"
 

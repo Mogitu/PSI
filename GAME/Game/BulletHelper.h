@@ -48,6 +48,7 @@ private:
 	const std::string STATIC_SPHERE = "SS";
 	const std::string STATIC_CUBE = "SB";
 	const std::string WORLD = "WB";
+	const std::string PARTICLE = "PS";
 	
 	list<btRigidBody *> objects;
 	btDiscreteDynamicsWorld *world;
