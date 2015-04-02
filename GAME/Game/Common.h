@@ -2,6 +2,7 @@
 #define COMMON_H
 
 #include <irrlicht.h>
+#include <irrKlang.h>
 #include "InputReceiver.h"
 #include "BulletHelper.h"
 
@@ -12,6 +13,7 @@ using namespace video;
 using namespace io;
 using namespace gui;
 using namespace std;
+using namespace irrklang;
 
 namespace Common
 {
@@ -24,6 +26,7 @@ namespace Common
 	extern ILogger *irrLog;
 	extern InputReceiver* input;
 	extern BulletHelper* helper;
+	extern ISoundEngine *soundEngine;
 
 	static void initIrrlicht()
 	{
@@ -33,7 +36,7 @@ namespace Common
 		smgr = device->getSceneManager();
 		irrDriver = device->getVideoDriver();
 		device->getCursorControl()->setVisible(0);
-
+		soundEngine = irrklang::createIrrKlangDevice();
 		device->getCursorControl()->setPosition(0.5f, 0.5f);
 		input->MouseState.Position.set(device->getCursorControl()->getPosition().X, device->getCursorControl()->getPosition().Y);
 	}

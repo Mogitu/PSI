@@ -1,30 +1,9 @@
-﻿Build started 3/21/2015 4:19:44 PM.
-     1>Project "C:\Users\Maikel\Documents\GitHub\PSI\GAME\Game\Game.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ParticleSettings.cpp
-         ParticleSettings.cpp
-     1>c:\users\maikel\documents\github\psi\game\game\particlesettings.cpp(26): warning C4244: '=' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\maikel\documents\github\psi\game\game\particlesettings.cpp(28): warning C4244: '=' : conversion from 'int' to 'irr::f32', possible loss of data
-     1>c:\users\maikel\documents\github\psi\game\game\particlesettings.cpp(55): warning C4244: '=' : conversion from 'float' to 'irr::u32', possible loss of data
-     1>c:\users\maikel\documents\github\psi\game\game\particlesettings.cpp(85): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\maikel\documents\github\psi\game\game\particlesettings.cpp(86): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\maikel\documents\github\psi\game\game\particlesettings.cpp(87): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\maikel\documents\github\psi\game\game\particlesettings.cpp(88): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>c:\users\maikel\documents\github\psi\game\game\particlesettings.cpp(98): warning C4244: '=' : conversion from 'float' to 'irr::u32', possible loss of data
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\bin\Game.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib irrlicht.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\bin\Game.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\bin\Game.lib" /MACHINE:X86 Debug\BulletHelper.obj
-         Debug\Common.obj
-         Debug\GameWorld.obj
-         Debug\Enemy.obj
-         Debug\Level.obj
-         Debug\Main.obj
-         Debug\ParticleSettings.obj
-         Debug\ParticleManager.obj
-         Debug\Player.obj
-         Debug\Projectile.obj
-         Game.vcxproj -> C:\Users\Maikel\Documents\GitHub\PSI\GAME\Game\..\bin\Game.exe
-     1>Done Building Project "C:\Users\Maikel\Documents\GitHub\PSI\GAME\Game\Game.vcxproj" (Build target(s)).
+﻿Build started 2-4-2015 12:31:27.
+     1>Project "D:\HvA\Jaar 3\BU\PSI\GAME\Game\Game.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         Game.vcxproj -> D:\HvA\Jaar 3\BU\PSI\GAME\Game\..\bin\Game.exe
+     1>Done Building Project "D:\HvA\Jaar 3\BU\PSI\GAME\Game\Game.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.41
+Time Elapsed 00:00:00.06

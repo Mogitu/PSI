@@ -8,6 +8,7 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	isAlive = true;
 	shootInterval = 250;//ms
 	shootIntervalTimer = 0;
+	world->setPlayer(this);
 }
 
 void Player::Initialize()
@@ -17,7 +18,6 @@ void Player::Initialize()
 
 void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
 {
-
 	justJumped = false;
 	this->input = input;
 	this->helper = helper;
@@ -107,6 +107,7 @@ void Player::Fire()
 		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY()+20, body->getWorldTransform().getOrigin().getZ());
 		p->fire(pos + helper->extractForwardVector(body)*30, helper->extractForwardVector(body));
 		world->addGameObject(p);	
+		Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");
 	}	
 }
 

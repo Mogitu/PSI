@@ -15,11 +15,11 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     IrrRenderWidget.cpp \
-    ParticleManager.cpp
+    ParticleSettings.cpp
 
 HEADERS  += mainwindow.h \
     IrrRenderWidget.h \
-    ParticleManager.h
+    ParticleSettings.h
 
 FORMS    += mainwindow.ui
 

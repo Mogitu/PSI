@@ -18,16 +18,24 @@ public:
 	void SetDeath(float begindeath = 0, float enddeath = 0, float deathspeed = 25);
 	void getcurrentframe();
 	virtual void kill();
+	void shoot();
+
 private:
 	irr::scene::ISceneManager *smgr;
 	irr::video::IVideoDriver *irrDriver;
 	//irr::scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	GameWorld *world;
+	float shootingRange;
 	float begindeath;
 	float enddeath;
 	float deathspeed;
 	float frameget;
+	void followPlayer();
+	float shootTimer;
+	float shootTimerMax;
+	float walkSpeed;
+	const IGameObject *player;	
 };
 
 #endif ENEMY_H

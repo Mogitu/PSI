@@ -7,7 +7,7 @@
 #include <QObject>
 #include <QWidget>
 #include "irrlicht.h"
-#include "ParticleManager.h"
+#include "ParticleSettings.h"
 
 using namespace irr;
 using namespace core;
@@ -23,9 +23,8 @@ public:
     IrrRenderWidget(QWidget *irrRenderTarget, bool softwareRenderer);
     ~IrrRenderWidget();  
     void init();
-    void resizeIrrWidget(int x, int y, int newWidth, int newHeight);
-    void exportToFile();
-    ParticleManager* particleManager;
+    void resizeIrrWidget(int x, int y, int newWidth, int newHeight);   
+    ParticleSettings* particleSettings;
 
 
 private:

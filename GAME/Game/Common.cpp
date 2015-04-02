@@ -11,4 +11,5 @@ namespace Common
 	ILogger *irrLog;
 	InputReceiver* input = new InputReceiver();
 	BulletHelper* helper;
+	ISoundEngine *soundEngine;
 }

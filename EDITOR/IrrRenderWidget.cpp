@@ -1,5 +1,3 @@
-
-
 #include "IrrRenderWidget.h"
 
 IrrRenderWidget::IrrRenderWidget(QWidget *irrRenderTarget, bool softwareRenderer)
@@ -42,28 +40,6 @@ IrrRenderWidget::~IrrRenderWidget()
     device->drop();
 }
 
-//Preliminary method to export a settings file
-void IrrRenderWidget::exportToFile()
-{
-    //setup te file system and the reader.
-    IFileSystem *fs = device->getFileSystem();
-    IXMLWriter *xml = fs->createXMLWriter("test.xml");
-
-    //need to create the header first
-    xml->writeXMLHeader();
-
-    //setup containers with settings
-    array<stringw> elements;
-    array<stringw> values;
-    elements.insert(L"testel");
-    values.insert(L"testval");
-
-    //finally write to the file
-    xml->writeElement(L"commonSettings",false,elements,values);
-    xml->writeLineBreak();   
-}
-
-
 //setup the widget
 void IrrRenderWidget::init()
 {
@@ -71,7 +47,7 @@ void IrrRenderWidget::init()
     {
         //create a new particle manager and setup the camera
         smgr = device->getSceneManager();
-        particleManager = new ParticleManager(device);
+        particleSettings = new ParticleSettings(device);
         smgr->addCameraSceneNode(0, core::vector3df(0, -50, -100), core::vector3df(0, 5, 0));
 
         //this will hand control over to the game/render loop
