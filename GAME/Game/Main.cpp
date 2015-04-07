@@ -59,10 +59,6 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 }
 
 int main() {
-
-	list<Projectile*> projectiles;
-	Level *level;
-
 	initIrrlicht();
 	// Add camera
 	camera = smgr->addCameraSceneNode(0);
@@ -70,7 +66,7 @@ int main() {
 	device->getCursorControl()->setPosition(0.5f, 0.5f);
 	middleScreenPosition = device->getCursorControl()->getPosition();
 
-	level = new Level(smgr, "../Assets/level.irr");
+	Level *level = new Level(smgr, "../Assets/level.irr");
 
 	// Create the initial scene
 	smgr->addLightSceneNode(0, core::vector3df(2, 5, -2), SColorf(4, 4, 4, 1));
@@ -78,8 +74,9 @@ int main() {
 	helper = new BulletHelper();	
 
 	//Create the game world
-	GameWorld* gWorld = new GameWorld(helper,device);	
+	GameWorld* gWorld = new GameWorld(helper,device,input);	
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));	
+	
 	gWorld->buildIrrLevel(level);		
 
 	camera->setParent(player->getNode());

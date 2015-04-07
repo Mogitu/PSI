@@ -7,6 +7,7 @@
 #include "GameWorld.h"
 #include "Projectile.h"
 
+
 class Player : public IGameObject
 {
 private:
@@ -15,8 +16,7 @@ private:
 	BulletHelper* helper;
 	ISceneManager* smgr;
 	vector2di centerScreenPosition;
-	GameWorld *world;
-
+	GameWorld *world;	
 	bool justJumped;
 	bool isGrounded();
 public:
@@ -27,6 +27,7 @@ public:
 	void PlayerMovement(u32 frameDeltaTime);
 	void Fire();
 	virtual void kill();
+	
 	const vector3df& getNodePosition() const;
 	const vector3df& getNodeAbsolutePosition() const;
 	scene::IAnimatedMeshSceneNode* getNode();

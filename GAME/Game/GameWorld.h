@@ -6,6 +6,7 @@
 #include "BulletHelper.h"
 #include "ParticleManager.h"
 #include "Level.h"
+#include "InputReceiver.h"
 
 
 using namespace irr;
@@ -30,12 +31,14 @@ private:
 	const std::string ENEMY = "EN";
 	const std::string PLAYER = "PL";
 
+	InputReceiver *playerInputReceiver;
 	core::list<IGameObject*> gameObjects;
 	BulletHelper *helper;
 	IrrlichtDevice *device;
 	IGameObject *player;
 public:
 	GameWorld(BulletHelper *h, IrrlichtDevice *device);
+	GameWorld(BulletHelper *h, IrrlichtDevice *device, InputReceiver *playerInputReceiver);
 	~GameWorld();
 	void clearGameObjects();
 	void update(u32 frameDeltaTime);

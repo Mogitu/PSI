@@ -7,6 +7,12 @@ GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device
 {
 
 }
+
+GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device, InputReceiver *playerInputReceiver) : helper(h), device(device), playerInputReceiver(playerInputReceiver)
+{
+
+}
+
 GameWorld::~GameWorld()
 {
 	clearGameObjects();
@@ -104,7 +110,6 @@ void GameWorld::update(u32 frameDeltaTime)
 }
 
 
-
 void GameWorld::addGameObject(IGameObject* gameObject)
 {
 	this->gameObjects.push_back(gameObject);
@@ -179,15 +184,17 @@ void GameWorld::buildIrrLevel(Level *level)
 			stringw last = core::stringw(name.c_str());
 			stringw path = "../Assets/";
 			ParticleManager::createFullParticleEffect(path.append(last.subString(4, last.size()).append(".xml")), p->getPosition());
-		}
-		else if (namePrefix==PLAYER)
-		{
-			//Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));	
-		}
+		}		
 		else if (namePrefix == ENEMY)
+		{		
+			IAnimatedMeshSceneNode *p = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
+			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, p, Shape_Type::CAPSULE, 300, p->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+		}
+		else if (namePrefix == PLAYER)
 		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
-			Enemy* enemy = new Enemy(Common::smgr,Common::irrDriver, helper, this, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300,p->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+			//This part bugs out, probably a problem in memory allocation in the player class.
+			//IAnimatedMeshSceneNode *p = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
+			//Player* player = new Player(Common::smgr, Common::irrDriver, helper, this, playerInputReceiver, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, p->getPosition());
 		}
 		tmp = 0;
 	}

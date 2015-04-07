@@ -20,8 +20,47 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	body->setActivationState(DISABLE_DEACTIVATION);
 }
 
+Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass , vector3df position , vector3df rotation, vector3df scale)
+{
+	this->Initialize(smgr, irrDriver, helper, world, mesh, bodyType, bodyMass, position, rotation, scale);
+	this->world = world;
+	player = world->getPlayer();
+	isAlive = true;
+	shootTimer = 0;
+	shootTimerMax = 5;
+	shootFollowRange = 200;
+	walkSpeed = 75;
+	body->setActivationState(DISABLE_DEACTIVATION);
+}
+
+
 void Enemy::Initialize(){
 	
+}
+
+void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
+{
+	this->helper = helper;
+	this->smgr = smgr;
+	this->irrDriver = irrDriver;
+	
+	//default node setup
+	node = mesh;
+	node->setName("Enemy");
+	if (node)
+	{
+		node->setPosition(position);
+		node->setRotation(rotation);
+		node->setScale(scale);
+		node->setMaterialFlag(EMF_LIGHTING, false);
+		node->setMaterialTexture(0, mesh->getMaterial(0).getTexture(0));
+	}
+	body = helper->createBody(node, bodyType, bodyMass);
+	body->setRestitution(.1);
+	body->setFriction(.3);
+	//body->setLinearFactor(btVector3(0, 1, 0));
+	body->setAngularFactor(btVector3(0, 0, 0));
+	world->addGameObject(this);
 }
 
 void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
