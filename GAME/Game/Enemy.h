@@ -26,7 +26,7 @@ private:
 	//irr::scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	GameWorld *world;
-	float shootingRange;
+	float shootFollowRange;
 	float begindeath;
 	float enddeath;
 	float deathspeed;

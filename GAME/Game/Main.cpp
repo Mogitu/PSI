@@ -75,22 +75,12 @@ int main() {
 	// Create the initial scene
 	smgr->addLightSceneNode(0, core::vector3df(2, 5, -2), SColorf(4, 4, 4, 1));
 
-	helper = new BulletHelper();
-	helper->buildIrrLevel(level);
+	helper = new BulletHelper();	
 
 	//Create the game world
-	GameWorld* gWorld = new GameWorld(helper,device);
+	GameWorld* gWorld = new GameWorld(helper,device);	
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));	
-	Enemy* enemy = new Enemy(smgr, irrDriver, helper, gWorld, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300, vector3df(-120, 100, 0), vector3df(0, 0, 0), vector3df(1, 1, 1));
-	//Enemy* enemy2 = new Enemy(smgr, irrDriver, helper, gWorld, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300, vector3df(-120, 100, 20), vector3df(0, 0, 0), vector3df(1, 1, 1));
-	
-	
-	//Set up Particle World
-	//ParticleManager::ParticleSystem* ps = ParticleManager::createParticleSystem(ParticleManager::ParticleTag::NONE, vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
-	//ParticleManager::createBoxParticle(ps, aabbox3d<f32>(-7, 3, -7, 7, 6, 7), vector3df(0.0f, 0.0f, 0.0f), 80, 100, SColor(0, 255, 255, 255), SColor(0, 255, 255, 255), 800, 2000, 0, dimension2df(10.0f, 10.0f), dimension2df(20.0f, 20.f));
-	//ParticleManager::createFullParticleEffect("");
-
-	//ParticleManager::createSphereParticle(ps, vector3df(0, 10, 0), 5, vector3df(0.0f, 0.0f, 0.0f), 80, 100, SColor(0, 255, 255, 255), SColor(0, 255, 255, 255), 800, 2000, 0, dimension2df(10.0f, 10.0f), dimension2df(10.0f, 10.0f));
+	gWorld->buildIrrLevel(level);		
 
 	camera->setParent(player->getNode());
 	camera->setTarget(player->getNodeAbsolutePosition());
@@ -123,7 +113,6 @@ int main() {
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();
 	}
-
 	device->drop();
 	return 0;
 }

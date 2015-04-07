@@ -269,7 +269,7 @@ btRigidBody *BulletHelper::createSphere(ISceneNode* node, btScalar mass)
 }
 
 
-
+//DEPRECATED!!!!! Use the method from the gameworld instead
 void BulletHelper::buildIrrLevel(Level *level)
 {	
 	for (u32 i = 0; i < level->getNodes().size(); i++)
@@ -316,6 +316,9 @@ void BulletHelper::buildIrrLevel(Level *level)
 			stringw last = core::stringw(name.c_str());			
 			stringw path = "../Assets/";					
 			ParticleManager::createFullParticleEffect(path.append(last.subString(4,last.size()).append(".xml")), p->getPosition());
+		}
+		else if (namePrefix == ENEMY)
+		{
 		}
 		tmp = 0;
 	}

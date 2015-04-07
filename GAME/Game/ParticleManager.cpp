@@ -1,5 +1,6 @@
 #include "ParticleManager.h"
 #include <vector>
+#include "myAffector.h"
 
 using namespace Common;
 using namespace std;
@@ -103,7 +104,7 @@ namespace ParticleManager
 				s.minRate, s.maxRate,
 				s.minColor,
 				s.maxColor,
-				s.minTime,s.maxTime, 0,
+				s.minTime, s.maxTime, 0,
 				dimension2df(s.minStartSize, s.minStartSize),
 				dimension2df(s.maxStartSize, s.maxStartSize));			
 		}
@@ -115,22 +116,15 @@ namespace ParticleManager
 				s.minRate,s.maxRate,
 				s.minColor,
 				s.maxColor,
-				s.minTime,s.maxTime, 0,
+				s.minTime, s.maxTime, 0,
 				dimension2df(s.minStartSize, s.minStartSize),
 				dimension2df(s.maxStartSize, s.maxStartSize));				
 		}	
-		//Adding the affectors
-		std::vector<IParticleAffector*> affectors;//list to make this part less big
-		if (s.scaleAF)affectors.push_back(ps->psNode->createScaleParticleAffector(s.scale_scaleTo));//adding affectors if they are needed
-		if (s.attraction)affectors.push_back(ps->psNode->createAttractionAffector(s.attraction_point, s.attraction_attract, s.attraction_affectX, s.attraction_affectY, s.attraction_affectZ));
-		if (s.fade)affectors.push_back(ps->psNode->createFadeOutParticleAffector(s.fade_targetColor, s.fade_timeNeededToFadeOut));
-		if (s.gravity)affectors.push_back(ps->psNode->createGravityAffector(s.gravity_gravity, s.gravity_timeForceLost));
-		if (s.rotation)affectors.push_back(ps->psNode->createRotationAffector(s.rotation_speed, s.rotation_pivotPoint));
-		for (std::vector<IParticleAffector*>::iterator affector = affectors.begin(); affector != affectors.end(); ++affector)
-		{
-			ps->psNode->addAffector(*affector);//Finally adding them
-			(*affector)->drop();//drop is needed
-		}
+
+
+		IParticleAffector *aff = new MyAffector(vector3df(5,0,0),vector3df(0,0,0));
+		ps->psNode->addAffector(aff);
+	
 		psList.push_back(ps);
 		return ps;
 	}

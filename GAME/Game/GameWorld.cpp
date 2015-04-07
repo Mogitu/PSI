@@ -1,4 +1,6 @@
 #include "GameWorld.h"
+#include "Enemy.h"
+#include "Player.h"
 
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
@@ -19,7 +21,6 @@ void GameWorld::clearGameObjects()
 
 		delete gameObject;
 	}
-
 	gameObjects.clear();
 }
 
@@ -57,6 +58,7 @@ void GameWorld::update(u32 frameDeltaTime)
 		std::string nameA = nodeA->getName();
 		std::string nameB = nodeB->getName();
 		
+		//check collisions between enemies and projectiles
 		if ((nameB == "Enemy"&&nameA == "Projectile") || (nameA == "Enemy"&&nameB == "Projectile"))
 		{					
 			int numContacts = contactManifold->getNumContacts();
@@ -78,10 +80,25 @@ void GameWorld::update(u32 frameDeltaTime)
 			}
 		}		
 
+		//check collisions between player and enemy
 		if ((nameB == "Enemy"&&nameA == "Player") || (nameA == "Enemy"&&nameB == "Player"))
 		{
 			ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeA->getPosition());
 			ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeB->getPosition());
+		}
+
+		//check collisions between player and projectiles
+		if ((nameB == "Projectile"&&nameA == "Player") || (nameA == "Projectile"&&nameB == "Player"))
+		{
+			if (nameA == "Projectile")
+			{
+				nodeA->setName("dead");
+
+			}
+			else if (nameB == "Projectile")
+			{
+				nodeB->setName("dead");
+			}
 		}
 	}
 }
@@ -115,4 +132,63 @@ void GameWorld::setPlayer(IGameObject *p)
 IGameObject *GameWorld::getPlayer()
 {
 	return player;
+}
+
+void GameWorld::buildIrrLevel(Level *level)
+{
+	for (u32 i = 0; i < level->getNodes().size(); i++)
+	{
+		btRigidBody *tmp = 0;
+		std::string name = level->getNodes()[i]->getName();
+
+		ISceneNode *node = level->getNamedNode(name);
+
+		std::string namePrefix = name.substr(0, 2);
+
+		if (namePrefix == DYNAMIC_CUBE)
+		{
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
+			tmp = helper->createCube(p, 50);
+			tmp->setRestitution(0.8);
+			tmp->setFriction(0.6);
+		}
+		else if (namePrefix == STATIC_CUBE)
+		{
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
+			tmp = helper->createCube(p, 0);
+			tmp->setRestitution(0.2);
+			tmp->setFriction(0.3);
+		}
+		else if (namePrefix == DYNAMIC_SPHERE)
+		{
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
+			tmp = helper->createSphere(p, 50);
+			tmp->setRestitution(0.8);
+			tmp->setFriction(0.6);
+		}
+		else if (namePrefix == WORLD)
+		{
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
+			tmp = helper->createTriangleBody(p);
+			tmp->setRestitution(0.8);
+			tmp->setFriction(0.6);
+		}
+		else if (namePrefix == PARTICLE)
+		{
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
+			stringw last = core::stringw(name.c_str());
+			stringw path = "../Assets/";
+			ParticleManager::createFullParticleEffect(path.append(last.subString(4, last.size()).append(".xml")), p->getPosition());
+		}
+		else if (namePrefix==PLAYER)
+		{
+			//Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));	
+		}
+		else if (namePrefix == ENEMY)
+		{
+			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
+			Enemy* enemy = new Enemy(Common::smgr,Common::irrDriver, helper, this, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300,p->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+		}
+		tmp = 0;
+	}
 }

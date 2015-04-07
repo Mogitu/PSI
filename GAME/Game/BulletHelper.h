@@ -39,7 +39,12 @@ public:
 	btDiscreteDynamicsWorld *getWorld();
 	btVector3 extractForwardVector(const btRigidBody *body);
 	btVector3 extractRightVector(const btRigidBody *body);
-
+	btRigidBody *createCube(ISceneNode* node, btScalar mass);
+	btRigidBody *createSphere(ISceneNode* node, btScalar mass);
+	btRigidBody *createTriangleBody(ISceneNode *node);
+	btRigidBody *createConvexTriangleBody(ISceneNode *node);
+	btRigidBody *createCapsule(ISceneNode *node, btScalar mass);
+	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, const vector3df& scaling);
 private:
 	const float GRAVITY = -9.8f;
 	//constants for objects in a level
@@ -49,6 +54,7 @@ private:
 	const std::string STATIC_CUBE = "SB";
 	const std::string WORLD = "WB";
 	const std::string PARTICLE = "PS";
+	const std::string ENEMY = "EN";
 	
 	list<btRigidBody *> objects;
 	btDiscreteDynamicsWorld *world;
@@ -56,12 +62,7 @@ private:
 	btBroadphaseInterface *broadPhase;
 	btCollisionDispatcher *dispatcher;
 	btSequentialImpulseConstraintSolver *solver;	
-	btRigidBody *createCube(ISceneNode* node, btScalar mass);
-	btRigidBody *createSphere(ISceneNode* node, btScalar mass);
-	btRigidBody *createTriangleBody(ISceneNode *node);
-	btRigidBody *createConvexTriangleBody(ISceneNode *node);
-	btRigidBody *createCapsule(ISceneNode *node, btScalar mass);
-	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, const vector3df& scaling);
+
 	IMesh* getMesh(ISceneNode* node);
 };
 
