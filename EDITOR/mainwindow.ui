@@ -474,13 +474,6 @@
              <string>Center</string>
             </property>
            </widget>
-           <zorder>lineSpereRadius</zorder>
-           <zorder>labelSphereRadius</zorder>
-           <zorder>centerBoxY</zorder>
-           <zorder>centerBoxZ</zorder>
-           <zorder>centerBoxX</zorder>
-           <zorder>labelCenter</zorder>
-           <zorder>groupBoxSettings</zorder>
           </widget>
          </item>
         </layout>
@@ -579,23 +572,6 @@
      </attribute>
     </widget>
    </widget>
-   <widget class="QPushButton" name="ApplyAll">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>540</y>
-      <width>101</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Apply</string>
-    </property>
-   </widget>
-   <zorder>ParticlePreviewWidget</zorder>
-   <zorder>tabWidget</zorder>
-   <zorder>ApplyAll</zorder>
-   <zorder>verticalLayoutWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
