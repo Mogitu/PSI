@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<commonSettings
+	imagePath = "../Assets/sparkle.png"
+	scaleX = "2" scaleY="2" scaleZ="2"
+	minStartSize="5" maxStartSize="10"
+	type="sphere"
+	duration="30000"
+	directionX="0" directionY="0" directionZ="0"
+	minRate="800" maxRate="1000"
+	minTime="2000" maxTime="4000"
+	minColorR="0" minColorG="68" minColorB="10" minColorA="255"
+	maxColorR="85" maxColorG="255" maxColorB="127" maxColorA="255"
+/>
+<sphereSettings value ="1"
+	radius="6"	
+/>
+<boxSettings value = "0"
+	minX = "-7" minY="-5" minZ="-7"
+	maxX = "7" maxY= "5" maxZ="7"
+/>
+<AffectorSettings value = "1"
+
+	attraction="0"
+		attraction_pointX="0" attraction_pointY="0" attraction_pointZ="0"
+		attraction_speed="0"
+		attraction_attract="0"
+		attraction_affectX="0"
+		attraction_affectY="0"
+		attraction_affectZ="0"
+	
+	scale="1"
+		scale_scaleToWidth="0.1" scale_scaleToHeight="0.1"
+		
+	fade="0"
+		fade_targetColorR="0" fade_targetColorG="0" fade_targetColorG="0" fade_targetColorA="0"
+		fade_timeNeededToFadeOut="1000"
+
+	gravity="0"
+		gravity_gravityX="0" gravity_gravityY="0.0" gravity_gravityZ="0"
+		gravity_timeForceLost="2000"
+
+	rotation = "0"
+		rotation_speedX="60" rotation_speedY="0" rotation_speedZ="0" 
+		rotation_pivotPointX="0" rotation_pivotPointY="0" rotation_pivotPointZ="0"
+	
+/>
+

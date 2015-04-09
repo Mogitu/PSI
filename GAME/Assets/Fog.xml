@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<commonSettings
+	imagePath = "../Assets/Cloud_01.png"
+	scaleX = "8" scaleY="8" scaleZ="8"
+	minStartSize="40" maxStartSize="40"
+	type="box"
+	duration="30000"
+	directionX="0" directionY="0" directionZ="0"
+	minRate="2000" maxRate="3000"
+	minTime="2000" maxTime="4000"
+	minColorR="255" minColorG="255" minColorB="255" minColorA="150"
+	maxColorR="255" maxColorG="255" maxColorB="255" maxColorA="50"
+/>
+<sphereSettings value ="0"
+	radius="8"	
+/>
+<boxSettings value = "1"
+	minX = "-40" minY="-5" minZ="-40"
+	maxX = "40" maxY= "100" maxZ="40"
+/>
+<AffectorSettings value = "1"
+
+	attraction="0"
+		attraction_pointX="0" attraction_pointY="0" attraction_pointZ="0"
+		attraction_speed="0"
+		attraction_attract="0"
+		attraction_affectX="0"
+		attraction_affectY="0"
+		attraction_affectZ="0"
+	
+	scale="1"
+		scale_scaleToWidth="1" scale_scaleToHeight="3"
+		
+	fade="1"
+		fade_targetColorR="0" fade_targetColorG="0" fade_targetColorG="0" fade_targetColorA="0"
+		fade_timeNeededToFadeOut="9000"
+
+	gravity="0"
+		gravity_gravityX="-0.01" gravity_gravityY="-0.01" gravity_gravityZ="0"
+		gravity_timeForceLost="2000"
+
+	rotation = "0"
+		rotation_speedX="0" rotation_speedY="0" rotation_speedZ="0" 
+		rotation_pivotPointX="0" rotation_pivotPointY="0" rotation_pivotPointZ="0"
+	
+/>
+
