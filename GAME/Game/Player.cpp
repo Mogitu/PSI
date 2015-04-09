@@ -70,16 +70,22 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 
 	this->body->setAngularVelocity(btVector3(0, 0, 0));
 
-	//TODO: Needs more restriction (now you can move while you're not grounded)
+	bool grounded = isGrounded();
+
+	if (grounded)
+		restriction = 1;
+	else
+		restriction = .2f;
+
 	if (input->IsKeyDown(KEY_KEY_W))
-		vel = forward * 50;
+		vel = forward * speed * restriction;
 	else if (input->IsKeyDown(KEY_KEY_S))
-		vel = forward * -50;
+		vel = forward * -speed * restriction;
 
 	if (input->IsKeyDown(KEY_KEY_A))
-		vel = right * 50;
+		vel = right * speed * restriction;
 	else if (input->IsKeyDown(KEY_KEY_D))
-		vel = right * -50;
+		vel = right * -speed * restriction;
 
 	int diff = 0;
 	
@@ -89,7 +95,7 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 	turningVel = btVector3(0, diff, 0);
 
 	//TODO: Justjumped isn't used now
-	if (input->IsKeyDown(KEY_SPACE) && isGrounded() && !justJumped)
+	if (input->IsKeyDown(KEY_SPACE) && grounded && !justJumped)
 	{
 		vel += btVector3(0, 2000, 0);
 		//justJumped = true;
@@ -155,7 +161,7 @@ const vector3df& Player::getNodeAbsolutePosition() const
 	return node->getAbsolutePosition();
 }
 
-GameObjectType Player::getType()
+GameObjectType Player::getType() const
 {
 	return GameObjectType::PLAYER;
 }
