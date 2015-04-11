@@ -58,17 +58,20 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 	camera->setTarget(nodePosition.operator+(vector3df(0, heightModifier, 0)));
 }
 
-
+//Draw basic hud with score and player health, also displayes game over text when player is dead.
 void drawHud(IGUIFont *font, Player *player)
 {
+	//default textcolor, yellow
 	SColor textColor(255,255,255,0);
+	//player health
 	font->draw(L"Health:", rect<s32>(3, 0, 300, 50),textColor);
 	stringw playerHealth(player->health);
 	font->draw(playerHealth, rect<s32>(70, 0, 300, 50), textColor);
-	stringw playerScore(player->score);
+	//score
+	stringw playerScore(player->getScore());
 	font->draw(L"Score:", rect<s32>(3, 20, 300, 50), textColor);
 	font->draw(playerScore, rect<s32>(70, 20, 300, 50), textColor);
-
+	//when gameover
 	if (player->health<=0 || !player->isAlive)
 	{
 		font->draw(L"GAME OVER", rect<s32>(300, 300, 300, 50), textColor);
@@ -92,7 +95,7 @@ int main() {
 
 	//Create the game world
 	GameWorld* gWorld = new GameWorld(helper,device,input);	
-	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));	
+	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(447, 100, -299));	
 	
 	gWorld->buildIrrLevel(level);		
 
@@ -100,9 +103,6 @@ int main() {
 	camera->setTarget(player->getNodeAbsolutePosition());
 	
 	Common::soundEngine->play2D("../Assets/Sounds/getout.ogg");
-	//create flame
-	ParticleManager::createFullParticleEffect("../Assets/Flame1.xml", vector3df(0,9,0));
-	ParticleManager::createFullParticleEffect("../Assets/Flame2.xml", vector3df(0, 9, 0));
 	
 	//create hud vars.
 	IGUIEnvironment *gui = device->getGUIEnvironment();
@@ -117,7 +117,8 @@ int main() {
 		if (deltaTime < 1000 / fps)
 			continue;
 		timeStamp = irrTimer->getTime();	
-		if (player && player->isAlive)
+		//only update the camera when the player is alive.
+		if (player->isAlive)
 		{
 			updateCamera(device, player->getNodeAbsolutePosition(), (f32)deltaTime);
 			camera->setTarget(player->getNodeAbsolutePosition());

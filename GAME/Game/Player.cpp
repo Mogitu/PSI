@@ -18,6 +18,16 @@ void Player::Initialize()
 	//Overload this function
 }
 
+void Player::increaseScore(int amount)
+{
+	score += amount;
+}
+
+int Player::getScore()
+{
+	return score;
+}
+
 void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
 {
 	justJumped = false;
@@ -122,7 +132,7 @@ void Player::Fire()
 {
 	if (input->IsKeyDown(KEY_KEY_E))
 	{
-		Projectile *p = new Projectile(smgr, helper);
+		Projectile *p = new Projectile(smgr, helper,"PlayerProjectile");
 		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY()+20, body->getWorldTransform().getOrigin().getZ());
 		p->fire(pos + helper->extractForwardVector(body)*30, helper->extractForwardVector(body));
 		world->addGameObject(p);	

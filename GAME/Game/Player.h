@@ -19,6 +19,7 @@ private:
 	GameWorld *world;	
 	bool justJumped;
 	bool isGrounded();
+	int score;
 public:
 	Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world,InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass = 1,vector3df position = vector3df(0, 0, 0), vector3df rotation = vector3df(0, 0, 0), vector3df scale = vector3df(1, 1, 1));
 	void Initialize();
@@ -34,7 +35,8 @@ public:
 	GameObjectType getType();
     u32 shootInterval;
 	u32 shootIntervalTimer;	
-	int score;
+	void increaseScore(int amount);
+	int getScore();
 	//scene::IAnimatedMeshSceneNode*& n = (IAnimatedMeshSceneNode*)node;
 };
 

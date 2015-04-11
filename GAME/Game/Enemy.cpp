@@ -113,7 +113,7 @@ void Enemy::Update(u32 frameDeltaTime)
 //TODO: make more readable...
 void Enemy::shoot()
 {		
-		Projectile *projectile = new Projectile(smgr, helper);
+		Projectile *projectile = new Projectile(smgr, helper,"EnemyProjectile");
 		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
 		btVector3 offSet((btVector3(player->node->getPosition().X, 50, player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z)).normalize() * 30);
 		vector3df playerToEnemy = (player->node->getPosition() - node->getPosition()) - vector3df(offSet.getX(), offSet.getY(), offSet.getZ());

@@ -1,7 +1,7 @@
 #include "Projectile.h"
 
 
-Projectile::Projectile(ISceneManager *smgr, BulletHelper *h) :smgr(smgr), h(h)
+Projectile::Projectile(ISceneManager *smgr, BulletHelper *h, stringw projectileName) :smgr(smgr), h(h), projectileName(projectileName)
 {
 	Initialize();	
 }
@@ -19,7 +19,7 @@ void Projectile::Initialize()
 	isAlive = true;
 	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
 	node = smgr->addMeshSceneNode(mesh);
-	node->setName("Projectile");	
+	node->setName(projectileName);	
 	//node->setPosition(vector3df(0, 20, 0));
 	body = h->createBody(node, Shape_Type::SPHERE,10);
 	body->setLinearFactor(btVector3(1, 0, 1));

@@ -32,16 +32,20 @@ void GameWorld::clearGameObjects()
 
 void GameWorld::update(u32 frameDeltaTime)
 {	
+	//only update when game is in play state
 	if (gameState==PLAYING)
 	{
+		//Loop all objects in the world and update their physics
 		for (core::list<IGameObject *>::Iterator Iterator = gameObjects.begin(); Iterator != gameObjects.end(); ++Iterator)
 		{
 			IGameObject* gameObject = *Iterator;
 			gameObject->Update(frameDeltaTime);
 			helper->updatePhysics(gameObject->body);
 
+			//gets the name of the node
 			stringw nodeName = gameObject->node->getName();
 
+			//if object not alive or name is dead we kill/clean it.
 			if (!gameObject->isAlive || nodeName == "dead")
 			{
 				gameObject->kill();
@@ -67,11 +71,9 @@ void GameWorld::update(u32 frameDeltaTime)
 			std::string nameB = nodeB->getName();
 
 			//check collisions between enemies and projectiles
-			if ((nameB == "Enemy"&&nameA == "Projectile") || (nameA == "Enemy"&&nameB == "Projectile"))
+			if ((nameB == "Enemy"&&nameA == "PlayerProjectile") || (nameA == "Enemy"&&nameB == "PlayerProjectile"))
 			{
-				Player *p = (Player*)getPlayer();
-				if (!p)
-					return;
+				Player *p = (Player*)getPlayer();				
 				int numContacts = contactManifold->getNumContacts();
 				for (int j = 0; j<numContacts; j++)
 				{
@@ -88,8 +90,8 @@ void GameWorld::update(u32 frameDeltaTime)
 					nodeA->setName("dead");
 					nodeB->setName("dead");
 					Common::soundEngine->play2D("../Assets/Sounds/explosion.wav");
-					p->score += 10;
-				}
+					p->increaseScore(10);
+				}			
 			}
 
 			//check collisions between player and enemy
@@ -97,27 +99,26 @@ void GameWorld::update(u32 frameDeltaTime)
 			{
 				ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeA->getPosition());
 				ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeB->getPosition());
+				
 			}
 
 			//check collisions between player and projectiles
-			if ((nameB == "Projectile"&&nameA == "Player") || (nameA == "Projectile"&&nameB == "Player"))
+			if ((nameB == "EnemyProjectile"&&nameA == "Player") || (nameA == "EnemyProjectile"&&nameB == "Player"))
 			{
-				Player *p = (Player*)getPlayer();
-				if (!p)
-					return;
-				if (nameA == "Projectile")
+				Player *p = (Player*)getPlayer();				
+				
+				if (nameA == "EnemyProjectile")
 				{
 					nodeA->setName("dead");
 				}
-				else if (nameB == "Projectile")
+				else if (nameB == "EnemyProjectile")
 				{
 					nodeB->setName("dead");
 				}
-				p->takeDamage(20);				
-			}
+				p->takeDamage(20);								
+			}			
 		}
-	}
-	
+	}	
 }
 
 
@@ -185,7 +186,7 @@ void GameWorld::buildIrrLevel(Level *level)
 		else if (namePrefix == WORLD)
 		{
 			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
-			tmp = helper->createTriangleBody(p);
+			tmp = helper->createConvexTriangleBody(p);
 			tmp->setRestitution(0.2);
 			tmp->setFriction(0.3);
 		}
