@@ -92,18 +92,21 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 
 void Enemy::Update(u32 frameDeltaTime)
 {	
-	shootTimer += frameDeltaTime;	
-	//get distance between player and enemy
-	f32 dist = node->getPosition().getDistanceFrom(player->node->getPosition());
-	//if player is in range the enemy will shoot and attempt to follow at the same time.
-	if (player && player->isAlive && dist <= shootFollowRange)
+	if (player && player->isAlive)
 	{
-		if (shootTimer >= shootTimerMax * 1000 && player)
+		shootTimer += frameDeltaTime;
+		//get distance between player and enemy
+		f32 dist = node->getPosition().getDistanceFrom(player->node->getPosition());
+		//if player is in range the enemy will shoot and attempt to follow at the same time.
+		if (player && player->isAlive && dist <= shootFollowRange)
 		{
-			shootTimer = 0;
-			shoot();
+			if (shootTimer >= shootTimerMax * 1000 && player)
+			{
+				shootTimer = 0;
+				shoot();
+			}
+			followPlayer();
 		}
-		followPlayer();
 	}	
 }
 

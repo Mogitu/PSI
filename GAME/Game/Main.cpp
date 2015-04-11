@@ -58,6 +58,23 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 	camera->setTarget(nodePosition.operator+(vector3df(0, heightModifier, 0)));
 }
 
+
+void drawHud(IGUIFont *font, Player *player)
+{
+	SColor textColor(255,255,255,0);
+	font->draw(L"Health:", rect<s32>(3, 0, 300, 50),textColor);
+	stringw playerHealth(player->health);
+	font->draw(playerHealth, rect<s32>(70, 0, 300, 50), textColor);
+	stringw playerScore(player->score);
+	font->draw(L"Score:", rect<s32>(3, 20, 300, 50), textColor);
+	font->draw(playerScore, rect<s32>(70, 20, 300, 50), textColor);
+
+	if (player->health<=0 || !player->isAlive)
+	{
+		font->draw(L"GAME OVER", rect<s32>(300, 300, 300, 50), textColor);
+	}
+}
+
 int main() {
 	initIrrlicht();
 	// Add camera
@@ -81,13 +98,16 @@ int main() {
 
 	camera->setParent(player->getNode());
 	camera->setTarget(player->getNodeAbsolutePosition());
-
-	camera->setTarget(player->getNodePosition());
+	
 	Common::soundEngine->play2D("../Assets/Sounds/getout.ogg");
 	//create flame
 	ParticleManager::createFullParticleEffect("../Assets/Flame1.xml", vector3df(0,9,0));
 	ParticleManager::createFullParticleEffect("../Assets/Flame2.xml", vector3df(0, 9, 0));
 	
+	//create hud vars.
+	IGUIEnvironment *gui = device->getGUIEnvironment();
+	IGUIFont *font = gui->getFont("../Assets/Fonts/myfont.xml");
+
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 	while (device->run()) {		
@@ -96,14 +116,18 @@ int main() {
 		//applying the fps
 		if (deltaTime < 1000 / fps)
 			continue;
-		timeStamp = irrTimer->getTime();		
-		updateCamera(device, player->getNodeAbsolutePosition(), (f32)deltaTime);
-		camera->setTarget(player->getNodeAbsolutePosition());
+		timeStamp = irrTimer->getTime();	
+		if (player && player->isAlive)
+		{
+			updateCamera(device, player->getNodeAbsolutePosition(), (f32)deltaTime);
+			camera->setTarget(player->getNodeAbsolutePosition());
+		}		
 		helper->getWorld()->stepSimulation(deltaTime * 0.001f, 60);
 		gWorld->update(deltaTime);
 		ParticleManager::update(deltaTime);
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
+		drawHud(font, player);
 		guiEnv->drawAll();
 		irrDriver->endScene();
 		//Close Device

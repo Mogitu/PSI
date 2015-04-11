@@ -9,6 +9,8 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	shootInterval = 250;//ms
 	shootIntervalTimer = 0;
 	world->setPlayer(this);
+	health = 100;
+	score = 0;
 }
 
 void Player::Initialize()
@@ -51,15 +53,32 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 
 void Player::Update(u32 frameDeltaTime)
 {
-	PlayerMovement(frameDeltaTime);
-	shootIntervalTimer += frameDeltaTime;
-	if (shootIntervalTimer>shootInterval)
+	//only update when alive
+	if (health > 0 && isAlive)
 	{
-		shootIntervalTimer = 0;
-		Fire();
+		PlayerMovement(frameDeltaTime);
+		shootIntervalTimer += frameDeltaTime;
+		if (shootIntervalTimer>shootInterval)
+		{
+			shootIntervalTimer = 0;
+			Fire();
+		}
+		node->updateAbsolutePosition();
 	}
-	node->updateAbsolutePosition();
 }
+
+void Player::takeDamage(int amount)
+{
+	health -= amount;
+	if (health <= 0)
+	{
+		world->gameState = GAMESTATE::GAMEOVER;
+		isAlive = false;
+		node->setName("dead");
+		node->setVisible(false);
+	}
+}
+
 
 void Player::PlayerMovement(u32 frameDeltaTime)
 {
@@ -134,8 +153,8 @@ bool Player::isGrounded()
 
 void Player::kill()
 {
-	//h->deactivateObject(body);
 	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	isAlive = false;
 	Node->remove();
 	// Remove the object from the world
 	helper->getWorld()->removeRigidBody(body);

@@ -32,10 +32,8 @@ void BulletHelper::clearObjects() {
 		// Delete irrlicht node
 		ISceneNode *Node = static_cast<ISceneNode *>(Object->getUserPointer());
 		Node->remove();
-
 		// Remove the object from the world
 		world->removeRigidBody(Object);
-
 		// Free memory
 		delete Object->getMotionState();
 		delete Object->getCollisionShape();

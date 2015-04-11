@@ -5,12 +5,12 @@
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
 {
-
+	gameState = PLAYING;
 }
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device, InputReceiver *playerInputReceiver) : helper(h), device(device), playerInputReceiver(playerInputReceiver)
 {
-
+	gameState = PLAYING;
 }
 
 GameWorld::~GameWorld()
@@ -31,82 +31,93 @@ void GameWorld::clearGameObjects()
 }
 
 void GameWorld::update(u32 frameDeltaTime)
-{
-	for (core::list<IGameObject *>::Iterator Iterator = gameObjects.begin(); Iterator != gameObjects.end(); ++Iterator)
+{	
+	if (gameState==PLAYING)
 	{
-		IGameObject* gameObject = *Iterator;
-		gameObject->Update(frameDeltaTime);
-		helper->updatePhysics(gameObject->body);
-
-		stringw nodeName = gameObject->node->getName();
-		
-		if (!gameObject->isAlive || nodeName=="dead")
+		for (core::list<IGameObject *>::Iterator Iterator = gameObjects.begin(); Iterator != gameObjects.end(); ++Iterator)
 		{
-			gameObject->kill();
-			gameObjects.erase(Iterator);
-			delete gameObject;
-			return;			
-		}			
+			IGameObject* gameObject = *Iterator;
+			gameObject->Update(frameDeltaTime);
+			helper->updatePhysics(gameObject->body);
+
+			stringw nodeName = gameObject->node->getName();
+
+			if (!gameObject->isAlive || nodeName == "dead")
+			{
+				gameObject->kill();
+				gameObjects.erase(Iterator);
+				delete gameObject;
+				return;
+			}
+		}
+
+		//collision detection
+		//TODO: VERY SLOPPY; in its current state this will need a lot of special case checks. Needs to be improved in later sprints.
+		int numManifolds = helper->getWorld()->getDispatcher()->getNumManifolds();
+		for (int i = 0; i<numManifolds; i++)
+		{
+			btPersistentManifold* contactManifold = helper->getWorld()->getDispatcher()->getManifoldByIndexInternal(i);
+			btCollisionObject* obA = (btCollisionObject*)contactManifold->getBody0();
+			btCollisionObject* obB = (btCollisionObject*)contactManifold->getBody1();
+
+			ISceneNode *nodeA = (ISceneNode*)contactManifold->getBody0()->getUserPointer();
+			ISceneNode *nodeB = (ISceneNode*)contactManifold->getBody1()->getUserPointer();
+
+			std::string nameA = nodeA->getName();
+			std::string nameB = nodeB->getName();
+
+			//check collisions between enemies and projectiles
+			if ((nameB == "Enemy"&&nameA == "Projectile") || (nameA == "Enemy"&&nameB == "Projectile"))
+			{
+				Player *p = (Player*)getPlayer();
+				if (!p)
+					return;
+				int numContacts = contactManifold->getNumContacts();
+				for (int j = 0; j<numContacts; j++)
+				{
+					btManifoldPoint& pt = contactManifold->getContactPoint(j);
+					if (pt.getDistance()<0.f)
+					{
+						const btVector3& ptA = pt.getPositionWorldOnA();
+						const btVector3& ptB = pt.getPositionWorldOnB();
+						const btVector3& normalOnB = pt.m_normalWorldOnB;
+						//std::cout << "Hit" << std::endl;
+					}
+					ParticleManager::createFullParticleEffect("../Assets/killEnemyEffect.xml", nodeB->getPosition());
+					ParticleManager::createFullParticleEffect("../Assets/killEnemyEffect.xml", nodeA->getPosition());
+					nodeA->setName("dead");
+					nodeB->setName("dead");
+					Common::soundEngine->play2D("../Assets/Sounds/explosion.wav");
+					p->score += 10;
+				}
+			}
+
+			//check collisions between player and enemy
+			if ((nameB == "Enemy"&&nameA == "Player") || (nameA == "Enemy"&&nameB == "Player"))
+			{
+				ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeA->getPosition());
+				ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeB->getPosition());
+			}
+
+			//check collisions between player and projectiles
+			if ((nameB == "Projectile"&&nameA == "Player") || (nameA == "Projectile"&&nameB == "Player"))
+			{
+				Player *p = (Player*)getPlayer();
+				if (!p)
+					return;
+				if (nameA == "Projectile")
+				{
+					nodeA->setName("dead");
+				}
+				else if (nameB == "Projectile")
+				{
+					nodeB->setName("dead");
+				}
+				p->takeDamage(20);				
+			}
+		}
 	}
 	
-	//collision detection
-	//TODO: VERY SLOPPY; in its current state this will need a lot of special case checks. Needs to be improved in later sprints.
-	int numManifolds = helper->getWorld()->getDispatcher()->getNumManifolds();
-	for (int i = 0; i<numManifolds; i++)
-	{
-		btPersistentManifold* contactManifold = helper->getWorld()->getDispatcher()->getManifoldByIndexInternal(i);
-		btCollisionObject* obA = (btCollisionObject*)contactManifold->getBody0();
-		btCollisionObject* obB = (btCollisionObject*)contactManifold->getBody1();
-
-		ISceneNode *nodeA =  (ISceneNode*)contactManifold->getBody0()->getUserPointer();
-		ISceneNode *nodeB = (ISceneNode*)contactManifold->getBody1()->getUserPointer();		
-
-		std::string nameA = nodeA->getName();
-		std::string nameB = nodeB->getName();
-		
-		//check collisions between enemies and projectiles
-		if ((nameB == "Enemy"&&nameA == "Projectile") || (nameA == "Enemy"&&nameB == "Projectile"))
-		{					
-			int numContacts = contactManifold->getNumContacts();
-			for (int j = 0; j<numContacts; j++)
-			{
-				btManifoldPoint& pt = contactManifold->getContactPoint(j);
-				if (pt.getDistance()<0.f)
-				{
-					const btVector3& ptA = pt.getPositionWorldOnA();
-					const btVector3& ptB = pt.getPositionWorldOnB();
-					const btVector3& normalOnB = pt.m_normalWorldOnB;
-					//std::cout << "Hit" << std::endl;
-				}
-				ParticleManager::createFullParticleEffect("../Assets/killEnemyEffect.xml", nodeB->getPosition());
-				ParticleManager::createFullParticleEffect("../Assets/killEnemyEffect.xml", nodeA->getPosition());
-				nodeA->setName("dead");
-				nodeB->setName("dead");
-				Common::soundEngine->play2D("../Assets/Sounds/explosion.wav");
-			}
-		}		
-
-		//check collisions between player and enemy
-		if ((nameB == "Enemy"&&nameA == "Player") || (nameA == "Enemy"&&nameB == "Player"))
-		{
-			ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeA->getPosition());
-			ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeB->getPosition());
-		}
-
-		//check collisions between player and projectiles
-		if ((nameB == "Projectile"&&nameA == "Player") || (nameA == "Projectile"&&nameB == "Player"))
-		{
-			if (nameA == "Projectile")
-			{
-				//nodeA->setName("dead");
-
-			}
-			else if (nameB == "Projectile")
-			{
-				//nodeB->setName("dead");
-			}
-		}
-	}
 }
 
 

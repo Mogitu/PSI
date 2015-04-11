@@ -18,8 +18,15 @@ using namespace gui;
 
 using namespace irr;
 
+enum GAMESTATE
+{
+	PLAYING,
+	GAMEOVER
+};
+
 class GameWorld
 {
+	
 private:
 	//constants for objects in a level
 	const std::string DYNAMIC_SPHERE = "DS";
@@ -39,6 +46,8 @@ private:
 public:
 	GameWorld(BulletHelper *h, IrrlichtDevice *device);
 	GameWorld(BulletHelper *h, IrrlichtDevice *device, InputReceiver *playerInputReceiver);
+
+
 	~GameWorld();
 	void clearGameObjects();
 	void update(u32 frameDeltaTime);
@@ -48,6 +57,7 @@ public:
 	void setPlayer(IGameObject *p);
 	IGameObject *getPlayer();
 	void buildIrrLevel(Level *level);	
+	GAMESTATE gameState;
 };
 
 #endif // !Game_World_H

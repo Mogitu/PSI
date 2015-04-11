@@ -27,14 +27,14 @@ public:
 	void PlayerMovement(u32 frameDeltaTime);
 	void Fire();
 	virtual void kill();
-	
+	virtual void takeDamage(int amount);
 	const vector3df& getNodePosition() const;
 	const vector3df& getNodeAbsolutePosition() const;
 	scene::IAnimatedMeshSceneNode* getNode();
 	GameObjectType getType();
     u32 shootInterval;
-	u32 shootIntervalTimer;
-
+	u32 shootIntervalTimer;	
+	int score;
 	//scene::IAnimatedMeshSceneNode*& n = (IAnimatedMeshSceneNode*)node;
 };
 
