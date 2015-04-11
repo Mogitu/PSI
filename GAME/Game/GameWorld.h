@@ -21,7 +21,8 @@ using namespace irr;
 enum GAMESTATE
 {
 	PLAYING,
-	GAMEOVER
+	GAMEOVER,
+	LEVELCOMPLETE
 };
 
 class GameWorld

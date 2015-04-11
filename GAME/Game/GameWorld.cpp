@@ -94,6 +94,20 @@ void GameWorld::update(u32 frameDeltaTime)
 				}			
 			}
 
+			//if player reaches the end node
+			if ((nameA == "SB_END"&&nameB == "Player") || (nameB == "SB_END"&&nameA == "Player"))
+			{				
+				int numContacts = contactManifold->getNumContacts();
+				for (int j = 0; j<numContacts; j++)
+				{
+					btManifoldPoint& pt = contactManifold->getContactPoint(j);
+					if (pt.getDistance()<=0.f)
+					{
+						gameState = LEVELCOMPLETE;						
+					}					
+				}
+			}
+
 			//check collisions between player and enemy
 			if ((nameB == "Enemy"&&nameA == "Player") || (nameA == "Enemy"&&nameB == "Player"))
 			{
@@ -116,7 +130,7 @@ void GameWorld::update(u32 frameDeltaTime)
 					nodeB->setName("dead");
 				}
 				p->takeDamage(20);								
-			}			
+			}				
 		}
 	}	
 }

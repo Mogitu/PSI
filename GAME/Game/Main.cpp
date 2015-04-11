@@ -59,7 +59,7 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 }
 
 //Draw basic hud with score and player health, also displayes game over text when player is dead.
-void drawHud(IGUIFont *font, Player *player)
+void drawHud(IGUIFont *font, Player *player,GameWorld *world)
 {
 	//default textcolor, yellow
 	SColor textColor(255,255,255,0);
@@ -75,6 +75,10 @@ void drawHud(IGUIFont *font, Player *player)
 	if (player->health<=0 || !player->isAlive)
 	{
 		font->draw(L"GAME OVER", rect<s32>(300, 300, 300, 50), textColor);
+	}
+	if (world->gameState==GAMESTATE::LEVELCOMPLETE)
+	{
+		font->draw(L"LEVEL COMPLETE!!!", rect<s32>(300, 300, 300, 50), textColor);
 	}
 }
 
@@ -118,7 +122,7 @@ int main() {
 			continue;
 		timeStamp = irrTimer->getTime();	
 		//only update the camera when the player is alive.
-		if (player->isAlive)
+		if (player->isAlive && gWorld->gameState==GAMESTATE::PLAYING)
 		{
 			updateCamera(device, player->getNodeAbsolutePosition(), (f32)deltaTime);
 			camera->setTarget(player->getNodeAbsolutePosition());
@@ -128,7 +132,7 @@ int main() {
 		ParticleManager::update(deltaTime);
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
-		drawHud(font, player);
+		drawHud(font, player,gWorld);
 		guiEnv->drawAll();
 		irrDriver->endScene();
 		//Close Device
