@@ -27,7 +27,6 @@ enum Shape_Type
 class BulletHelper
 {
 public:
-
 	BulletHelper();
 	~BulletHelper();
 
@@ -45,6 +44,7 @@ public:
 	btRigidBody *createConvexTriangleBody(ISceneNode *node);
 	btRigidBody *createCapsule(ISceneNode *node, btScalar mass);
 	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, const vector3df& scaling);
+
 private:
 	const float GRAVITY = -9.8f;
 	//constants for objects in a level

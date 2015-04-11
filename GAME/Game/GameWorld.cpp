@@ -98,12 +98,12 @@ void GameWorld::update(u32 frameDeltaTime)
 		{
 			if (nameA == "Projectile")
 			{
-				nodeA->setName("dead");
+				//nodeA->setName("dead");
 
 			}
 			else if (nameB == "Projectile")
 			{
-				nodeB->setName("dead");
+				//nodeB->setName("dead");
 			}
 		}
 	}
@@ -175,8 +175,8 @@ void GameWorld::buildIrrLevel(Level *level)
 		{
 			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
 			tmp = helper->createTriangleBody(p);
-			tmp->setRestitution(0.8);
-			tmp->setFriction(0.6);
+			tmp->setRestitution(0.2);
+			tmp->setFriction(0.3);
 		}
 		else if (namePrefix == PARTICLE)
 		{

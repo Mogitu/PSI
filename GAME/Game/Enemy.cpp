@@ -14,7 +14,7 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	player = world->getPlayer();
 	isAlive = true;
 	shootTimer = 0;
-	shootTimerMax = 5;
+	shootTimerMax = 1.5;
 	shootFollowRange = 200;
 	walkSpeed = 75;	
 	body->setActivationState(DISABLE_DEACTIVATION);
