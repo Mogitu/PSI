@@ -41,6 +41,8 @@ void Projectile::Update(u32 deltaTime)
 void Projectile::fire(btVector3 &pos, btVector3 &dir)
 {	
 	ParticleManager::createFullParticleEffect("../Assets/shootEffect.xml", vector3df(pos.getX(),pos.getY(),pos.getZ()));
+	ParticleManager::createFullParticleEffect("../Assets/trail.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()),node);
+	ParticleManager::createFullParticleEffect("../Assets/projectilefire.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 	isAlive = true;
 	btTransform t;	
 	t.setOrigin(pos);

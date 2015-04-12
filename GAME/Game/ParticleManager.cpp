@@ -32,6 +32,7 @@ namespace ParticleManager
 	void stopParticleSystem(ParticleSystem* ps)
 	{
 		if (isEmitting(ps))
+			//ps->psNode->setParent(0);
 			ps->psNode->setEmitter(0);
 	}
 
@@ -83,16 +84,25 @@ namespace ParticleManager
 	ParticleSystem* createFullParticleEffect(stringw path, vector3df position, ISceneNode *parent)
 	{
 		//create an instance that will load/contain all settings from a given path
-		ParticleSettings s(Common::device, path);
-
+		ParticleSettings s(Common::device, path);	
 		//create system and emitter 
-		ParticleSystem *ps = createParticleSystem(ParticleManager::ParticleTag::NONE, position, s.scale, s.imagepath);
-		
-		ps->duration = s.duration;	
-		if (parent)
+		ParticleSystem *ps;
+		//set parent
+		if (parent!=0)
 		{
+			vector3df pos(parent->getPosition());
+			ps = createParticleSystem(ParticleManager::ParticleTag::NONE, pos, s.scale, s.imagepath);
+			//makes the particle follow the parents transform etc
 			ps->psNode->setParent(parent);
+			//if we dont give -1 as duration the game will crash, probably a bug in the way the particles in this class are updated/cleaned. for now it works...
+			ps->duration = -1;
 		}
+		else
+		{
+			ps = createParticleSystem(ParticleManager::ParticleTag::NONE, position, s.scale, s.imagepath);
+			ps->duration = s.duration;
+		}			
+		
 		ps->psNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
 		//load an emitter type depending on the settings file
 		if (s.type=="box")
