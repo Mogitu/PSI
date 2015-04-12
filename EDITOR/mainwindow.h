@@ -25,6 +25,7 @@ public:
     IrrRenderWidget* irrRenderWidget;
     QColorDialog* colorPickerBright;
     QColorDialog* colorPickerDark;
+    QColorDialog* colorPickerFade;
 
     void openShapeBox(const QString text);
 private:
@@ -39,6 +40,7 @@ private slots:
     void applySettings();
     void on_PickDarkest_clicked();
     void on_PickBrightest_clicked();
+    void on_FadeColor_clicked();
     void on_actionExport_triggered();
     void on_comboShape_currentIndexChanged(const QString &arg1);
     void on_loadTexture_clicked();   
