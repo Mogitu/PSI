@@ -111,7 +111,7 @@ int main() {
 	//create hud vars.
 	IGUIEnvironment *gui = device->getGUIEnvironment();
 	IGUIFont *font = gui->getFont("../Assets/Fonts/myfont.xml");
-
+	//ParticleManager::createFullParticleEffect("../Assets/firesea.xml",vector3df(316,40,-200));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 	while (device->run()) {		

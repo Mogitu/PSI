@@ -208,8 +208,8 @@ void GameWorld::buildIrrLevel(Level *level)
 		{
 			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
 			stringw last = core::stringw(name.c_str());
-			stringw path = "../Assets/";
-			ParticleManager::createFullParticleEffect(path.append(last.subString(4, last.size()).append(".xml")), p->getPosition());
+			stringw path = "../Assets/";			
+			ParticleManager::createFullParticleEffect(path.append(last.subString(3, last.size()).append(".xml")), p->getPosition());
 		}		
 		else if (namePrefix == ENEMY)
 		{		

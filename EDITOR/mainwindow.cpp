@@ -53,6 +53,8 @@ void MainWindow::connectInputElements(){
 
     connect(colorPickerBright,SIGNAL(colorSelected(QColor)),this,SLOT(applySettings()));
     connect(colorPickerDark,SIGNAL(colorSelected(QColor)),this,SLOT(applySettings()));
+
+    connect(ui->lineTexture, SIGNAL(textChanged(QString)), this, SLOT(applySettings()));
 }
 
 void MainWindow::InitIrrRenderWidget(QWidget *irrRenderTarget)
@@ -71,6 +73,8 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 void MainWindow::applySettings()
 {
     //set all variables
+
+    irrRenderWidget->particleSettings->imagepath= ui->lineTexture->text().toStdString().c_str();
     irrRenderWidget->particleSettings->setColorBright(colorPickerBright->currentColor());
     irrRenderWidget->particleSettings->setColorDark(colorPickerDark->currentColor());
     irrRenderWidget->particleSettings->setDirection(ui->dirX->text().toFloat(),ui->dirY->text().toFloat(),ui->dirZ->text().toFloat());

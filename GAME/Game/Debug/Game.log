@@ -1,6 +1,17 @@
-﻿Build started 4/11/2015 4:52:15 PM.
+﻿Build started 4/12/2015 11:53:42 AM.
      1>Project "C:\Users\Maikel\Documents\GitHub\PSI\GAME\Game\Game.vcxproj" on node 2 (Build target(s)).
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameWorld.cpp
+         GameWorld.cpp
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(183): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(184): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(190): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(191): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(197): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(198): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(204): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(205): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+       Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\bin\Game.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib irrlicht.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib irrKlang.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\bin\Game.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\bin\Game.lib" /MACHINE:X86 Debug\BulletHelper.obj
          Debug\Common.obj
          Debug\GameWorld.obj
@@ -12,7 +23,6 @@
          Debug\ParticleManager.obj
          Debug\Player.obj
          Debug\Projectile.obj
-         LINK : ..\bin\Game.exe not found or not built by the last incremental link; performing full link
      1>BulletCollision.lib(btAxisSweep3.obj) : warning LNK4099: PDB 'bulletcollision_vs2010_debug.pdb' was not found with 'BulletCollision.lib(btAxisSweep3.obj)' or at 'C:\Users\Maikel\Documents\GitHub\PSI\GAME\bin\bulletcollision_vs2010_debug.pdb'; linking object as if no debug info
      1>BulletCollision.lib(btCollisionAlgorithm.obj) : warning LNK4099: PDB 'bulletcollision_vs2010_debug.pdb' was not found with 'BulletCollision.lib(btCollisionAlgorithm.obj)' or at 'C:\Users\Maikel\Documents\GitHub\PSI\GAME\bin\bulletcollision_vs2010_debug.pdb'; linking object as if no debug info
      1>BulletCollision.lib(btDbvt.obj) : warning LNK4099: PDB 'bulletcollision_vs2010_debug.pdb' was not found with 'BulletCollision.lib(btDbvt.obj)' or at 'C:\Users\Maikel\Documents\GitHub\PSI\GAME\bin\bulletcollision_vs2010_debug.pdb'; linking object as if no debug info
@@ -85,4 +95,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.85
+Time Elapsed 00:00:02.42

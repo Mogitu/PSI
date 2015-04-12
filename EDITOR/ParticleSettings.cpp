@@ -33,6 +33,8 @@ void ParticleSettings::init()
     minColor.set(0, 255, 255, 255);
     maxColor.set(0, 255, 255, 255);
     direction.set(0, 0.06, 0);
+
+    imagepath= "";
     createParticle();
 }
 
@@ -81,7 +83,7 @@ void ParticleSettings::createParticle()
     particleNode->setScale(vector3df(0.5,0.5,0.5));
     particleNode->setMaterialFlag(EMF_LIGHTING, false);
     particleNode->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
-    particleNode->setMaterialTexture(0, device->getVideoDriver()->getTexture("fire.bmp"));
+    particleNode->setMaterialTexture(0, device->getVideoDriver()->getTexture(imagepath));
     particleNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
 }
 
@@ -136,7 +138,7 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
 
     //now pushback all elements to write and pair them with values.
     commonElements.push_back(L"imagePath");
-    commonValues.push_back(L"../Assets/fire.bmp");
+    commonValues.push_back(imagepath);
 
     commonElements.push_back(L"scaleX");
     commonValues.push_back(L"1");
@@ -145,7 +147,7 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
     commonValues.push_back(L"1");
 
     commonElements.push_back(L"scaleZ");
-    commonValues.push_back(L"test");
+    commonValues.push_back(L"1");
 
     commonElements.push_back(L"minStartSize");
     commonValues.push_back(ui->lineMinScale->text().toStdString().c_str());
@@ -181,26 +183,74 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
     commonValues.push_back(ui->lineMaxTime->text().toStdString().c_str());
 
     commonElements.push_back(L"minColorR");
-    commonValues.push_back(L"255");
+    commonValues.push_back(stringw(minColor.getRed()));
 
     commonElements.push_back(L"minColorG");
-    commonValues.push_back(L"255");
+    commonValues.push_back(stringw(minColor.getGreen()));
 
     commonElements.push_back(L"minColorB");
-    commonValues.push_back(L"255");
+    commonValues.push_back(stringw(minColor.getBlue()));
 
     commonElements.push_back(L"maxColorR");
-    commonValues.push_back(L"255");
+    commonValues.push_back(stringw(maxColor.getRed()));
 
     commonElements.push_back(L"maxColorG");
-    commonValues.push_back(L"255");
+    commonValues.push_back(stringw(maxColor.getGreen()));
 
     commonElements.push_back(L"maxColorB");
-    commonValues.push_back(L"255");
+    commonValues.push_back(stringw(maxColor.getBlue()));
 
     //finally write to the file, again we should use writelement for each option we have and pass the proper containers in.
     xml->writeElement(L"commonSettings",false,commonElements,commonValues);   
     xml->writeLineBreak();
+
+    //setup box container settings
+    if(ui->comboShape->currentText().toStdString()=="box")
+    {
+        array<stringw> boxElements;
+        array<stringw> boxValues;
+        //the value=1 is currently mandatory as we check in the game framework for this. might get rid of this later.
+        boxElements.push_back(L"value");
+        boxValues.push_back(L"1");
+
+        boxElements.push_back(L"minX");
+        boxValues.push_back(ui->lineMinBoxX->text().toStdString().c_str());
+
+        boxElements.push_back(L"minY");
+        boxValues.push_back(ui->lineMinBoxY->text().toStdString().c_str());
+
+        boxElements.push_back(L"minZ");
+        boxValues.push_back(ui->lineMinBoxZ->text().toStdString().c_str());
+
+        boxElements.push_back(L"maxX");
+        boxValues.push_back(ui->lineMaxBoxX->text().toStdString().c_str());
+
+        boxElements.push_back(L"maxY");
+        boxValues.push_back(ui->lineMaxBoxY->text().toStdString().c_str());
+
+        boxElements.push_back(L"maxZ");
+        boxValues.push_back(ui->lineMaxBoxZ->text().toStdString().c_str());
+
+        xml->writeElement(L"boxSettings",false,boxElements,boxValues);
+        xml->writeLineBreak();
+    }
+
+    //sphere settings
+    if(ui->comboShape->currentText().toStdString()=="sphere")
+    {
+        array<stringw> sphereElements;
+        array<stringw> sphereValues;
+        //the value=1 is currently mandatory as we check in the game framework for this. might get rid of this later.
+        sphereElements.push_back(L"value");
+        sphereValues.push_back(L"1");
+
+        sphereElements.push_back(L"radius");
+        sphereValues.push_back(ui->lineSpereRadius->text().toStdString().c_str());
+
+        xml->writeElement(L"sphereSettings",false,sphereElements,sphereValues);
+        xml->writeLineBreak();
+    }
+
     //Need to drop, if we dont the xml wont be written at all.
     xml->drop();
 }
