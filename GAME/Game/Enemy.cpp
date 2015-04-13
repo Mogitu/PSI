@@ -113,7 +113,6 @@ void Enemy::Update(u32 frameDeltaTime)
 			}
 			followPlayer();
 		}
-
 		updateAvoidanceSpeed();
 		moveEnemy();
 	}	
@@ -170,6 +169,8 @@ void Enemy::followPlayer()
 
 		//set all calculations to the body.
 		body->setCenterOfMassTransform(currentTrans);
+		body->applyCentralImpulse(helper->extractForwardVector(body)*walkSpeed);
+		//body->setLinearVelocity(helper->extractForwardVector(body) * walkSpeed);
 }
 
 void Enemy::kill()

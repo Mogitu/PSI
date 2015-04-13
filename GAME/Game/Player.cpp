@@ -11,6 +11,7 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	world->setPlayer(this);
 	health = 100;
 	score = 0;
+	speed = 100;
 }
 
 void Player::Initialize()
