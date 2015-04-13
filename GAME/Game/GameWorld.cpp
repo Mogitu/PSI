@@ -1,5 +1,5 @@
 #include "GameWorld.h"
-
+#include "Enemy.h"
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
 {
@@ -33,13 +33,40 @@ void GameWorld::update(u32 frameDeltaTime)
 
 		stringw nodeName = gameObject->node->getName();
 		
-		if (!gameObject->isAlive || nodeName=="dead")
+		if (!gameObject->isAlive || nodeName == "dead")
 		{
 			gameObject->kill();
 			gameObjects.erase(Iterator);
 			delete gameObject;
-			return;			
-		}			
+			return;
+		}
+
+		if (gameObject->getType() == GameObjectType::ENEMY)
+		{
+			Enemy* e = dynamic_cast<Enemy*>(gameObject);
+			bool isAvoiding = false;
+			for (core::list<IGameObject *>::Iterator i = gameObjects.begin(); i != gameObjects.end(); ++i)
+			{
+				IGameObject* gb = *i;
+
+				if (gb->getType() == GameObjectType::PROJECTILE)
+				{
+					Projectile* projectile = dynamic_cast<Projectile*>(gb);
+
+					vector3df dist = projectile->node->getPosition() - e->node->getPosition();
+
+					if (dist.getLength() <= 60)
+					{
+						isAvoiding = true;
+						e->addAvoidance(dist);
+					}
+											
+				}
+			}
+
+			if (!isAvoiding)
+				e->resetAvoidance();
+		}
 	}
 	
 	//collision detection
@@ -57,7 +84,7 @@ void GameWorld::update(u32 frameDeltaTime)
 		std::string nameA = nodeA->getName();
 		std::string nameB = nodeB->getName();
 		
-		if ((nameB == "Enemy"&&nameA == "Projectile") || (nameA == "Enemy"&&nameB == "Projectile"))
+		if ((nameB == "Enemy" && nameA == "Projectile") || (nameA == "Enemy" && nameB == "Projectile"))
 		{					
 			int numContacts = contactManifold->getNumContacts();
 			for (int j = 0; j<numContacts; j++)
@@ -78,15 +105,13 @@ void GameWorld::update(u32 frameDeltaTime)
 			}
 		}		
 
-		if ((nameB == "Enemy"&&nameA == "Player") || (nameA == "Enemy"&&nameB == "Player"))
+		if ((nameB == "Enemy" && nameA == "Player") || (nameA == "Enemy" && nameB == "Player"))
 		{
 			ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeA->getPosition());
 			ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeB->getPosition());
 		}
 	}
 }
-
-
 
 void GameWorld::addGameObject(IGameObject* gameObject)
 {

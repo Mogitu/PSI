@@ -5,6 +5,7 @@
 #include "IGameObject.h"
 #include "BulletHelper.h"
 #include "ParticleManager.h"
+#include "Projectile.h"
 
 
 using namespace irr;

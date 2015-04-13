@@ -1,6 +1,5 @@
 #include "irrlicht.h"
 #include "Enemy.h"
-#include "Projectile.h"
 
 using namespace irr;
 using namespace scene;
@@ -17,6 +16,10 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	shootTimerMax = 2;
 	shootingRange = 200;
 	walkSpeed = 75;
+	addAvoidSpeed = 2;
+	avoidance = btVector3(0, 0, 0);
+	direction = btVector3(0, 0, 0);
+
 }
 
 void Enemy::Initialize(){
@@ -58,10 +61,13 @@ void Enemy::Update(u32 frameDeltaTime)
 		if (shootTimer >= shootTimerMax * 1000 && player)
 		{
 			shootTimer = 0;
-			shoot();
+			//shoot();
 		}
 		followPlayer();
-	}	
+	}
+
+	updateAvoidanceSpeed();
+	moveEnemy();
 }
 
 //TODO: make more readable...
@@ -100,7 +106,7 @@ void Enemy::followPlayer()
 	btTransform playerTransform = player->body->getCenterOfMassTransform();
 	btTransform currentTrans = body->getCenterOfMassTransform();	
 
-	btVector3 dir = (btVector3(player->node->getPosition().X,50,player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z)).normalize();
+	direction = btVector3(player->node->getPosition().X, 50, player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z).normalize();
 	
 	f32 deltaX = player->node->getPosition().X - node->getPosition().X;
 	f32 deltaZ = player->node->getPosition().Z - node->getPosition().Z;
@@ -112,7 +118,6 @@ void Enemy::followPlayer()
 	currentTrans.setRotation(rot);
 
 	body->setCenterOfMassTransform(currentTrans);
-	body->applyCentralImpulse(dir*walkSpeed);
 }
 
 void Enemy::kill()
@@ -126,4 +131,36 @@ void Enemy::kill()
 	delete body->getMotionState();
 	delete body->getCollisionShape();
 	delete body;		
+}
+
+//flocking separation
+void Enemy::updateAvoidanceSpeed()
+{
+	if (avoidance.length() == 0)
+		return;
+
+	avoidance.normalize();
+	avoidance *= addAvoidSpeed;
+}
+
+void Enemy::addAvoidance(vector3df delta)
+{
+	delta *= -1;
+	avoidance += btVector3(delta.X, delta.Y, delta.Z);
+}
+
+void Enemy::resetAvoidance()
+{
+	avoidance = btVector3(0, 0, 0);
+}
+
+void Enemy::moveEnemy()
+{
+	direction.setY(body->getLinearVelocity().getY());
+	body->setLinearVelocity(direction + avoidance * walkSpeed);
+}
+
+GameObjectType Enemy::getType() const
+{
+	return GameObjectType::ENEMY;
 }

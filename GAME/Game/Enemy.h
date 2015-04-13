@@ -19,7 +19,9 @@ public:
 	void getcurrentframe();
 	virtual void kill();
 	void shoot();
-
+	GameObjectType getType() const;
+	void addAvoidance(vector3df delta);
+	void resetAvoidance();
 private:
 	irr::scene::ISceneManager *smgr;
 	irr::video::IVideoDriver *irrDriver;
@@ -36,6 +38,12 @@ private:
 	float shootTimerMax;
 	float walkSpeed;
 	const IGameObject *player;	
+
+	float addAvoidSpeed;
+	btVector3 avoidance;
+	btVector3 direction;
+	void updateAvoidanceSpeed();
+	void moveEnemy();
 };
 
 #endif ENEMY_H

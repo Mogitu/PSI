@@ -73,3 +73,8 @@ void Projectile::resurrect()
 	body->setCollisionFlags(0);
 }
 
+GameObjectType Projectile::getType() const
+{
+	return GameObjectType::PROJECTILE;
+}
+
