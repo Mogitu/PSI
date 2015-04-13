@@ -9,6 +9,7 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	shootInterval = 250;//ms
 	shootIntervalTimer = 0;
 	world->setPlayer(this);
+
 }
 
 void Player::Initialize()
@@ -63,7 +64,9 @@ void Player::Update(u32 frameDeltaTime)
 
 void Player::PlayerMovement(u32 frameDeltaTime)
 {
-	btVector3 vel(0, 0, 0);
+	btVector3 newVel(0, 0, 0);
+	btVector3 currentVel(0, 0, 0);
+	btVector3 jump(0, 0, 0);
 	btVector3 turningVel(0, 0, 0);
 	btVector3 forward = helper->extractForwardVector(this->body);
 	btVector3 right = helper->extractRightVector(this->body);
@@ -73,36 +76,48 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 	bool grounded = isGrounded();
 
 	if (grounded)
+	{
 		restriction = 1;
+		currentVel = body->getLinearVelocity();
+	}
 	else
-		restriction = .2f;
+		restriction = .4f;
 
 	if (input->IsKeyDown(KEY_KEY_W))
-		vel = forward * speed * restriction;
+		newVel = forward * speed * restriction;
 	else if (input->IsKeyDown(KEY_KEY_S))
-		vel = forward * -speed * restriction;
+		newVel = -forward * speed * restriction;
 
 	if (input->IsKeyDown(KEY_KEY_A))
-		vel = right * speed * restriction;
+		newVel += right * speed * restriction;
 	else if (input->IsKeyDown(KEY_KEY_D))
-		vel = right * -speed * restriction;
+		newVel += -right * speed * restriction;
 
 	int diff = 0;
-	
+
 	if (centerScreenPosition.X != input->GetMouseState().Position.X + 5)
 		diff = -(centerScreenPosition.X - (input->GetMouseState().Position.X + 5)) / 2;
 
 	turningVel = btVector3(0, diff, 0);
 
-	//TODO: Justjumped isn't used now
+	//TODO: Justjumped isn't used now (now the jumps are uneven)
 	if (input->IsKeyDown(KEY_SPACE) && grounded && !justJumped)
 	{
-		vel += btVector3(0, 2000, 0);
-		//justJumped = true;
+		jump = btVector3(0, 2000, 0);
 	}
 
+	if (grounded)
+	{
+		newVel.setY(currentVel.getY());
+		body->setLinearVelocity(newVel);
+	}
+	else
+	{
+		jump += newVel;
+	}
+
+	body->applyCentralImpulse(jump);
 	body->setAngularVelocity(turningVel);
-	body->applyCentralImpulse(vel);
 }
 
 void Player::Fire()

@@ -5,7 +5,6 @@
 #include "BulletHelper.h"
 #include "IGameObject.h"
 #include "GameWorld.h"
-#include "Projectile.h"
 
 class Player : public IGameObject
 {
