@@ -1,4 +1,4 @@
-// Copyright (C) 2002-2012 Nikolaus Gebhardt
+// Copyright (C) 2010-2012 Nikolaus Gebhardt
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
@@ -9,60 +9,47 @@ namespace irr
 {
 	namespace scene
 	{
-
-		//! constructor
-		MyAffector::MyAffector(const core::vector3df& speed, const core::vector3df& pivotPoint)
-			: PivotPoint(pivotPoint), Speed(speed), LastTime(0)
+		MyAffector::MyAffector(const core::dimension2df& scaleTo)
+			: ScaleTo(scaleTo)
 		{
 #ifdef _DEBUG
-			setDebugName("MyAffector");
+			setDebugName("CParticleScaleAffector");
 #endif
 		}
 
 
-		//! Affects an array of particles.
-		void MyAffector::affect(u32 now, SParticle* particlearray, u32 count)
+		void  MyAffector::affect(u32 now, SParticle *particlearray, u32 count)
 		{
-			if (LastTime == 0)
+			for (u32 i = 0; i<count; i++)
 			{
-				LastTime = now;
-				return;
-			}
-
-			f32 timeDelta = (now - LastTime) / 1000.0f;
-			LastTime = now;
-
-			if (!Enabled)
-				return;
-
-			for (u32 i = 0; i<count; ++i)
-			{
-				PivotPoint = irr::core::vector3df(0,0,0);
-				if (Speed.X != 0.0f)
-					particlearray[i].pos.rotateYZBy(timeDelta * Speed.X, PivotPoint);
-
-				if (Speed.Y != 0.0f)
-					particlearray[i].pos.rotateXZBy(timeDelta * Speed.Y, PivotPoint);
-
-				if (Speed.Z != 0.0f)
-					particlearray[i].pos.rotateXYBy(timeDelta * Speed.Z, PivotPoint);
+				const u32 maxdiff = particlearray[i].endTime - particlearray[i].startTime;
+				const u32 curdiff = now - particlearray[i].startTime;
+				const f32 newscale = (f32)curdiff / maxdiff;
+				particlearray[i].size = particlearray[i].startSize + ScaleTo*newscale;
+				particlearray[i].size.Width = 20;
+				particlearray[i].size.Height = 20;
 			}
 		}
 
-		//! Writes attributes of the object.
+
 		void MyAffector::serializeAttributes(io::IAttributes* out, io::SAttributeReadWriteOptions* options) const
 		{
-			out->addVector3d("PivotPoint", PivotPoint);
-			out->addVector3d("Speed", Speed);
+			out->addFloat("ScaleToWidth", ScaleTo.Width);
+			out->addFloat("ScaleToHeight", ScaleTo.Height);
 		}
 
-		//! Reads attributes of the object.
-		void MyAffector::deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options)
+
+		void  MyAffector::deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options)
 		{
-			PivotPoint = in->getAttributeAsVector3d("PivotPoint");
-			Speed = in->getAttributeAsVector3d("Speed");
+			ScaleTo.Width = in->getAttributeAsFloat("ScaleToWidth");
+			ScaleTo.Height = in->getAttributeAsFloat("ScaleToHeight");
 		}
 
-	} // end namespace scene
-} // end namespace irr
+
+		E_PARTICLE_AFFECTOR_TYPE MyAffector::getType() const
+		{
+			return scene::EPAT_SCALE;
+		}
+	}
+}
 

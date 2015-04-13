@@ -78,7 +78,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="myAffector.cpp" />
+    <ClCompile Include="MyAffector.cpp" />
     <ClCompile Include="ParticleSettings.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -92,7 +92,7 @@
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="myAffector.h" />
+    <ClInclude Include="MyAffector.h" />
     <ClInclude Include="ParticleSettings.h" />
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Player.h" />

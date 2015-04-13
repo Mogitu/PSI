@@ -1,5 +1,6 @@
 #include "ParticleManager.h"
 #include <vector>
+#include "myAffector.h"
 
 using namespace Common;
 using namespace std;
@@ -141,6 +142,10 @@ namespace ParticleManager
 			ps->psNode->addAffector(*affector);//Finally adding them
 			(*affector)->drop();//drop is needed
 		}
+		//MyAffector *pa = new MyAffector();
+		//ps->psNode->addAffector(pa);
+		//pa->drop();
+
 		psList.push_back(ps);
 		return ps;
 	}

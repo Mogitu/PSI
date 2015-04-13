@@ -42,13 +42,13 @@
     <ClCompile Include="ParticleSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="myAffector.cpp">
-          <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameWorld.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyAffector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -89,7 +89,7 @@
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="myAffector.h">
+    <ClInclude Include="MyAffector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
