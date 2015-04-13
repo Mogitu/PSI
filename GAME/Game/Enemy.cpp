@@ -13,17 +13,57 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	player = world->getPlayer();
 	isAlive = true;
 	shootTimer = 0;
-	shootTimerMax = 2;
-	shootingRange = 200;
-	walkSpeed = 75;
+	shootTimerMax = 1.5;
+	shootFollowRange = 200;
+	walkSpeed = 75;	
+	body->setActivationState(DISABLE_DEACTIVATION);
 	addAvoidSpeed = 2;
 	avoidance = btVector3(0, 0, 0);
 	direction = btVector3(0, 0, 0);
 
 }
 
+Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass , vector3df position , vector3df rotation, vector3df scale)
+{
+	this->Initialize(smgr, irrDriver, helper, world, mesh, bodyType, bodyMass, position, rotation, scale);
+	this->world = world;
+	player = world->getPlayer();
+	isAlive = true;
+	shootTimer = 0;
+	shootTimerMax = 5;
+	shootFollowRange = 200;
+	walkSpeed = 75;
+	body->setActivationState(DISABLE_DEACTIVATION);
+}
+
+
 void Enemy::Initialize(){
 	
+}
+
+void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
+{
+	this->helper = helper;
+	this->smgr = smgr;
+	this->irrDriver = irrDriver;
+	
+	//default node setup
+	node = mesh;
+	node->setName("Enemy");
+	if (node)
+	{
+		node->setPosition(position);
+		node->setRotation(rotation);
+		node->setScale(scale);
+		node->setMaterialFlag(EMF_LIGHTING, false);
+		node->setMaterialTexture(0, mesh->getMaterial(0).getTexture(0));
+	}
+	body = helper->createBody(node, bodyType, bodyMass);
+	body->setRestitution(.1);
+	body->setFriction(.3);
+	//body->setLinearFactor(btVector3(0, 1, 0));
+	body->setAngularFactor(btVector3(0, 0, 0));
+	world->addGameObject(this);
 }
 
 void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
@@ -55,29 +95,31 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 
 void Enemy::Update(u32 frameDeltaTime)
 {	
-	shootTimer += frameDeltaTime;	
 	if (player && player->isAlive)
 	{
-		if (shootTimer >= shootTimerMax * 1000 && player)
+		shootTimer += frameDeltaTime;
+		//get distance between player and enemy
+		f32 dist = node->getPosition().getDistanceFrom(player->node->getPosition());
+		//if player is in range the enemy will shoot and attempt to follow at the same time.
+		if (player && player->isAlive && dist <= shootFollowRange)
 		{
-			shootTimer = 0;
-			shoot();
+			if (shootTimer >= shootTimerMax * 1000 && player)
+			{
+				shootTimer = 0;
+				shoot();
+			}
+			followPlayer();
 		}
-		followPlayer();
-	}
 
 	updateAvoidanceSpeed();
 	moveEnemy();
+	}	
 }
 
 //TODO: make more readable...
 void Enemy::shoot()
-{
-	
-	f32 dist = node->getPosition().getDistanceFrom(player->node->getPosition());
-	if(dist<shootingRange)
-	{
-		Projectile *projectile = new Projectile(smgr, helper);
+{		
+		Projectile *projectile = new Projectile(smgr, helper,"EnemyProjectile");
 		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
 		btVector3 offSet((btVector3(player->node->getPosition().X, 50, player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z)).normalize() * 30);
 		vector3df playerToEnemy = (player->node->getPosition() - node->getPosition()) - vector3df(offSet.getX(), offSet.getY(), offSet.getZ());
@@ -85,8 +127,7 @@ void Enemy::shoot()
 		btVector3 direction(playerToEnemy.X, playerToEnemy.Y, playerToEnemy.Z);
 		projectile->fire(pos + offSet, direction);
 		world->addGameObject(projectile);
-		Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");
-	}	
+		Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");	
 }
 
 void Enemy::SetDeath(float begindeath, float enddeath, float deathspeed)
@@ -102,22 +143,30 @@ void Enemy::getcurrentframe()
 }
 
 void Enemy::followPlayer()
-{
-	btTransform playerTransform = player->body->getCenterOfMassTransform();
-	btTransform currentTrans = body->getCenterOfMassTransform();	
+{		
+		//Get transforms from the bodys
+		btTransform playerTransform = player->body->getCenterOfMassTransform();
+		btTransform currentTrans = body->getCenterOfMassTransform();
 
+		//Get the direction to move to by normalizing the difference between player and enemy.
 	direction = btVector3(player->node->getPosition().X, 50, player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z).normalize();
-	
-	f32 deltaX = player->node->getPosition().X - node->getPosition().X;
-	f32 deltaZ = player->node->getPosition().Z - node->getPosition().Z;
 
-	f32 angleInRad= atan2(deltaZ, deltaX);
+		//Enemy follows only in the XZ plane
+		f32 deltaX = player->node->getPosition().X - node->getPosition().X;
+		f32 deltaZ = player->node->getPosition().Z - node->getPosition().Z;
 
-	btQuaternion rot;
-	rot.setRotation(btVector3(0,1,0),-angleInRad);
-	currentTrans.setRotation(rot);
+		//atan2 is used to map 360 degrees movement correctly.
+		f32 angleInRad = atan2(deltaZ, deltaX);		
+		
+		btQuaternion rotation;
+		//set the rotation to occur around the Y axis, the angle is negative to account for a counter clockwise rotation
+		rotation.setRotation(btVector3(0, 1, 0), -angleInRad);
 
-	body->setCenterOfMassTransform(currentTrans);
+		//apply made rotation
+		currentTrans.setRotation(rotation);
+
+		//set all calculations to the body.
+		body->setCenterOfMassTransform(currentTrans);
 }
 
 void Enemy::kill()

@@ -2,7 +2,6 @@
 #include "Level.h"
 
 
-
 Level::Level(irr::scene::ISceneManager *smgr, irr::io::path path) : smgr(smgr)
 {
 	smgr->loadScene(path);
@@ -13,6 +12,7 @@ Level::~Level()
 {
 
 }
+
 irr::core::array<irr::scene::ISceneNode *> Level::getNodes()
 {
 	return nodes;

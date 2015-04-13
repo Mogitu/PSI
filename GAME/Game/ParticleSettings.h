@@ -16,6 +16,7 @@ public:
 	ParticleSettings(IrrlichtDevice *device, stringw file);
 	~ParticleSettings();
 
+	//Basic settings
 	stringw imagepath;
 	stringc type;
 	f32 minStartSize;

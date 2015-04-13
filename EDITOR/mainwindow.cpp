@@ -1,4 +1,3 @@
-
 //mainwindow.cpp
 
 #include "mainwindow.h"
@@ -11,14 +10,84 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);   
     colorPickerBright= new QColorDialog();
     colorPickerDark = new QColorDialog();
+    colorPickerFade = new QColorDialog();
     InitIrrRenderWidget(ui->centralWidget->findChild<QWidget *>("ParticlePreviewWidget"));
-
     openShapeBox(ui->comboShape->currentText());
+    connectInputElements();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+//Connect all input elements to the appropriate signals and slots.
+//Example: buttons to click signals and textfields to textchanged, etc.
+void MainWindow::connectInputElements(){
+    connect(ui->lineMinScale,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->lineMaxScale,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->lineDuration,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(ui->lineMinBoxX,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->lineMinBoxY,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->lineMinBoxZ,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(ui->lineMaxBoxX,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->lineMaxBoxY,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->lineMaxBoxZ,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(ui->centerBoxX,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->centerBoxY,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->centerBoxZ,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(ui->lineMinRate,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->lineMaxRate,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(ui->lineMinTime,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->lineMaxTime,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(ui->lineSpereRadius,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(ui->dirX,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->dirY,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->dirZ,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(colorPickerBright,SIGNAL(colorSelected(QColor)),this,SLOT(applySettings()));
+    connect(colorPickerDark,SIGNAL(colorSelected(QColor)),this,SLOT(applySettings()));
+
+    connect(ui->lineTexture, SIGNAL(textChanged(QString)), this, SLOT(applySettings()));
+
+    connect(ui->checkAttract,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+    connect(ui->attrX,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->attrY,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->attrZ,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->attrAttr,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+    connect(ui->attrAttrX,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+    connect(ui->attrAttrY,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+    connect(ui->attrAttrZ,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+
+    connect(ui->checkFade,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+    connect(ui->fadeTime,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(colorPickerFade,SIGNAL(colorSelected(QColor)),this,SLOT(applySettings()));
+
+    connect(ui->checkGravity,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+    connect(ui->gravX,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->gravY,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->gravZ,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->gravForcelost,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(ui->checkRotation,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+    connect(ui->rotSpeedX,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->rotSpeedY,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->rotSpeedZ,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->rotPivotX,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->rotPivotY,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->rotPivotZ,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(ui->checkScale,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+    connect(ui->S_Width,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->S_Height,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
 }
 
 void MainWindow::InitIrrRenderWidget(QWidget *irrRenderTarget)
@@ -34,9 +103,11 @@ void MainWindow::resizeEvent(QResizeEvent *event)
 }
 
 //writes all information entered in the editors labels into respective variables and creates a new emitter from them.
-void MainWindow::on_ApplyAll_clicked()
+void MainWindow::applySettings()
 {
     //set all variables
+
+    irrRenderWidget->particleSettings->imagepath= ui->lineTexture->text().toStdString().c_str();
     irrRenderWidget->particleSettings->setColorBright(colorPickerBright->currentColor());
     irrRenderWidget->particleSettings->setColorDark(colorPickerDark->currentColor());
     irrRenderWidget->particleSettings->setDirection(ui->dirX->text().toFloat(),ui->dirY->text().toFloat(),ui->dirZ->text().toFloat());
@@ -58,26 +129,67 @@ void MainWindow::on_ApplyAll_clicked()
 
     irrRenderWidget->particleSettings->sphereCenter = vector3df(ui->centerBoxX->text().toFloat(), ui->centerBoxY->text().toFloat(), ui->centerBoxZ->text().toFloat());
     irrRenderWidget->particleSettings->sphereRadius = ui->lineSpereRadius->text().toFloat();
+
+    irrRenderWidget->particleSettings->attraction = ui->checkAttract->isChecked();
+    irrRenderWidget->particleSettings->setAttractionPoint(ui->attrX->text().toFloat(),ui->attrY->text().toFloat(),ui->attrZ->text().toFloat());
+    irrRenderWidget->particleSettings->attraction_attract = ui->attrAttr->isChecked();
+    irrRenderWidget->particleSettings->attraction_affectX = ui->attrAttrX->isChecked();
+    irrRenderWidget->particleSettings->attraction_affectY = ui->attrAttrY->isChecked();
+    irrRenderWidget->particleSettings->attraction_affectZ = ui->attrAttrZ->isChecked();
+
+    irrRenderWidget->particleSettings->fade = ui->checkFade->isChecked();
+    irrRenderWidget->particleSettings->fade_timeNeededToFadeOut = ui->fadeTime->text().toFloat();
+    irrRenderWidget->particleSettings->setColorFade(colorPickerFade->currentColor());
+
+    irrRenderWidget->particleSettings->gravity = ui->checkGravity->isChecked();
+    irrRenderWidget->particleSettings->setGravity(ui->gravX->text().toFloat(), ui->gravY->text().toFloat(), ui->gravZ->text().toFloat());
+    irrRenderWidget->particleSettings->gravity_timeForceLost = ui->gravForcelost->text().toFloat();
+
+    irrRenderWidget->particleSettings->rotation = ui->checkRotation->isChecked();
+    irrRenderWidget->particleSettings->setRotation(ui->rotPivotX->text().toFloat(), ui->rotPivotY->text().toFloat(), ui->rotPivotZ->text().toFloat());
+    irrRenderWidget->particleSettings->setRotationspeed(ui->rotSpeedX->text().toFloat(), ui->rotSpeedY->text().toFloat(), ui->rotSpeedZ->text().toFloat());
+
+    irrRenderWidget->particleSettings->scaleAF = ui->checkScale->isChecked();
+    irrRenderWidget->particleSettings->scale_scaleTo.Width = ui->S_Width->text().toFloat();
+    irrRenderWidget->particleSettings->scale_scaleTo.Height = ui->S_Height->text().toFloat();
+
+
     //create the emitter
     irrRenderWidget->particleSettings->createEmitter();
+
+    //apply affectors
+    irrRenderWidget->particleSettings->createAffector();
 }
 
+//Open dialog for darkest color
 void MainWindow::on_PickDarkest_clicked()
 {
     colorPickerDark->open();
 }
 
+//Opens dialog for brightest color
 void MainWindow::on_PickBrightest_clicked()
 {
     colorPickerBright->open();
 }
 
+void MainWindow::on_FadeColor_clicked()
+{
+    colorPickerFade->open();
+}
+
+//Exports all particle settings to xml
 void MainWindow::on_actionExport_triggered()
 {
+    //set the the entered text from the dialog as filename to use when saving
     QString filename = QFileDialog::getSaveFileName();
+    //create the file
     QFile f( filename );
+    //open for writing
     f.open( QIODevice::WriteOnly );
+    //export to xml
     irrRenderWidget->particleSettings->exportToFile(filename.toStdWString().c_str(),  ui);
+    //done, close.
     f.close();
 }
 
@@ -98,6 +210,7 @@ void MainWindow::openShapeBox(const QString text)
         ui->groupSphereSettings->setVisible(true);
         ui->groupBoxSettings->setVisible(false);
     }
+    applySettings();
 }
 
 void MainWindow::on_loadTexture_clicked()

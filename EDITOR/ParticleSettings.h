@@ -32,6 +32,36 @@ class ParticleSettings{
         SColor minColor;
         SColor maxColor;
 
+        //Affectors etc.
+
+            //Attraction
+            bool			attraction;
+            vector3df		attraction_point;
+            f32				attraction_speed;
+            bool			attraction_attract;
+            bool			attraction_affectX;
+            bool			attraction_affectY;
+            bool			attraction_affectZ;
+
+            //Scale
+            bool			scaleAF;
+            dimension2df	scale_scaleTo;
+
+            //FadeOut
+            bool			fade;
+            SColor			fade_targetColor;
+            u32				fade_timeNeededToFadeOut;
+
+            //Gravity
+            bool			gravity;
+            vector3df		gravity_gravity;
+            u32				gravity_timeForceLost;
+
+            //Rotation
+            bool			rotation;
+            vector3df		rotation_speed;
+            vector3df		rotation_pivotPoint;
+
         //sphere settings
         vector3df sphereCenter;
         u32 sphereRadius;
@@ -41,9 +71,15 @@ class ParticleSettings{
         //functions
         void setColorBright(QColor& color);
         void setColorDark(QColor& color);
+        void setColorFade(QColor& color);
         void setDirection(float x, float y, float z);
+        void setAttractionPoint(float x, float y, float z);
+        void setGravity(float x, float y, float z);
+        void setRotation(float x, float y, float z);
+        void setRotationspeed(float x, float y, float z);
         void createParticle();
         void createEmitter();
+        void createAffector();
         void exportToFile(stringw fileName, Ui_MainWindow *ui);
         void loadTexture(QString path);
 

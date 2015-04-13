@@ -6,6 +6,7 @@
 #include "IGameObject.h"
 #include "GameWorld.h"
 
+
 class Player : public IGameObject
 {
 private:
@@ -14,9 +15,10 @@ private:
 	BulletHelper* helper;
 	ISceneManager* smgr;
 	vector2di centerScreenPosition;
-	GameWorld *world;
+	GameWorld *world;	
 	bool justJumped;
 	bool isGrounded();
+	int score;
 	float restriction = 1; //1 = no restriction; 0 = stop movement
 	float speed = 50;
 public:
@@ -27,13 +29,15 @@ public:
 	void PlayerMovement(u32 frameDeltaTime);
 	void Fire();
 	virtual void kill();
+	virtual void takeDamage(int amount);
 	const vector3df& getNodePosition() const;
 	const vector3df& getNodeAbsolutePosition() const;
 	scene::IAnimatedMeshSceneNode* getNode();
 	GameObjectType getType() const;
     u32 shootInterval;
-	u32 shootIntervalTimer;
-
+	u32 shootIntervalTimer;	
+	void increaseScore(int amount);
+	int getScore();
 	//scene::IAnimatedMeshSceneNode*& n = (IAnimatedMeshSceneNode*)node;
 };
 

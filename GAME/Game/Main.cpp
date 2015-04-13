@@ -58,11 +58,31 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 	camera->setTarget(nodePosition.operator+(vector3df(0, heightModifier, 0)));
 }
 
+//Draw basic hud with score and player health, also displayes game over text when player is dead.
+void drawHud(IGUIFont *font, Player *player,GameWorld *world)
+{
+	//default textcolor, yellow
+	SColor textColor(255,255,255,0);
+	//player health
+	font->draw(L"Health:", rect<s32>(3, 0, 300, 50),textColor);
+	stringw playerHealth(player->health);
+	font->draw(playerHealth, rect<s32>(70, 0, 300, 50), textColor);
+	//score
+	stringw playerScore(player->getScore());
+	font->draw(L"Score:", rect<s32>(3, 20, 300, 50), textColor);
+	font->draw(playerScore, rect<s32>(70, 20, 300, 50), textColor);
+	//when gameover
+	if (player->health<=0 || !player->isAlive)
+	{
+		font->draw(L"GAME OVER", rect<s32>(300, 300, 300, 50), textColor);
+	}
+	if (world->gameState==GAMESTATE::LEVELCOMPLETE)
+	{
+		font->draw(L"LEVEL COMPLETE!!!", rect<s32>(300, 300, 300, 50), textColor);
+	}
+}
+
 int main() {
-
-	list<Projectile*> projectiles;
-	Level *level;
-
 	initIrrlicht();
 	// Add camera
 	camera = smgr->addCameraSceneNode(0);
@@ -70,37 +90,28 @@ int main() {
 	device->getCursorControl()->setPosition(0.5f, 0.5f);
 	middleScreenPosition = device->getCursorControl()->getPosition();
 
-	level = new Level(smgr, "../Assets/level.irr");
+	Level *level = new Level(smgr, "../Assets/level.irr");
 
 	// Create the initial scene
 	smgr->addLightSceneNode(0, core::vector3df(2, 5, -2), SColorf(4, 4, 4, 1));
 
-	helper = new BulletHelper();
-	helper->buildIrrLevel(level);
+	helper = new BulletHelper();	
 
 	//Create the game world
-	GameWorld* gWorld = new GameWorld(helper,device);
-	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(0, 100, 0));	
-	Enemy* enemy = new Enemy(smgr, irrDriver, helper, gWorld, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300, vector3df(-120, 100, 0), vector3df(0, 0, 0), vector3df(1, 1, 1));
-	//Enemy* enemy2 = new Enemy(smgr, irrDriver, helper, gWorld, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 300, vector3df(-120, 100, 20), vector3df(0, 0, 0), vector3df(1, 1, 1));
+	GameWorld* gWorld = new GameWorld(helper,device,input);	
+	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(447, 100, -299));	
 	
-	
-	//Set up Particle World
-	//ParticleManager::ParticleSystem* ps = ParticleManager::createParticleSystem(ParticleManager::ParticleTag::NONE, vector3df(0, 0, 0), vector3df(2, 2, 2), "../Assets/fire.bmp");
-	//ParticleManager::createBoxParticle(ps, aabbox3d<f32>(-7, 3, -7, 7, 6, 7), vector3df(0.0f, 0.0f, 0.0f), 80, 100, SColor(0, 255, 255, 255), SColor(0, 255, 255, 255), 800, 2000, 0, dimension2df(10.0f, 10.0f), dimension2df(20.0f, 20.f));
-	//ParticleManager::createFullParticleEffect("");
-
-	//ParticleManager::createSphereParticle(ps, vector3df(0, 10, 0), 5, vector3df(0.0f, 0.0f, 0.0f), 80, 100, SColor(0, 255, 255, 255), SColor(0, 255, 255, 255), 800, 2000, 0, dimension2df(10.0f, 10.0f), dimension2df(10.0f, 10.0f));
+	gWorld->buildIrrLevel(level);		
 
 	camera->setParent(player->getNode());
 	camera->setTarget(player->getNodeAbsolutePosition());
-
-	camera->setTarget(player->getNodePosition());
-	Common::soundEngine->play2D("../Assets/Sounds/getout.ogg");
-	//create flame
-	ParticleManager::createFullParticleEffect("../Assets/Flame1.xml", vector3df(0,9,0));
-	ParticleManager::createFullParticleEffect("../Assets/Flame2.xml", vector3df(0, 9, 0));
 	
+	Common::soundEngine->play2D("../Assets/Sounds/getout.ogg");
+	
+	//create hud vars.
+	IGUIEnvironment *gui = device->getGUIEnvironment();
+	IGUIFont *font = gui->getFont("../Assets/Fonts/myfont.xml");
+	//ParticleManager::createFullParticleEffect("../Assets/firesea.xml",vector3df(316,40,-200));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 	while (device->run()) {		
@@ -109,21 +120,25 @@ int main() {
 		//applying the fps
 		if (deltaTime < 1000 / fps)
 			continue;
-		timeStamp = irrTimer->getTime();		
-		updateCamera(device, player->getNodeAbsolutePosition(), (f32)deltaTime);
-		camera->setTarget(player->getNodeAbsolutePosition());
+		timeStamp = irrTimer->getTime();	
+		//only update the camera when the player is alive.
+		if (player->isAlive && gWorld->gameState==GAMESTATE::PLAYING)
+		{
+			updateCamera(device, player->getNodeAbsolutePosition(), (f32)deltaTime);
+			camera->setTarget(player->getNodeAbsolutePosition());
+		}		
 		helper->getWorld()->stepSimulation(deltaTime * 0.001f, 60);
 		gWorld->update(deltaTime);
 		ParticleManager::update(deltaTime);
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
+		drawHud(font, player,gWorld);
 		guiEnv->drawAll();
 		irrDriver->endScene();
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();
 	}
-
 	device->drop();
 	return 0;
 }

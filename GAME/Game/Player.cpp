@@ -9,12 +9,23 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	shootInterval = 250;//ms
 	shootIntervalTimer = 0;
 	world->setPlayer(this);
-
+	health = 100;
+	score = 0;
 }
 
 void Player::Initialize()
 {
 	//Overload this function
+}
+
+void Player::increaseScore(int amount)
+{
+	score += amount;
+}
+
+int Player::getScore()
+{
+	return score;
 }
 
 void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
@@ -52,15 +63,32 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 
 void Player::Update(u32 frameDeltaTime)
 {
-	PlayerMovement(frameDeltaTime);
-	shootIntervalTimer += frameDeltaTime;
-	if (shootIntervalTimer>shootInterval)
+	//only update when alive
+	if (health > 0 && isAlive)
 	{
-		shootIntervalTimer = 0;
-		Fire();
+		PlayerMovement(frameDeltaTime);
+		shootIntervalTimer += frameDeltaTime;
+		if (shootIntervalTimer>shootInterval)
+		{
+			shootIntervalTimer = 0;
+			Fire();
+		}
+		node->updateAbsolutePosition();
 	}
-	node->updateAbsolutePosition();
 }
+
+void Player::takeDamage(int amount)
+{
+	health -= amount;
+	if (health <= 0)
+	{
+		world->gameState = GAMESTATE::GAMEOVER;
+		isAlive = false;
+		node->setName("dead");
+		node->setVisible(false);
+	}
+}
+
 
 void Player::PlayerMovement(u32 frameDeltaTime)
 {
@@ -124,8 +152,8 @@ void Player::Fire()
 {
 	if (input->IsKeyDown(KEY_KEY_E))
 	{
-		Projectile *p = new Projectile(smgr, helper);
-		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY()+20, body->getWorldTransform().getOrigin().getZ());
+		Projectile *p = new Projectile(smgr, helper,"PlayerProjectile");
+		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY()+20, body->getWorldTransform().getOrigin().getZ());		
 		p->fire(pos + helper->extractForwardVector(body)*30, helper->extractForwardVector(body));
 		world->addGameObject(p);	
 		Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");
@@ -155,8 +183,8 @@ bool Player::isGrounded()
 
 void Player::kill()
 {
-	//h->deactivateObject(body);
 	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	isAlive = false;
 	Node->remove();
 	// Remove the object from the world
 	helper->getWorld()->removeRigidBody(body);
