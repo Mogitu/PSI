@@ -34,6 +34,9 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	shootFollowRange = 200;
 	walkSpeed = 75;
 	body->setActivationState(DISABLE_DEACTIVATION);
+	addAvoidSpeed = 2;
+	avoidance = btVector3(0, 0, 0);
+	direction = btVector3(0, 0, 0);
 }
 
 
@@ -111,8 +114,8 @@ void Enemy::Update(u32 frameDeltaTime)
 			followPlayer();
 		}
 
-	updateAvoidanceSpeed();
-	moveEnemy();
+		updateAvoidanceSpeed();
+		moveEnemy();
 	}	
 }
 
@@ -149,7 +152,7 @@ void Enemy::followPlayer()
 		btTransform currentTrans = body->getCenterOfMassTransform();
 
 		//Get the direction to move to by normalizing the difference between player and enemy.
-	direction = btVector3(player->node->getPosition().X, 50, player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z).normalize();
+		direction = btVector3(player->node->getPosition().X, 50, player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z).normalize();
 
 		//Enemy follows only in the XZ plane
 		f32 deltaX = player->node->getPosition().X - node->getPosition().X;
