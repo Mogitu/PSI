@@ -135,11 +135,18 @@ void GameWorld::update(u32 frameDeltaTime)
 			}
 
 			//check collisions between player and enemy
-		if ((nameB == "Enemy" && nameA == "Player") || (nameA == "Enemy" && nameB == "Player"))
+			if ((nameB == "Enemy" && nameA == "Player") || (nameA == "Enemy" && nameB == "Player"))
 			{
-				ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeA->getPosition());
-				ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeB->getPosition());
-				
+				int numContacts = contactManifold->getNumContacts();
+				for (int j = 0; j<numContacts; j++)
+				{
+					btManifoldPoint& pt = contactManifold->getContactPoint(j);
+					if (pt.getDistance() <= 0.f)
+					{
+						ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeA->getPosition());
+						ParticleManager::createFullParticleEffect("../Assets/playerGotHitEffect.xml", nodeB->getPosition());
+					}
+				}				
 			}
 
 			//check collisions between player and projectiles
@@ -155,9 +162,9 @@ void GameWorld::update(u32 frameDeltaTime)
 				{
 					nodeB->setName("dead");
 				}
-				p->takeDamage(20);								
+				p->takeDamage(10);								
 			}				
-		}
+		}//End collision detection
 	}	
 }
 

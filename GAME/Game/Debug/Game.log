@@ -1,12 +1,17 @@
-﻿Build started 4/13/2015 12:36:33 PM.
+﻿Build started 4/13/2015 2:49:40 PM.
      1>Project "C:\Users\Maikel\Documents\GitHub\PSI\GAME\Game\Game.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ParticleManager.cpp
-         ParticleManager.cpp
-     1>c:\users\maikel\documents\github\psi\game\game\particlemanager.cpp(104): warning C4244: '=' : conversion from 'irr::f32' to 'irr::u32', possible loss of data
-     1>c:\users\maikel\documents\github\psi\game\game\particlemanager.cpp(119): warning C4244: 'argument' : conversion from 'irr::f32' to 'irr::u32', possible loss of data
-     1>c:\users\maikel\documents\github\psi\game\game\particlemanager.cpp(131): warning C4244: 'argument' : conversion from 'irr::f32' to 'irr::u32', possible loss of data
-     1>c:\users\maikel\documents\github\psi\game\game\particlemanager.cpp(131): warning C4244: 'argument' : conversion from 'irr::u32' to 'irr::f32', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameWorld.cpp
+         GameWorld.cpp
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(215): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(216): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(222): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(223): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(229): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(230): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(236): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(237): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+     1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(249): warning C4316: 'Enemy' : object allocated on the heap may not be aligned 16
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\bin\Game.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib irrlicht.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib irrKlang.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\bin\Game.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\bin\Game.lib" /MACHINE:X86 Debug\BulletHelper.obj
          Debug\Common.obj
@@ -24,4 +29,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.26
+Time Elapsed 00:00:01.87
