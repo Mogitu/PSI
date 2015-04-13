@@ -1,4 +1,5 @@
 #include "ParticleManager.h"
+#include "ParticleAffector.h"
 #include <vector>
 
 using namespace Common;
@@ -93,7 +94,6 @@ namespace ParticleManager
 			ps->node->setParent(parent);
 		}
 		ps->node->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
-		ps->node->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
 		//load an emitter type depending on the settings file
 		if (s.type=="box")
 		{
@@ -126,24 +126,23 @@ namespace ParticleManager
 		if (s.fade)affectors.push_back(ps->node->createFadeOutParticleAffector(s.fade_targetColor, s.fade_timeNeededToFadeOut));
 		if (s.gravity)affectors.push_back(ps->node->createGravityAffector(s.gravity_gravity, s.gravity_timeForceLost));
 		if (s.rotation)affectors.push_back(ps->node->createRotationAffector(s.rotation_speed, s.rotation_pivotPoint));
-		//FOR TESTING SOME PARTICLE SYSTEMS
-
-
 		for (std::vector<IParticleAffector*>::iterator affector = affectors.begin(); affector != affectors.end(); ++affector)
 		{
 			ps->node->addAffector(*affector);//Finally adding them
 			(*affector)->drop();//drop is needed
 		}
+		ParticleAffector* pa = new ParticleAffector();
+		ps->node->addAffector(pa);
+		pa->drop();
 		psList.push_back(ps);
 		return ps;
 	}
 
-	ParticleSystem* addParticleSystemNode(CParticleSystemSceneNode* n, ParticleTag tag)
+	ParticleSystem* addParticleSystemNode(IParticleSystemSceneNode* n, ParticleTag tag)
 	{
 		ParticleSystem* pst = new ParticleSystem();
 		pst->node = n;
 		pst->tag = tag;
-
 		psList.push_back(pst);
 
 		return pst;
@@ -151,9 +150,8 @@ namespace ParticleManager
 	
 	ParticleSystem* createParticleSystem(ParticleTag tag, vector3df position, vector3df scale, io::path texture, u32 textureLayer, E_MATERIAL_FLAG lightning, bool flagLight, E_MATERIAL_FLAG zwr, bool flagZWR, E_MATERIAL_TYPE eType, bool fadeOut)
 	{
-		//CParticleSystemSceneNode* n = (CParticleSystemSceneNode*)smgr->addParticleSystemSceneNode(false);
-		CParticleSystemSceneNode* n = new CParticleSystemSceneNode(0, 0, smgr, -1, vector3df(0, 0, 0), vector3df(0, 0, 0), vector3df(1.0f, 1.0f, 1.0f));
-		n->drop();
+		//CParticleSystemSceneNode* n = (CParticleSystemSceneNode*)
+		IParticleSystemSceneNode* n = smgr->addParticleSystemSceneNode(false);
 		n->setPosition(position);
 		n->setScale(scale);
 		n->setMaterialFlag(lightning, flagLight);

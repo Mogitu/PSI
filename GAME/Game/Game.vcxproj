@@ -21,6 +21,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -49,6 +50,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <CompileAsManaged>false</CompileAsManaged>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -74,24 +76,12 @@
   <ItemGroup>
     <ClCompile Include="BulletHelper.cpp" />
     <ClCompile Include="Common.cpp" />
-    <ClCompile Include="CParticleAnimatedMeshSceneNodeEmitter.cpp" />
-    <ClCompile Include="CParticleAttractionAffector.cpp" />
-    <ClCompile Include="CParticleBoxEmitter.cpp" />
-    <ClCompile Include="CParticleCylinderEmitter.cpp" />
-    <ClCompile Include="CParticleFadeOutAffector.cpp" />
-    <ClCompile Include="CParticleGravityAffector.cpp" />
-    <ClCompile Include="CParticleMeshEmitter.cpp" />
-    <ClCompile Include="CParticlePointEmitter.cpp" />
-    <ClCompile Include="CParticleRingEmitter.cpp" />
-    <ClCompile Include="CParticleRotationAffector.cpp" />
     <ClCompile Include="CParticleScaleAffector.cpp" />
-    <ClCompile Include="CParticleSphereEmitter.cpp" />
-    <ClCompile Include="CParticleSystemSceneNode.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="os.cpp" />
+    <ClCompile Include="ParticleAffector.cpp" />
     <ClCompile Include="ParticleSettings.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -100,25 +90,14 @@
   <ItemGroup>
     <ClInclude Include="BulletHelper.h" />
     <ClInclude Include="Common.h" />
-    <ClInclude Include="CParticleAnimatedMeshSceneNodeEmitter.h" />
-    <ClInclude Include="CParticleAttractionAffector.h" />
-    <ClInclude Include="CParticleBoxEmitter.h" />
-    <ClInclude Include="CParticleCylinderEmitter.h" />
-    <ClInclude Include="CParticleFadeOutAffector.h" />
-    <ClInclude Include="CParticleGravityAffector.h" />
-    <ClInclude Include="CParticleMeshEmitter.h" />
-    <ClInclude Include="CParticlePointEmitter.h" />
-    <ClInclude Include="CParticleRingEmitter.h" />
-    <ClInclude Include="CParticleRotationAffector.h" />
     <ClInclude Include="CParticleScaleAffector.h" />
-    <ClInclude Include="CParticleSphereEmitter.h" />
-    <ClInclude Include="CParticleSystemSceneNode.h" />
+    <ClInclude Include="ForceOverLifetimeAffector.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="Level.h" />
-    <ClInclude Include="os.h" />
+    <ClInclude Include="ParticleAffector.h" />
     <ClInclude Include="ParticleSettings.h" />
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Player.h" />

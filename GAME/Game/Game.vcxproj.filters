@@ -60,46 +60,10 @@
     <ClCompile Include="ParticleSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CParticleAnimatedMeshSceneNodeEmitter.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticlePointEmitter.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleRingEmitter.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleRotationAffector.cpp">
+    <ClCompile Include="ParticleAffector.cpp">
       <Filter>Source Files\ParticleStuff</Filter>
     </ClCompile>
     <ClCompile Include="CParticleScaleAffector.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleSphereEmitter.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleSystemSceneNode.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleAttractionAffector.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleBoxEmitter.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleCylinderEmitter.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleFadeOutAffector.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleGravityAffector.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleMeshEmitter.cpp">
-      <Filter>Source Files\ParticleStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="os.cpp">
       <Filter>Source Files\ParticleStuff</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,46 +104,13 @@
     <ClInclude Include="ParticleSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CParticleAttractionAffector.h">
+    <ClInclude Include="ParticleAffector.h">
       <Filter>Header Files\ParticleStuff</Filter>
     </ClInclude>
-    <ClInclude Include="CParticleBoxEmitter.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticleCylinderEmitter.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticleFadeOutAffector.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticleGravityAffector.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticleMeshEmitter.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticlePointEmitter.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticleRingEmitter.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticleRotationAffector.h">
+    <ClInclude Include="ForceOverLifetimeAffector.h">
       <Filter>Header Files\ParticleStuff</Filter>
     </ClInclude>
     <ClInclude Include="CParticleScaleAffector.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticleSphereEmitter.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticleSystemSceneNode.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticleAnimatedMeshSceneNodeEmitter.h">
-      <Filter>Header Files\ParticleStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="os.h">
       <Filter>Header Files\ParticleStuff</Filter>
     </ClInclude>
   </ItemGroup>
