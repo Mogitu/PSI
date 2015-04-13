@@ -61,7 +61,7 @@ void Enemy::Update(u32 frameDeltaTime)
 		if (shootTimer >= shootTimerMax * 1000 && player)
 		{
 			shootTimer = 0;
-			//shoot();
+			shoot();
 		}
 		followPlayer();
 	}
