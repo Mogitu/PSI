@@ -81,6 +81,8 @@ void Player::Update(u32 frameDeltaTime)
 void Player::takeDamage(int amount)
 {
 	health -= amount;
+	ParticleManager::createFullParticleEffect("../Assets/bloodsplat.xml", node->getPosition());
+	Common::soundEngine->play2D("../Assets/Sounds/splat.wav");
 	if (health <= 0)
 	{
 		world->gameState = GAMESTATE::GAMEOVER;

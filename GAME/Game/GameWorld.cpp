@@ -111,11 +111,11 @@ void GameWorld::update(u32 frameDeltaTime)
 						const btVector3& normalOnB = pt.m_normalWorldOnB;
 						//std::cout << "Hit" << std::endl;
 					}
-					ParticleManager::createFullParticleEffect("../Assets/killEnemyEffect.xml", nodeB->getPosition());
-					ParticleManager::createFullParticleEffect("../Assets/killEnemyEffect.xml", nodeA->getPosition());
+					ParticleManager::createFullParticleEffect("../Assets/bloodsplat.xml", nodeB->getPosition());
+					ParticleManager::createFullParticleEffect("../Assets/bloodsplat.xml", nodeA->getPosition());
 					nodeA->setName("dead");
 					nodeB->setName("dead");
-					Common::soundEngine->play2D("../Assets/Sounds/explosion.wav");
+					Common::soundEngine->play2D("../Assets/Sounds/splat.wav");
 					p->increaseScore(10);
 				}			
 			}
@@ -161,7 +161,7 @@ void GameWorld::update(u32 frameDeltaTime)
 				else if (nameB == "EnemyProjectile")
 				{
 					nodeB->setName("dead");
-				}
+				}				
 				p->takeDamage(10);								
 			}				
 		}//End collision detection
