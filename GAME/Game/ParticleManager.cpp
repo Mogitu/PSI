@@ -1,7 +1,9 @@
 #include "ParticleManager.h"
 #include <vector>
-#include "myAffector.h"
-
+#include "ParticleAffector.h"
+#include "ScaleOverLifeTimeAffector.h"
+#include "ForceOverLifeTimeAffector.h"
+#include "BurstAffector.h"
 using namespace Common;
 using namespace std;
 
@@ -142,9 +144,13 @@ namespace ParticleManager
 			ps->psNode->addAffector(*affector);//Finally adding them
 			(*affector)->drop();//drop is needed
 		}
-		//MyAffector *pa = new MyAffector();
-		//ps->psNode->addAffector(pa);
-		//pa->drop();
+		//ParticleAffector *pa = new ParticleAffector();
+		//ScaleOverLifeTimeAffector *pa = new ScaleOverLifeTimeAffector(dimension2df(25, 25));
+		//ForceOverLifeTimeAffector *pa = new ForceOverLifeTimeAffector(vector3df(0,0,55));
+		BurstAffector *pa = new BurstAffector(0.5, 0.05, 300);
+		pa->ps = ps;
+		ps->psNode->addAffector(pa);
+		pa->drop();
 
 		psList.push_back(ps);
 		return ps;

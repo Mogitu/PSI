@@ -2,19 +2,19 @@
 // This file is part of the "Irrlicht Engine".
 // For conditions of distribution and use, see copyright notice in irrlicht.h
 
-#ifndef C_PARTICLE_SCALE_AFFECTOR_H
-#define C_PARTICLE_SCALE_AFFECTOR_H
+#ifndef PARTICLE_AFFECTOR_H
+#define PARTICLE_AFFECTOR_H
 
 #include <IParticleAffector.h>
-
+#include "ParticleManager.h"
 namespace irr
 {
 	namespace scene
 	{
-		class MyAffector: public IParticleAffector
+		class ParticleAffector: public IParticleAffector
 		{
 		public:
-			MyAffector(const core::dimension2df& scaleTo = core::dimension2df(1.0f, 1.0f));
+			ParticleAffector();
 
 			virtual void affect(u32 now, SParticle *particlearray, u32 count);
 
@@ -30,15 +30,18 @@ namespace irr
 			//! \return: returns last index of an attribute read by this affector
 			virtual void deserializeAttributes(io::IAttributes* in, io::SAttributeReadWriteOptions* options);
 
+			
+
 			//! Get emitter type
 			virtual E_PARTICLE_AFFECTOR_TYPE getType() const;
 
-		protected:
-			core::dimension2df ScaleTo;
+
+		public:
+			ParticleManager::ParticleSystem* ps;
 		};
 	}
 }
 
 
-#endif // C_PARTICLE_SCALE_AFFECTOR_H
+#endif // PARTICLE_AFFECTOR_H
 
