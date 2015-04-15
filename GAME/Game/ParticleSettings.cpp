@@ -48,7 +48,7 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 					maxColor.setRed(xml->getAttributeValueAsInt(L"maxColorR"));
 					maxColor.setGreen(xml->getAttributeValueAsInt(L"maxColorG"));
 					maxColor.setBlue(xml->getAttributeValueAsInt(L"maxColorB"));
-					maxColor.setAlpha(xml->getAttributeValueAsInt(L"maxColorA"));
+					maxColor.setAlpha(xml->getAttributeValueAsInt(L"maxColorA"));				
 				}
 				else if (nodeName.equals_ignore_case("sphereSettings") && xml->getAttributeValueAsInt(L"value") == 1)
 				{					

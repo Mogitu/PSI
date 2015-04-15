@@ -106,7 +106,7 @@ int main() {
 	camera->setParent(player->getNode());
 	camera->setTarget(player->getNodeAbsolutePosition());
 	
-	Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3");
+	Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
 	
 	//create hud vars.
 	IGUIEnvironment *gui = device->getGUIEnvironment();
