@@ -257,7 +257,8 @@ void GameWorld::buildIrrLevel(Level *level)
 		{		
 			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
 			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
-		}		
+		}	
+		//Done with the tempory body
 		tmp = 0;
 		delete tmp;
 	}

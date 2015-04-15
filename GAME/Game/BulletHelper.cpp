@@ -49,20 +49,25 @@ btDiscreteDynamicsWorld *BulletHelper::getWorld()
 }
 
 
+//Update the body from a gameobject
 void BulletHelper::updatePhysics(btRigidBody *body)
 {
+	//Retreive the node by casting the user pointer.
 	ISceneNode *node = static_cast<ISceneNode *>(body->getUserPointer());
-
-	// Set position
+	//Set position
 	btVector3 point = body->getCenterOfMassPosition();
+	//Copy the position of the rigidbody into that of the scenenode
 	node->setPosition(vector3df((f32)point.getX(), (f32)point.getY(), (f32)point.getZ()));
-
-	// Set rotation
-	vector3df euler;
-	const btQuaternion& btQuat = body->getOrientation();
+	//Set rotation
+	vector3df euler;	
+	//convert the quaternion representation of the body into an quaternion from Irrlicht
+	btQuaternion &btQuat = body->getOrientation();
 	quaternion irrQuat(btQuat.getX(), btQuat.getY(), btQuat.getZ(), btQuat.getW());
+	//rotation for a node is set in euler angles, so we need to convert between the 2.
 	irrQuat.toEuler(euler);
+	//the current conversion is in radials, so convert it.
 	euler *= RADTODEG;
+	//finally apply
 	node->setRotation(euler);
 }
 
@@ -92,20 +97,23 @@ btRigidBody *BulletHelper::createBody(ISceneNode* node,Shape_Type type, btScalar
 	return body;	
 }
 
-// Create a box rigid body
+// Create a box rigid body to attach to the node. Use 0 mass for a static version
 btRigidBody *BulletHelper::createCube(ISceneNode* node, btScalar mass)
 {		
-	// Set the initial position of the object	
+	// Create a transform
 	btTransform transform;
 	transform.setIdentity();
+	//the origin must be aligned with the position of the node
 	transform.setOrigin(btVector3(node->getPosition().X, node->getPosition().Y, node->getPosition().Z));
+	//The rotation of the body needs to be identical to that of the node
 	btQuaternion q;
 	q.setEulerZYX(node->getRotation().Z*DEGTORAD, node->getRotation().Y*DEGTORAD, node->getRotation().X*DEGTORAD);
 	transform.setRotation(q);
 
+	//apply the transform to a new motionstate
 	btDefaultMotionState *motionState = new btDefaultMotionState(transform);
 	
-	// Create the shape	
+	// Create the shape	by the size of the node
 	btVector3 halfExtents(node->getTransformedBoundingBox().getExtent().X*0.5, node->getTransformedBoundingBox().getExtent().Y*0.5, node->getTransformedBoundingBox().getExtent().Z*0.5);	
 	btCollisionShape *shape = new btBoxShape(halfExtents);
 	
