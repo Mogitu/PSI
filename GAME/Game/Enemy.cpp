@@ -111,10 +111,12 @@ void Enemy::Update(u32 frameDeltaTime)
 				shootTimer = 0;
 				shoot();
 			}
+			
 			followPlayer();
 		}
+
 		updateAvoidanceSpeed();
-		moveEnemy();
+		moveEnemy(dist);
 	}	
 }
 
@@ -207,9 +209,13 @@ void Enemy::resetAvoidance()
 	avoidance.setValue(0, 0, 0);
 }
 
-void Enemy::moveEnemy()
+void Enemy::moveEnemy(f32 dist)
 {
-	body->setLinearVelocity((helper->extractForwardVector(body) + avoidance).normalize() * walkSpeed);
+	//TODO: Make this nicer (dist check is already been done in update)
+	if (dist <= shootFollowRange)
+		body->setLinearVelocity((helper->extractForwardVector(body) + avoidance).normalize() * walkSpeed);
+	else
+		body->setLinearVelocity((avoidance.length() == 0 ? avoidance : avoidance.normalize()) * walkSpeed);
 }
 
 GameObjectType Enemy::getType() const

@@ -53,6 +53,7 @@ void GameWorld::update(u32 frameDeltaTime)
 				return;
 			}
 
+			//Flocking Separation
 			if (gameObject->getType() == GameObjectType::ENEMY)
 			{
 				Enemy* e = dynamic_cast<Enemy*>(gameObject);
