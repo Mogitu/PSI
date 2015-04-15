@@ -41,7 +41,7 @@ private:
 	float walkSpeed;
 	const IGameObject *player;	
 
-	float addAvoidSpeed;
+	float avoidStrength;
 	btVector3 avoidance;
 	btVector3 direction;
 	void updateAvoidanceSpeed();

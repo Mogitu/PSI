@@ -17,7 +17,7 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	shootFollowRange = 200;
 	walkSpeed = 75;	
 	body->setActivationState(DISABLE_DEACTIVATION);
-	addAvoidSpeed = 2;
+	avoidStrength = 2;
 	avoidance = btVector3(0, 0, 0);
 	direction = btVector3(0, 0, 0);
 
@@ -34,7 +34,7 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	shootFollowRange = 200;
 	walkSpeed = 75;
 	body->setActivationState(DISABLE_DEACTIVATION);
-	addAvoidSpeed = 2;
+	avoidStrength = 2;
 	avoidance = btVector3(0, 0, 0);
 	direction = btVector3(0, 0, 0);
 }
@@ -126,8 +126,8 @@ void Enemy::shoot()
 		btVector3 offSet((btVector3(player->node->getPosition().X, 50, player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z)).normalize() * 30);
 		vector3df playerToEnemy = (player->node->getPosition() - node->getPosition()) - vector3df(offSet.getX(), offSet.getY(), offSet.getZ());
 		playerToEnemy.normalize();
-		btVector3 direction(playerToEnemy.X, playerToEnemy.Y, playerToEnemy.Z);
-		projectile->fire(pos + offSet, direction);
+		btVector3 dir(playerToEnemy.X, playerToEnemy.Y, playerToEnemy.Z);
+		projectile->fire(pos + offSet, dir);
 		world->addGameObject(projectile);
 		Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");	
 }
@@ -169,7 +169,7 @@ void Enemy::followPlayer()
 
 		//set all calculations to the body.
 		body->setCenterOfMassTransform(currentTrans);
-		body->applyCentralImpulse(helper->extractForwardVector(body)*walkSpeed);
+		//body->applyCentralImpulse(helper->extractForwardVector(body)*walkSpeed);
 		//body->setLinearVelocity(helper->extractForwardVector(body) * walkSpeed);
 }
 
@@ -193,7 +193,7 @@ void Enemy::updateAvoidanceSpeed()
 		return;
 
 	avoidance.normalize();
-	avoidance *= addAvoidSpeed;
+	avoidance *= avoidStrength;
 }
 
 void Enemy::addAvoidance(vector3df delta)
@@ -204,13 +204,12 @@ void Enemy::addAvoidance(vector3df delta)
 
 void Enemy::resetAvoidance()
 {
-	avoidance = btVector3(0, 0, 0);
+	avoidance.setValue(0, 0, 0);
 }
 
 void Enemy::moveEnemy()
 {
-	direction.setY(body->getLinearVelocity().getY());
-	body->setLinearVelocity(direction + avoidance * walkSpeed);
+	body->setLinearVelocity((helper->extractForwardVector(body) + avoidance).normalize() * walkSpeed);
 }
 
 GameObjectType Enemy::getType() const
