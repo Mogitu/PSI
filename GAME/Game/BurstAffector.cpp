@@ -32,12 +32,16 @@ namespace irr
 			f32 deltaTime = ((f32)(now - LastTime)) / 1000.0;
 			LastBurstTimer += deltaTime;
 			LastTime = now;
-			if (LastBurstTimer> BurstTime)
+			if (LastBurstTimer > BurstTime)
+			{
 				ps->em->setMinParticlesPerSecond(0);
+				ps->em->setMaxParticlesPerSecond(0);
+			}
 			if (LastBurstTimer >= TimeBetweenBursts)
 			{
 				LastBurstTimer = 0;
 				ps->em->setMinParticlesPerSecond(BurstAmount);
+				ps->em->setMaxParticlesPerSecond(BurstAmount);
 			}
 		}
 

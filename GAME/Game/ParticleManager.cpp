@@ -147,7 +147,7 @@ namespace ParticleManager
 		//ParticleAffector *pa = new ParticleAffector();
 		//ScaleOverLifeTimeAffector *pa = new ScaleOverLifeTimeAffector(dimension2df(25, 25));
 		//ForceOverLifeTimeAffector *pa = new ForceOverLifeTimeAffector(vector3df(0,0,55));
-		BurstAffector *pa = new BurstAffector(0.5, 0.05, 300);
+		BurstAffector *pa = new BurstAffector(2.5, 0.05, 300);
 		pa->ps = ps;
 		ps->psNode->addAffector(pa);
 		pa->drop();

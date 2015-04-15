@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Particle Affectors">
+      <UniqueIdentifier>{17520a07-0a6c-4752-babf-ddd5657e22fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Particle Affectors">
+      <UniqueIdentifier>{a131c1d2-3fba-4fc3-831d-edca7f9002ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -48,8 +54,20 @@
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MyAffector.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="BurstAffector.cpp">
+      <Filter>Source Files\Particle Affectors</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceOverLifeTimeAffector.cpp">
+      <Filter>Source Files\Particle Affectors</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleAffector.cpp">
+      <Filter>Source Files\Particle Affectors</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleScaleAffector.cpp">
+      <Filter>Source Files\Particle Affectors</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaleOverLifeTimeAffector.cpp">
+      <Filter>Source Files\Particle Affectors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,8 +107,20 @@
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MyAffector.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="BurstAffector.h">
+      <Filter>Header Files\Particle Affectors</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceOverLifeTimeAffector.h">
+      <Filter>Header Files\Particle Affectors</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaleOverLifeTimeAffector.h">
+      <Filter>Header Files\Particle Affectors</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleScaleAffector.h">
+      <Filter>Header Files\Particle Affectors</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleAffector.h">
+      <Filter>Header Files\Particle Affectors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
