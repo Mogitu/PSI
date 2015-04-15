@@ -197,63 +197,68 @@ IGameObject *GameWorld::getPlayer()
 	return player;
 }
 
+//loads a level into the world 
 void GameWorld::buildIrrLevel(Level *level)
 {
+	//Loop all nodes in the scene 
 	for (u32 i = 0; i < level->getNodes().size(); i++)
 	{
+		//create a temporary body
 		btRigidBody *tmp = 0;
-		std::string name = level->getNodes()[i]->getName();
+		//retreive the full name of the current node
+		std::string name = level->getNodes()[i]->getName();		
 
-		ISceneNode *node = level->getNamedNode(name);
-
+		//get the prefix to check against
 		std::string namePrefix = name.substr(0, 2);
 
+		//create a suitable rigid body  depending on the prefix
 		if (namePrefix == DYNAMIC_CUBE)
 		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
-			tmp = helper->createCube(p, 50);
+			//We know the prefix, so now we can create a scene node 
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			//create the body from the node and a given mass
+			tmp = helper->createCube(node, 50);
+			//set some defaults
 			tmp->setRestitution(0.8);
 			tmp->setFriction(0.6);
 		}
 		else if (namePrefix == STATIC_CUBE)
 		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
-			tmp = helper->createCube(p, 0);
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			tmp = helper->createCube(node, 0);
 			tmp->setRestitution(0.2);
 			tmp->setFriction(0.3);
 		}
 		else if (namePrefix == DYNAMIC_SPHERE)
 		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
-			tmp = helper->createSphere(p, 50);
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			tmp = helper->createSphere(node, 50);
 			tmp->setRestitution(0.8);
 			tmp->setFriction(0.6);
 		}
+		//Create world geometry, simple boxes are often not enough for more complex scenes so we create a convex shape.
 		else if (namePrefix == WORLD)
 		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
-			tmp = helper->createConvexTriangleBody(p);
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			tmp = helper->createConvexTriangleBody(node);
 			tmp->setRestitution(0.2);
 			tmp->setFriction(0.3);
 		}
+		//Create a particle
 		else if (namePrefix == PARTICLE)
 		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
 			stringw last = core::stringw(name.c_str());
 			stringw path = "../Assets/";			
-			ParticleManager::createFullParticleEffect(path.append(last.subString(3, last.size()).append(".xml")), p->getPosition());
-		}		
+			ParticleManager::createFullParticleEffect(path.append(last.subString(3, last.size()).append(".xml")), node->getPosition());
+		}	
+		//The enemy alreay knows how to construct its rigidbody so we only create a new instance of the enemy from the current node.
 		else if (namePrefix == ENEMY)
 		{		
-			IAnimatedMeshSceneNode *p = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
-			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, p, Shape_Type::CAPSULE, 300, p->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
-		}
-		else if (namePrefix == PLAYER)
-		{
-			//This part bugs out, probably a problem in memory allocation in the player class.
-			//IAnimatedMeshSceneNode *p = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
-			//Player* player = new Player(Common::smgr, Common::irrDriver, helper, this, playerInputReceiver, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, p->getPosition());
-		}
+			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
+			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+		}		
 		tmp = 0;
+		delete tmp;
 	}
 }
