@@ -45,40 +45,40 @@ void GameWorld::update(u32 frameDeltaTime)
 			stringw nodeName = gameObject->node->getName();
 
 			//if object not alive or name is dead we kill/clean it.
-		if (!gameObject->isAlive || nodeName == "dead")
+			if (!gameObject->isAlive || nodeName == "dead")
 			{
 				gameObject->kill();
 				gameObjects.erase(Iterator);
 				delete gameObject;
 				return;
-		}
-
-		if (gameObject->getType() == GameObjectType::ENEMY)
-		{
-			Enemy* e = dynamic_cast<Enemy*>(gameObject);
-			bool isAvoiding = false;
-			for (core::list<IGameObject *>::Iterator i = gameObjects.begin(); i != gameObjects.end(); ++i)
-			{
-				IGameObject* gb = *i;
-
-				if (gb->getType() == GameObjectType::PROJECTILE)
-				{
-					Projectile* projectile = dynamic_cast<Projectile*>(gb);
-
-					vector3df dist = projectile->node->getPosition() - e->node->getPosition();
-
-					if (dist.getLength() <= 60)
-					{
-						isAvoiding = true;
-						e->addAvoidance(dist);
-					}
-											
-				}
 			}
 
-			if (!isAvoiding)
-				e->resetAvoidance();
-		}
+			//Flocking Separation
+			if (gameObject->getType() == GameObjectType::ENEMY)
+			{
+				Enemy* e = dynamic_cast<Enemy*>(gameObject);
+				bool isAvoiding = false;
+				for (core::list<IGameObject *>::Iterator i = gameObjects.begin(); i != gameObjects.end(); ++i)
+				{
+					IGameObject* gb = *i;
+
+					if (gb->getType() == GameObjectType::PROJECTILE && (std::string)gb->node->getName() == "PlayerProjectile")
+					{
+						Projectile* projectile = dynamic_cast<Projectile*>(gb);
+
+						vector3df dist = projectile->node->getPosition() - e->node->getPosition();
+
+						if (dist.getLength() <= 60)
+						{
+							isAvoiding = true;
+							e->addAvoidance(dist);
+						}					
+					}
+				}
+
+				if (!isAvoiding)
+					e->resetAvoidance();
+			}
 		}
 
 		//collision detection

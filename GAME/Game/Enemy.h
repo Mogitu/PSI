@@ -41,11 +41,11 @@ private:
 	float walkSpeed;
 	const IGameObject *player;	
 
-	float addAvoidSpeed;
+	float avoidStrength;
 	btVector3 avoidance;
 	btVector3 direction;
 	void updateAvoidanceSpeed();
-	void moveEnemy();
+	void moveEnemy(f32 dist);
 };
 
 #endif ENEMY_H
