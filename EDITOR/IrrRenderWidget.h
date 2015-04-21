@@ -8,6 +8,8 @@
 #include <QWidget>
 #include "irrlicht.h"
 #include "ParticleSettings.h"
+#include "PreviewCamera.h"
+
 
 using namespace irr;
 using namespace core;
@@ -21,18 +23,16 @@ class IrrRenderWidget : public QWidget
 
 public:
     IrrRenderWidget(QWidget *irrRenderTarget, bool softwareRenderer);
-    ~IrrRenderWidget();  
+    ~IrrRenderWidget();
     void init();
     void resizeIrrWidget(int x, int y, int newWidth, int newHeight);   
     ParticleSettings* particleSettings;
-
+    PreviewCamera *camera;
 
 private:
     QWidget *irrRenderTarget;
     E_DRIVER_TYPE rendererType;
     ISceneManager* smgr;
-
-
 
 
 protected:

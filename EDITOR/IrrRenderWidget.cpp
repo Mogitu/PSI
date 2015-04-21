@@ -48,8 +48,8 @@ void IrrRenderWidget::init()
         //create a new particle manager and setup the camera
         smgr = device->getSceneManager();
         particleSettings = new ParticleSettings(device);
-        smgr->addCameraSceneNode(0, core::vector3df(0, -50, -100), core::vector3df(0, 5, 0));
-
+        //smgr->addCameraSceneNode(0, core::vector3df(0, -50, -100), core::vector3df(0, 5, 0));
+        camera  = new PreviewCamera(smgr);
         //this will hand control over to the game/render loop
         startTimer(0);
     }
