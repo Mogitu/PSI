@@ -14,9 +14,12 @@ class PreviewCamera{
    PreviewCamera();
    ~PreviewCamera();
     PreviewCamera(irr::scene::ISceneManager *smgr);
+    ICameraSceneNode *getNode();
+    void translate(f32 amount, vector3df axis);
  private:
    irr::scene::ISceneManager *smgr;
    irr::scene::ICameraSceneNode *cameraNode;
+   vector3df lookAt;
 };
 
 #endif // PREVIEWCAMERA

@@ -26,13 +26,19 @@ IrrRenderWidget::IrrRenderWidget(QWidget *irrRenderTarget, bool softwareRenderer
     params.Stencilbuffer = true;
     params.Stereobuffer = false;
     params.Vsync = false;
-    params.WindowId = reinterpret_cast<void*>(irrRenderTarget->winId());
+    params.WindowId = (void*)irrRenderTarget->winId();
     params.WindowSize.Width = irrRenderTarget->size().width();
     params.WindowSize.Height = irrRenderTarget->size().height();
     params.WithAlphaChannel = false;
     params.ZBufferBits = 16;
 
     device = createDeviceEx(params);
+   // this->setMouseTracking(true);
+   // this->grabMouse();
+
+    //this->grabKeyboard();
+   // this->setEnabled(true);
+
 }
 
 IrrRenderWidget::~IrrRenderWidget()
@@ -97,3 +103,72 @@ void IrrRenderWidget::resizeIrrWidget(int x, int y, int newWidth, int newHeight)
     }
     */
 }
+/*
+void IrrRenderWidget::mousePressEvent(QMouseEvent *event){
+    irr::SEvent irrEvent;
+
+       irrEvent.EventType = irr::EET_MOUSE_INPUT_EVENT;
+
+       switch ( event->button() )
+       {
+       case Qt::LeftButton:
+           //irrEvent.MouseInput.Event = pressedDown? irr::EMIE_LMOUSE_PRESSED_DOWN:irr::EMIE_LMOUSE_LEFT_UP;
+           break;
+
+       case Qt::MidButton:
+          // irrEvent.MouseInput.Event = pressedDown? irr::EMIE_MMOUSE_PRESSED_DOWN:irr::EMIE_MMOUSE_LEFT_UP;
+           break;
+
+       case Qt::RightButton:
+         //  irrEvent.MouseInput.Event = pressedDown? irr::EMIE_RMOUSE_PRESSED_DOWN:irr::EMIE_RMOUSE_LEFT_UP;
+           break;
+
+       default:
+           return; // Cannot handle this mouse event
+       }
+
+       irrEvent.MouseInput.X = event->x();
+       irrEvent.MouseInput.Y = event->y();
+       irrEvent.MouseInput.Wheel = 0.0f; // Zero is better than undefined
+
+       device->postEventFromUser( irrEvent );
+}
+
+void IrrRenderWidget::wheelEvent(QWheelEvent *event)
+{
+    qDebug()<<"fdsfdsfds";
+    camera->getNode()->setPosition(vector3df(0,1000,0));
+}
+
+void IrrRenderWidget::keyPressEvent(QKeyEvent *event)
+{
+
+    IParticleSystemSceneNode *node = particleSettings->getParticleNode();
+    vector3df forward = node->getRotation().rotationToDirection();
+    vector3df up(0,1,0);
+    vector3df right(forward.crossProduct(up).normalize());
+    vector3df oldRot = node->getRotation();
+    vector3df newRot;
+    switch(event->key())
+    {
+     case KEY_KEY_W:
+          node->setPosition(node->getPosition()+node->getRotation().rotationToDirection()*2);
+        break;
+     case KEY_KEY_S:
+          node->setPosition(node->getPosition()+node->getRotation().rotationToDirection()*-2);
+        break;
+     case KEY_KEY_D:
+        node->setPosition(node->getPosition()+right*2);
+        break;
+    case KEY_KEY_A:
+       node->setPosition(node->getPosition()+right*-2);
+       break;
+    case KEY_KEY_Q:
+       oldRot.X+=1;
+       node->setRotation(oldRot);
+       break;
+    }
+
+    event->accept();
+}
+*/

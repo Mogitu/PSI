@@ -9,6 +9,7 @@
 #include <qfiledialog.h>
 #include "IrrRenderWidget.h"
 #include <QMessageBox>
+#include <QT>
 
 namespace Ui {
 class MainWindow;
@@ -35,6 +36,7 @@ private:
 
 protected:
     virtual void resizeEvent(QResizeEvent *event);
+    virtual bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
     void applySettings();

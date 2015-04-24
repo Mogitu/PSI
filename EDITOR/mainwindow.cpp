@@ -2,6 +2,8 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
+#include "IrrRenderWidget.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,6 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
     InitIrrRenderWidget(ui->centralWidget->findChild<QWidget *>("ParticlePreviewWidget"));
     openShapeBox(ui->comboShape->currentText());
     connectInputElements();
+    ui->centralWidget->findChild<QWidget *>("ParticlePreviewWidget")->installEventFilter(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -211,6 +215,55 @@ void MainWindow::openShapeBox(const QString text)
         ui->groupBoxSettings->setVisible(false);
     }
     applySettings();
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    QPoint p =mapFromParent(QCursor::pos());
+  //  qDebug()<<p;
+    if (event->type() == QEvent::MouseButtonPress)
+    {
+        irrRenderWidget->mouseDown=true;
+        irrRenderWidget->pos = ((QMouseEvent*)event)->globalPos();
+        qDebug()<<"mouse down";
+       return true;
+    }else if(event->type() == QEvent::MouseButtonRelease){
+        irrRenderWidget->mouseDown=false;
+        qDebug()<<"mouse release";
+    }else if(event->type()==QEvent::MouseMove ){
+        if(irrRenderWidget->mouseDown){
+            QPoint newPos = ((QMouseEvent*)event)->globalPos();
+            f32 diffX= newPos.x()- irrRenderWidget->pos.x();
+            f32 diffY= newPos.y()- irrRenderWidget->pos.y();
+            if(diffX>0){
+               irrRenderWidget->camera->translate(-0.25,vector3df(1,0,0));
+            }else if(diffX<0){
+                irrRenderWidget->camera->translate(0.25,vector3df(1,0,0));
+            }
+
+            if(diffY>0){
+               irrRenderWidget->camera->translate(0.25,vector3df(0,1,0));
+            }else if(diffY<0){
+                irrRenderWidget->camera->translate(-0.25,vector3df(0,1,0));
+            }
+        }
+        return true;
+    } else if(event->type()==QEvent::Wheel)
+    {
+        f32 change = ((QWheelEvent*)event)->angleDelta().y();
+        if(change>0){
+            irrRenderWidget->camera->translate(-5,vector3df(0,0,1));
+        }
+        else if(change<0)
+        {
+              irrRenderWidget->camera->translate(5,vector3df(0,0,1));
+        }
+        return true;
+    }
+    else {
+       return false;
+    }
+    return QObject::eventFilter(obj,event);
 }
 
 void MainWindow::on_loadTexture_clicked()

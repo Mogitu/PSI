@@ -508,3 +508,7 @@ void ParticleSettings::loadTexture(QString path)
 {
     particleNode->setMaterialTexture(0, device->getVideoDriver()->getTexture(qPrintable(path)));
 }
+
+IParticleSystemSceneNode *ParticleSettings::getParticleNode(){
+    return particleNode;
+}

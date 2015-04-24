@@ -16,7 +16,7 @@ class ParticleSettings{
     public:
         ParticleSettings(IrrlichtDevice* device);
         ~ParticleSettings();
-
+        IParticleSystemSceneNode *getParticleNode();
         //common settings
         stringw imagepath;
         QString type;
