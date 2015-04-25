@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);   
+    ui->setupUi(this);
     colorPickerBright= new QColorDialog();
     colorPickerDark = new QColorDialog();
     colorPickerFade = new QColorDialog();
@@ -103,7 +103,7 @@ void MainWindow::InitIrrRenderWidget(QWidget *irrRenderTarget)
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-   irrRenderWidget->resizeIrrWidget(0, 0, this->size().width()/2, this->size().height());
+    irrRenderWidget->resizeIrrWidget(0, 0, this->size().width()/2, this->size().height());
 }
 
 //writes all information entered in the editors labels into respective variables and creates a new emitter from them.
@@ -199,7 +199,7 @@ void MainWindow::on_actionExport_triggered()
 
 void MainWindow::on_comboShape_currentIndexChanged(const QString &text)
 {
-   openShapeBox(text);
+    openShapeBox(text);
 }
 
 void MainWindow::openShapeBox(const QString text)
@@ -219,51 +219,50 @@ void MainWindow::openShapeBox(const QString text)
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
-    QPoint p =mapFromParent(QCursor::pos());
-  //  qDebug()<<p;
-    if (event->type() == QEvent::MouseButtonPress)
+    switch(event->type())
     {
-        irrRenderWidget->mouseDown=true;
-        irrRenderWidget->pos = ((QMouseEvent*)event)->globalPos();
-        qDebug()<<"mouse down";
-       return true;
-    }else if(event->type() == QEvent::MouseButtonRelease){
-        irrRenderWidget->mouseDown=false;
-        qDebug()<<"mouse release";
-    }else if(event->type()==QEvent::MouseMove ){
-        if(irrRenderWidget->mouseDown){
-            QPoint newPos = ((QMouseEvent*)event)->globalPos();
-            f32 diffX= newPos.x()- irrRenderWidget->pos.x();
-            f32 diffY= newPos.y()- irrRenderWidget->pos.y();
-            if(diffX>0){
-               irrRenderWidget->camera->translate(-0.25,vector3df(1,0,0));
-            }else if(diffX<0){
-                irrRenderWidget->camera->translate(0.25,vector3df(1,0,0));
+        case QEvent::MouseButtonPress:
+            irrRenderWidget->mouseDown=true;
+            irrRenderWidget->pos = ((QMouseEvent*)event)->globalPos();
+            qDebug()<<"mouse down";
+            return true;
+            break;
+        case QEvent::MouseButtonRelease:
+            irrRenderWidget->mouseDown=false;
+            qDebug()<<"mouse release";
+            return true;
+            break;
+        case QEvent::MouseMove:
+            if(irrRenderWidget->mouseDown){
+                //position of mouse during the drag/move
+                QPoint newPos = ((QMouseEvent*)event)->globalPos();
+                //find difference in positions
+                f32 diffX= newPos.x()- irrRenderWidget->pos.x();
+                f32 diffY= newPos.y()- irrRenderWidget->pos.y();
+                //find the direction of the drag by normalising the x and y components
+                vector3df dir(diffX,diffY,0);
+                dir.normalize();
+                //translate to new position
+                irrRenderWidget->camera->translate(-0.3,vector3df(dir.X,-dir.Y,0));
             }
-
-            if(diffY>0){
-               irrRenderWidget->camera->translate(0.25,vector3df(0,1,0));
-            }else if(diffY<0){
-                irrRenderWidget->camera->translate(-0.25,vector3df(0,1,0));
+            return true;
+            break;
+        case QEvent::Wheel:
+            {
+                f32 change = ((QWheelEvent*)event)->angleDelta().y();
+                if(change>0){
+                    irrRenderWidget->camera->translate(-5,vector3df(0,0,1));
+                }
+                else if(change<0)
+                {
+                    irrRenderWidget->camera->translate(5,vector3df(0,0,1));
+                }
+                return true;
             }
-        }
-        return true;
-    } else if(event->type()==QEvent::Wheel)
-    {
-        f32 change = ((QWheelEvent*)event)->angleDelta().y();
-        if(change>0){
-            irrRenderWidget->camera->translate(-5,vector3df(0,0,1));
-        }
-        else if(change<0)
-        {
-              irrRenderWidget->camera->translate(5,vector3df(0,0,1));
-        }
-        return true;
+            break;
+        default:
+         return false;
     }
-    else {
-       return false;
-    }
-    return QObject::eventFilter(obj,event);
 }
 
 void MainWindow::on_loadTexture_clicked()
