@@ -78,6 +78,7 @@
     <ClCompile Include="ForceOverLifeTimeAffector.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Hud.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ParticleAffector.cpp" />
@@ -95,6 +96,8 @@
     <ClInclude Include="ForceOverLifeTimeAffector.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Hud.h" />
+    <ClInclude Include="HudObject.h" />
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="Level.h" />

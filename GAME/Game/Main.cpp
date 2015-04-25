@@ -7,6 +7,7 @@
 #include "ParticleManager.h"
 #include <math.h>
 #include "Enemy.h"
+#include "Hud.h"
 
 using namespace Common;
 
@@ -58,29 +59,7 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 	camera->setTarget(nodePosition.operator+(vector3df(0, heightModifier, 0)));
 }
 
-//Draw basic hud with score and player health, also displayes game over text when player is dead.
-void drawHud(IGUIFont *font, Player *player,GameWorld *world)
-{
-	//default textcolor, yellow
-	SColor textColor(255,255,255,0);
-	//player health
-	font->draw(L"Health:", rect<s32>(3, 0, 300, 50),textColor);
-	stringw playerHealth(player->health);
-	font->draw(playerHealth, rect<s32>(70, 0, 300, 50), textColor);
-	//score
-	stringw playerScore(player->getScore());
-	font->draw(L"Score:", rect<s32>(3, 20, 300, 50), textColor);
-	font->draw(playerScore, rect<s32>(70, 20, 300, 50), textColor);
-	//when gameover
-	if (player->health<=0 || !player->isAlive)
-	{
-		font->draw(L"GAME OVER", rect<s32>(300, 300, 300, 50), textColor);
-	}
-	if (world->gameState==GAMESTATE::LEVELCOMPLETE)
-	{
-		font->draw(L"LEVEL COMPLETE!!!", rect<s32>(300, 300, 300, 50), textColor);
-	}
-}
+
 
 int main() {
 	initIrrlicht();
@@ -108,9 +87,8 @@ int main() {
 	
 	Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
 	
-	//create hud vars.
-	IGUIEnvironment *gui = device->getGUIEnvironment();
-	IGUIFont *font = gui->getFont("../Assets/Fonts/myfont.xml");
+	Hud *hud = new Hud(device, player, gWorld);
+	
 	//ParticleManager::createFullParticleEffect("../Assets/firesea.xml",vector3df(316,40,-200));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
@@ -132,7 +110,7 @@ int main() {
 		ParticleManager::update(deltaTime);
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
-		drawHud(font, player,gWorld);
+		hud->draw();
 		guiEnv->drawAll();
 		irrDriver->endScene();
 		//Close Device
