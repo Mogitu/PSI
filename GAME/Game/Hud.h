@@ -2,7 +2,6 @@
 #define HUD_H
 
 #include "irrlicht.h"
-#include "HudObject.h"
 #include "Player.h"
 #include "GameWorld.h"
 
@@ -13,23 +12,18 @@ class Hud{
 
 
 public:
-	Hud(IrrlichtDevice *device, Player *p, GameWorld *gameWorld);
+	Hud(IrrlichtDevice *device, Player *p, GameWorld *gameWorld, stringc imagePath);
 	~Hud();
-	void draw();
-
+	void draw();	
 private:
-	HudObject *healthBar;
-	HudObject *backGround;
-	HudObject *healthImg;
-	HudObject *selectedWeapon;
-
-
-	list<HudObject*> weapons;
+	ITexture *image;
+	IVideoDriver *driver;	
 	IrrlichtDevice *device;
 	IGUIEnvironment *gui;
 	IGUIFont *font;
 	Player *player;
 	GameWorld *gameWorld;
+	void moveWeaponSelectionHightlight();
 
 };
 

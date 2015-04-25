@@ -19,11 +19,11 @@
     <Filter Include="Source Files\Particle Affectors">
       <UniqueIdentifier>{a131c1d2-3fba-4fc3-831d-edca7f9002ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Hud">
-      <UniqueIdentifier>{8de97047-86ef-4191-aa63-89871f615b72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Hud">
+    <Filter Include="Header Files\GUI">
       <UniqueIdentifier>{b6db9748-58c0-4209-8db9-6b08ae58129f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{8de97047-86ef-4191-aa63-89871f615b72}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,7 +76,10 @@
       <Filter>Source Files\Particle Affectors</Filter>
     </ClCompile>
     <ClCompile Include="Hud.cpp">
-      <Filter>Source Files\Hud</Filter>
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,10 +135,10 @@
       <Filter>Header Files\Particle Affectors</Filter>
     </ClInclude>
     <ClInclude Include="Hud.h">
-      <Filter>Header Files\Hud</Filter>
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="HudObject.h">
-      <Filter>Header Files\Hud</Filter>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
