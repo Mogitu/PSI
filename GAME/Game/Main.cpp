@@ -62,6 +62,11 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 
 
 int main() {
+	//values for physics update speed(
+	const float pausedPhysicsSpeed=0.0f;
+	const float normalPhysicsSpeed = 0.001f;
+	float physicsSpeed = normalPhysicsSpeed;
+
 	initIrrlicht();
 	// Add camera
 	camera = smgr->addCameraSceneNode(0);
@@ -105,14 +110,29 @@ int main() {
 			updateCamera(device, player->getNodeAbsolutePosition(), (f32)deltaTime);
 			camera->setTarget(player->getNodeAbsolutePosition());
 		}		
-		helper->getWorld()->stepSimulation(deltaTime * 0.001f, 60);
-		gWorld->update(deltaTime);
+		helper->getWorld()->stepSimulation(deltaTime * physicsSpeed, 60);		
 		ParticleManager::update(deltaTime);
 		irrDriver->beginScene(true, true, SColor(255, 20, 0, 0));
 		smgr->drawAll();
 		hud->draw();
+		gWorld->update(deltaTime);
 		guiEnv->drawAll();
 		irrDriver->endScene();
+		 //pause game
+		if (input->IsKeyDown(KEY_KEY_P))
+		{						
+			switch (gWorld->gameState)
+			{
+			case PLAYING:
+				physicsSpeed = pausedPhysicsSpeed;
+				gWorld->gameState = PAUSED;
+				break;
+			case PAUSED:
+				physicsSpeed = normalPhysicsSpeed;
+				gWorld->gameState = PLAYING;
+				break;
+			}						
+		}			
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();

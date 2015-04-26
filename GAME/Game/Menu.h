@@ -5,10 +5,12 @@
 
 using namespace irr;
 using namespace gui;
+using namespace video;
+using namespace core;
 
 class Menu{
 public:
-	Menu(IrrlichtDevice *device);
+	Menu(IrrlichtDevice *device, stringc imagePath);
 	~Menu();
 
 	void draw();
@@ -16,6 +18,8 @@ public:
 private:
 	IrrlichtDevice *device;
 	IGUIEnvironment *gui;
+	IVideoDriver *driver;
+	ITexture *image;
 	IGUIButton *pauseButton;
 	IGUIButton *restartButton;
 };

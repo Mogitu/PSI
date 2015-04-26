@@ -5,11 +5,13 @@
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
 {
 	gameState = PLAYING;
+	menu = new Menu(device, "../Assets/textures/menu.png");
 }
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device, InputReceiver *playerInputReceiver) : helper(h), device(device), playerInputReceiver(playerInputReceiver)
 {
 	gameState = PLAYING;
+	menu = new Menu(device,"../Assets/textures/menu.png");
 }
 
 GameWorld::~GameWorld()
@@ -80,6 +82,7 @@ void GameWorld::update(u32 frameDeltaTime)
 					e->resetAvoidance();
 			}
 		}
+	
 
 		//collision detection
 		//TODO: VERY SLOPPY; in its current state this will need a lot of special case checks. Needs to be improved in later sprints.
@@ -165,7 +168,11 @@ void GameWorld::update(u32 frameDeltaTime)
 				p->takeDamage(10);								
 			}				
 		}//End collision detection
-	}	
+	}
+	else if (gameState==PAUSED)
+	{
+		menu->draw();		
+	}
 }
 
 void GameWorld::addGameObject(IGameObject* gameObject)

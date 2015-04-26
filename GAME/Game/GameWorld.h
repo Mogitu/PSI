@@ -8,6 +8,7 @@
 #include "Projectile.h"
 #include "Level.h"
 #include "InputReceiver.h"
+#include "Menu.h"
 
 
 using namespace irr;
@@ -22,6 +23,7 @@ using namespace irr;
 enum GAMESTATE
 {
 	PLAYING,
+	PAUSED,
 	GAMEOVER,
 	LEVELCOMPLETE
 };
@@ -45,6 +47,8 @@ private:
 	BulletHelper *helper;
 	IrrlichtDevice *device;
 	IGameObject *player;
+	Menu *menu;
+
 public:
 	GameWorld(BulletHelper *h, IrrlichtDevice *device);
 	GameWorld(BulletHelper *h, IrrlichtDevice *device, InputReceiver *playerInputReceiver);

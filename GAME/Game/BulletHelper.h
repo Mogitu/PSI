@@ -33,8 +33,7 @@ public:
 	float gravityMultiplier;
 	btRigidBody *createBody(ISceneNode* n, Shape_Type type,btScalar mass);
 	void updatePhysics(btRigidBody *body);	
-	void clearObjects();
-	void buildIrrLevel(Level *level);		
+	void clearObjects();	
 	btDiscreteDynamicsWorld *getWorld();
 	btVector3 extractForwardVector(const btRigidBody *body);
 	btVector3 extractRightVector(const btRigidBody *body);

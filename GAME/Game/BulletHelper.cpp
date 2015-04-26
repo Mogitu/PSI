@@ -274,62 +274,6 @@ btRigidBody *BulletHelper::createSphere(ISceneNode* node, btScalar mass)
 	return rigidBody;
 }
 
-
-//DEPRECATED!!!!! Use the method from the gameworld instead
-void BulletHelper::buildIrrLevel(Level *level)
-{	
-	for (u32 i = 0; i < level->getNodes().size(); i++)
-	{
-		btRigidBody *tmp = 0;
-		std::string name = level->getNodes()[i]->getName();
-
-		ISceneNode *node = level->getNamedNode(name);
-
-		std::string namePrefix = name.substr(0, 2);		
-		
-		
-		if (namePrefix == DYNAMIC_CUBE)
-		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);			
-			tmp=createCube(p, 50);			
-			tmp->setRestitution(0.8);
-			tmp->setFriction(0.6);
-		}
-		else if (namePrefix == STATIC_CUBE)
-		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
-			tmp=createCube(p, 0);
-			tmp->setRestitution(0.2);
-			tmp->setFriction(0.3);
-		}
-		else if (namePrefix == DYNAMIC_SPHERE)
-		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
-			tmp = createSphere(p, 50);		
-			tmp->setRestitution(0.8);
-			tmp->setFriction(0.6);
-		}
-		else if (namePrefix == WORLD)
-		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);
-			tmp = createTriangleBody(p);		
-			tmp->setRestitution(0.8);
-			tmp->setFriction(0.6);
-		}
-		else if (namePrefix == PARTICLE)
-		{
-			ISceneNode *p = (ISceneNode*)level->getNamedNode(name);		
-			stringw last = core::stringw(name.c_str());			
-			stringw path = "../Assets/";					
-			ParticleManager::createFullParticleEffect(path.append(last.subString(4,last.size()).append(".xml")), p->getPosition());
-		}
-		else if (namePrefix == ENEMY)
-		{
-		}
-		tmp = 0;
-	}
-}
-
 IMesh* BulletHelper::getMesh(ISceneNode* node)
 {
 	if (node->getType() == ESCENE_NODE_TYPE::ESNT_MESH)
