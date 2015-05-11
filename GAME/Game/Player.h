@@ -3,11 +3,11 @@
 
 #include "InputReceiver.h"
 #include "BulletHelper.h"
-#include "IGameObject.h"
+#include "Character.h"
 #include "GameWorld.h"
 
 
-class Player : public IGameObject
+class Player : public Character
 {
 private:
 	InputReceiver* input;

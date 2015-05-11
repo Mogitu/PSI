@@ -6,9 +6,9 @@
 #include <string>
 #include "BulletHelper.h"
 #include "GameWorld.h"
-#include "IGameObject.h"
+#include "Character.h"
 
-class Enemy : public IGameObject
+class Enemy : public Character
 {
 public:
 	Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass = 1, vector3df position = vector3df(0, 0, 0), vector3df rotation = vector3df(0, 0, 0), vector3df scale = vector3df(1, 1, 1));

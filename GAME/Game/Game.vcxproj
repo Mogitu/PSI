@@ -91,9 +91,12 @@
     <ClCompile Include="ScaleOverLifeTimeAffector.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BeamShotBehaviour.h" />
     <ClInclude Include="BulletHelper.h" />
     <ClInclude Include="BurstAffector.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="FireWeapon.h" />
     <ClInclude Include="ForceOverLifeTimeAffector.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Enemy.h" />
@@ -109,6 +112,8 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ScaleOverLifeTimeAffector.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponBehaviour.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
