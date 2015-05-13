@@ -15,6 +15,7 @@ public:
 	void resurrect();
 	virtual void Initialize();
 	virtual void Update(u32 deltaTime);	
+	virtual void revive();
 	GameObjectType getType() const;
 
 private:

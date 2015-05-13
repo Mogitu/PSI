@@ -57,6 +57,7 @@ public:
 	~GameWorld();
 	void clearGameObjects();
 	void update(u32 frameDeltaTime);
+	void restart(Level *level);
 	//void updatePhysics(btRigidBody *body);
 	void addGameObject(IGameObject* gameObject);
 	void removeGameObject(IGameObject* gameObject);

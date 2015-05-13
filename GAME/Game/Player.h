@@ -29,6 +29,7 @@ public:
 	void PlayerMovement(u32 frameDeltaTime);
 	void Fire();
 	virtual void kill();
+	virtual void revive();
 	virtual void takeDamage(int amount);
 	const vector3df& getNodePosition() const;
 	const vector3df& getNodeAbsolutePosition() const;

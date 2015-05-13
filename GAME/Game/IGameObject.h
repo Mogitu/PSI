@@ -23,6 +23,7 @@ public:
 	virtual void Initialize() = 0;
 	virtual void Update(irr::u32 frameDeltaTime) = 0;
 	virtual void kill()=0;
+	virtual void revive()=0;
 	virtual void takeDamage(int amount){};
 	virtual GameObjectType getType() const
 	{

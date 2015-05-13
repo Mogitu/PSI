@@ -216,3 +216,8 @@ IAnimatedMeshSceneNode* Player::getNode()
 {
 	return (IAnimatedMeshSceneNode*)node;
 }
+
+void Player::revive()
+{
+
+}

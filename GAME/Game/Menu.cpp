@@ -13,5 +13,5 @@ Menu::~Menu(){};
 void Menu::draw()
 {
 	SColor white(255, 255, 255, 255);
-	driver->draw2DImage(image, position2d<s32>(200, 200), rect<s32>(0, 0, 320, 64), 0, white, true);
+	driver->draw2DImage(image, position2d<s32>(220, 170));
 }

@@ -20,6 +20,7 @@ public:
 	void SetDeath(float begindeath = 0, float enddeath = 0, float deathspeed = 25);
 	void getcurrentframe();
 	virtual void kill();
+	virtual void revive();
 	void shoot();
 	GameObjectType getType() const;
 	void addAvoidance(vector3df delta);
@@ -46,6 +47,7 @@ private:
 	btVector3 direction;
 	void updateAvoidanceSpeed();
 	void moveEnemy(f32 dist);
+	
 };
 
 #endif ENEMY_H

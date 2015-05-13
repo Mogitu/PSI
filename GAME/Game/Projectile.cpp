@@ -36,6 +36,11 @@ void Projectile::Update(u32 deltaTime)
 	}
 }
 
+void Projectile::revive()
+{
+
+}
+
 
 
 void Projectile::fire(btVector3 &pos, btVector3 &dir)

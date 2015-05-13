@@ -179,6 +179,11 @@ void Enemy::kill()
 {	
 	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 	isAlive = false;
+	Node->setVisible(false);
+	body->setActivationState(0);
+	node->setName("dead");
+	
+	/*
 	Node->remove();
 	// Remove the object from the world
 	helper->getWorld()->removeRigidBody(body);
@@ -186,6 +191,15 @@ void Enemy::kill()
 	delete body->getMotionState();
 	delete body->getCollisionShape();
 	delete body;		
+	*/
+}
+
+void Enemy::revive(){
+	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	isAlive = true;
+	Node->setVisible(true);
+	body->setActivationState(1);
+	Node->setName("Enemy");
 }
 
 //flocking separation

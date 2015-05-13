@@ -61,6 +61,7 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 
 
 
+
 int main() {
 	//values for physics update speed(
 	const float pausedPhysicsSpeed=0.0f;
@@ -132,7 +133,20 @@ int main() {
 				gWorld->gameState = PLAYING;
 				break;
 			}						
-		}			
+		}
+		else if (gWorld->gameState == PAUSED && input->IsKeyDown(KEY_KEY_Q))
+		{
+			device->closeDevice();
+		}
+		else if (gWorld->gameState == PAUSED && input->IsKeyDown(KEY_KEY_R))
+		{
+			physicsSpeed = pausedPhysicsSpeed;
+			//system("start Restart Game.cmd");
+			//device->closeDevice();
+			gWorld->restart(level);
+			physicsSpeed = normalPhysicsSpeed;			
+			
+		}
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();
