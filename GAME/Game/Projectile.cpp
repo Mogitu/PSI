@@ -6,6 +6,11 @@ Projectile::Projectile(ISceneManager *smgr, BulletHelper *h, stringw projectileN
 	Initialize();	
 }
 
+Projectile::Projectile()
+{
+
+}
+
 Projectile::~Projectile()
 {
 	
@@ -22,9 +27,21 @@ void Projectile::Initialize()
 	node->setName(projectileName);	
 	//node->setPosition(vector3df(0, 20, 0));
 	body = h->createBody(node, Shape_Type::SPHERE,10);
-	body->setLinearFactor(btVector3(1, 0, 1));
+	body->setLinearFactor(btVector3(1, 0, 1));	
+}
 
-	
+void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName) 
+{	
+	aliveTime = 0;
+	maxLifeTime = 30;//3;
+	speed = 10;//4000;
+	isAlive = true;
+	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
+	node = smgr->addMeshSceneNode(mesh);
+	node->setName(projectileName);
+	//node->setPosition(vector3df(0, 20, 0));
+	body = h->createBody(node, Shape_Type::SPHERE, 10);
+	body->setLinearFactor(btVector3(1, 0, 1));
 }
 
 void Projectile::Update(u32 deltaTime)

@@ -14,6 +14,7 @@ public:
 	virtual void kill();
 	void resurrect();
 	virtual void Initialize();
+	virtual void Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName);
 	virtual void Update(u32 deltaTime);	
 	virtual void revive();
 	GameObjectType getType() const;
