@@ -94,12 +94,7 @@ int main() {
 	
 	Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
 	
-	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud.png");
-	ObjectPool<Projectile> pool;
-	Projectile *jan = pool.create();
-	jan->Initialize(smgr,helper,"PlayerProjectile");	
-	jan->fire(player->body->getWorldTransform().getOrigin(), btVector3(0,0,1));
-	gWorld->addGameObject(jan);
+	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud.png");	
 	//ParticleManager::createFullParticleEffect("../Assets/firesea.xml",vector3df(316,40,-200));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;

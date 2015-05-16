@@ -1,6 +1,8 @@
+#include "GameWorld.h"
 #include "BulletHelper.h"
 #include "ParticleManager.h"
 #include "IGameObject.h"
+
 
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
@@ -12,21 +14,24 @@ public:
 	~Projectile();	
 	void fire(btVector3 &pos, btVector3 &direction);
 	virtual void kill();
-	void resurrect();
-	virtual void Initialize();
-	virtual void Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName);
+	virtual void Initialize();	
+	virtual void Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir);
 	virtual void Update(u32 deltaTime);	
 	virtual void revive();
+	ParticleManager::ParticleSystem *a;
+	ParticleManager::ParticleSystem *b;
+	ParticleManager::ParticleSystem *c;
 	GameObjectType getType() const;
-
+	bool warmedUp;
 private:
 	ISceneManager *smgr;
+
 	//IMeshSceneNode *node;
 	IMesh *mesh;
 	BulletHelper *h;		
-	u32 aliveTime;
+	float aliveTime;
 	u32 speed;
-	u32 maxLifeTime;
+	float maxLifeTime;
 	stringw projectileName;
 	ParticleManager::ParticleSystem *particleEffect;
 };

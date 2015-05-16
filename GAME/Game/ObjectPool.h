@@ -5,17 +5,21 @@ template <class T>
 class ObjectPool{
 public:	
 	ObjectPool();
-	~ObjectPool();
+	~ObjectPool();	
 	T *create();
-	
+	T pool[3];
+	bool inUse[3];
 private:		
-	T pool[100];
-	bool inUse[100];
+	
+	
 };
 
 template <typename T>
-ObjectPool<T>::ObjectPool(){
-	
+ObjectPool<T>::ObjectPool(){	
+		for (int i = 0; i < 3; i++)
+		{
+			inUse[i] = false;
+		}
 }
 
 template <typename T>
@@ -24,16 +28,16 @@ ObjectPool<T>::~ObjectPool(){
 }
 template<typename T>
 T *ObjectPool<T>::create(){
-	return &pool[0];
-	/*
-	// Find an available particle.	
-	for (int i = 0; i < 100; i++)
+	//Find an available particle.	
+	for (int i = 0; i < 3; i++)
 	{
 		if (!inUse[i])
 		{
+			inUse[i] = true;
 			return &pool[i];
 		}
 	}
-	*/
+	return NULL;
+	
 }
 #endif

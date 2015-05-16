@@ -40,19 +40,19 @@ void GameWorld::update(u32 frameDeltaTime)
 		for (core::list<IGameObject *>::Iterator Iterator = gameObjects.begin(); Iterator != gameObjects.end(); ++Iterator)
 		{
 			IGameObject* gameObject = *Iterator;
-			gameObject->Update(frameDeltaTime);
-			helper->updatePhysics(gameObject->body);
-
 			//gets the name of the node
 			stringw nodeName = gameObject->node->getName();
-
 			//if object not alive or name is dead we kill/clean it.
 			if ((!gameObject->isAlive || nodeName == "dead"))
 			{
 				gameObject->kill();				
-				gameObjects.erase(Iterator);
-				delete gameObject;								
-				return;
+				//gameObjects.erase(Iterator);
+				//delete gameObject;				
+			}
+			else
+			{
+				gameObject->Update(frameDeltaTime);
+				helper->updatePhysics(gameObject->body);
 			}
 
 			//Flocking Separation

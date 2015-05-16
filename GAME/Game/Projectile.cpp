@@ -8,7 +8,7 @@ Projectile::Projectile(ISceneManager *smgr, BulletHelper *h, stringw projectileN
 
 Projectile::Projectile()
 {
-
+	warmedUp = false;
 }
 
 Projectile::~Projectile()
@@ -18,53 +18,78 @@ Projectile::~Projectile()
 
 void Projectile::Initialize()
 {	
-	aliveTime = 0;
-	maxLifeTime = 3;
+	aliveTime = 0.0f;
+	maxLifeTime = 3.0f;
 	speed = 4000;
 	isAlive = true;
 	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
 	node = smgr->addMeshSceneNode(mesh);
-	node->setName(projectileName);	
-	//node->setPosition(vector3df(0, 20, 0));
+	node->setName(projectileName);		
 	body = h->createBody(node, Shape_Type::SPHERE,10);
 	body->setLinearFactor(btVector3(1, 0, 1));	
 }
 
-void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName) 
+void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir)
 {	
-	aliveTime = 0;
-	maxLifeTime = 30;//3;
-	speed = 10;//4000;
-	isAlive = true;
-	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
-	node = smgr->addMeshSceneNode(mesh);
+	aliveTime = 0.0f;
+	maxLifeTime = 3.0f;
+	if (!warmedUp)
+	{
+		std::cout << "creating first time" << std::endl;		
+		speed = 4000;
+		isAlive = true;
+		mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
+		node = smgr->addMeshSceneNode(mesh);
+		node->setName(projectileName);
+		//node->setPosition(vector3df(0, 20, 0));
+		body = h->createBody(node, Shape_Type::SPHERE, 10);
+		body->setLinearFactor(btVector3(1, 0, 1));
+		warmedUp = true;
+		a = ParticleManager::createFullParticleEffect("../Assets/shootEffect.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()));
+		b = ParticleManager::createFullParticleEffect("../Assets/trail.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
+		c = ParticleManager::createFullParticleEffect("../Assets/projectilefire.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
+	}
+	else
+	{
+		revive();
+	}	
 	node->setName(projectileName);
-	//node->setPosition(vector3df(0, 20, 0));
-	body = h->createBody(node, Shape_Type::SPHERE, 10);
-	body->setLinearFactor(btVector3(1, 0, 1));
+	btTransform t;
+	t.setOrigin(pos);
+	body->setWorldTransform(t);
+	body->applyCentralImpulse(dir*speed);		
 }
 
 void Projectile::Update(u32 deltaTime)
 {	
-	aliveTime += deltaTime;
-	if (aliveTime >= maxLifeTime*1000)
+	if (isAlive)
 	{
-		isAlive = false;
-	}
+		aliveTime += deltaTime;
+		if (aliveTime >= maxLifeTime * 1000)
+		{
+			isAlive = false;
+			aliveTime = 0.0f;
+		}
+	}	
 }
 
 void Projectile::revive()
 {
-
+	body->setLinearVelocity(btVector3(0, 0, 0));
+	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	Node->setVisible(true);
+	aliveTime = 0;		
+	body->setActivationState(1);	
+	isAlive = true;
 }
 
 
 
 void Projectile::fire(btVector3 &pos, btVector3 &dir)
 {	
-	ParticleManager::createFullParticleEffect("../Assets/shootEffect.xml", vector3df(pos.getX(),pos.getY(),pos.getZ()));
-	ParticleManager::createFullParticleEffect("../Assets/trail.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()),node);
-	ParticleManager::createFullParticleEffect("../Assets/projectilefire.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
+	a=ParticleManager::createFullParticleEffect("../Assets/shootEffect.xml", vector3df(pos.getX(),pos.getY(),pos.getZ()));
+	b=ParticleManager::createFullParticleEffect("../Assets/trail.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()),node);
+	c=ParticleManager::createFullParticleEffect("../Assets/projectilefire.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 	isAlive = true;
 	btTransform t;	
 	t.setOrigin(pos);
@@ -74,28 +99,24 @@ void Projectile::fire(btVector3 &pos, btVector3 &dir)
 
 void Projectile::kill()
 {
-
 	//particleEffect->psNode->drop();
 	//delete particleEffect;
 	//particleEffect = 0;
-
 	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
-	Node->remove();
+	a->psNode->clearParticles();
+	b->psNode->clearParticles();
+	c->psNode->clearParticles();	
+	//Node->remove();
 	isAlive = false;
-	// Remove the object from the world
-	h->getWorld()->removeRigidBody(body);
-	// Free memory
-	delete body->getMotionState();
-	delete body->getCollisionShape();
-	delete body;
+	Node->setVisible(false);
+	//// Remove the object from the world
+	//h->getWorld()->removeRigidBody(body);
+	//// Free memory
+	////delete body->getMotionState();
+	//delete body->getCollisionShape();
+	//delete body;
 }
 
-void Projectile::resurrect()
-{
-	isAlive = true;
-	body->setActivationState(1);
-	body->setCollisionFlags(0);
-}
 
 GameObjectType Projectile::getType() const
 {

@@ -64,6 +64,18 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 
 void Player::Update(u32 frameDeltaTime)
 {
+	for (int i = 0; i < 3; i++)
+	{	    
+		if(pool.inUse[i] )
+		{	
+			if (!pool.pool[i].isAlive)
+			{
+				pool.inUse[i] = false;
+				std::cout << "disabling object in pool" << std::endl;
+			}			
+		}			
+	}
+
 	//only update when alive
 	if (health > 0 && isAlive)
 	{
@@ -74,7 +86,7 @@ void Player::Update(u32 frameDeltaTime)
 			shootIntervalTimer = 0;
 			Fire();
 		}
-		node->updateAbsolutePosition();
+		node->updateAbsolutePosition();		
 	}
 }
 
@@ -155,11 +167,15 @@ void Player::Fire()
 {
 	if (input->IsKeyDown(KEY_KEY_E))
 	{
-		Projectile *p = new Projectile(smgr, helper,"PlayerProjectile");
-		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY()+20, body->getWorldTransform().getOrigin().getZ());		
-		p->fire(pos + helper->extractForwardVector(body)*30, helper->extractForwardVector(body));
-		world->addGameObject(p);	
-		Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");
+		Projectile *p = pool.create();//new Projectile(smgr, helper,"PlayerProjectile");
+		if (p){
+			btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
+			if (!p->warmedUp){
+				world->addGameObject(p);
+			}
+			p->Initialize(smgr, helper, "PlayerProjectile",pos + helper->extractForwardVector(body) * 30, helper->extractForwardVector(body));			
+			Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");
+		}	
 	}	
 }
 
