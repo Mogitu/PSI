@@ -64,6 +64,7 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 
 void Player::Update(u32 frameDeltaTime)
 {
+	/*
 	for (int i = 0; i < 3; i++)
 	{	    
 		if(pool.inUse[i] )
@@ -75,7 +76,7 @@ void Player::Update(u32 frameDeltaTime)
 			}			
 		}			
 	}
-
+	*/
 	//only update when alive
 	if (health > 0 && isAlive)
 	{
