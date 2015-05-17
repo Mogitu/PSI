@@ -34,8 +34,7 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 	aliveTime = 0.0f;
 	maxLifeTime = 3.0f;
 	if (!warmedUp)
-	{
-		std::cout << "creating first time" << std::endl;		
+	{		
 		speed = 4000;
 		isAlive = true;
 		mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);

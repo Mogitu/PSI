@@ -7,6 +7,7 @@
 #include "BulletHelper.h"
 #include "GameWorld.h"
 #include "IGameObject.h"
+#include "ObjectPool.h"
 
 class Enemy : public IGameObject
 {
@@ -26,6 +27,7 @@ public:
 	void addAvoidance(vector3df delta);
 	void resetAvoidance();
 private:
+	ObjectPool<Projectile> *pool;
 	irr::scene::ISceneManager *smgr;
 	irr::video::IVideoDriver *irrDriver;
 	//irr::scene::IAnimatedMeshSceneNode* node;

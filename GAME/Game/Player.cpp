@@ -6,9 +6,10 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	this->Initialize(smgr, driver, helper, world, input, meshName, textureName, bodyType, bodyMass, position, rotation, scale);
 	this->world = world;
 	isAlive = true;
+	pool = new ObjectPool<Projectile>(10);
 	shootInterval = 250;//ms
 	shootIntervalTimer = 0;
-	world->setPlayer(this);
+	world->setPlayer(this);	
 	health = 100;
 	score = 0;
 	speed = 100;
@@ -64,11 +65,11 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 
 void Player::Update(u32 frameDeltaTime)
 {	
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < pool->getSize(); i++)
 	{	  		
-		if (!pool.pool[i].data.isAlive)
+		if (!pool->getObjects()[i].data.isAlive)
 		{
-			pool.returnToPool(&pool.pool[i]);			
+			pool->returnToPool(&pool->getObjects()[i]);			
 		}						
 	}
 	
@@ -163,7 +164,7 @@ void Player::Fire()
 {
 	if (input->IsKeyDown(KEY_KEY_E))
 	{
-		Projectile *p = pool.create();//new Projectile(smgr, helper,"PlayerProjectile");
+		Projectile *p = pool->create();//new Projectile(smgr, helper,"PlayerProjectile");
 		if (p){
 			btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
 			if (!p->warmedUp){
