@@ -16,6 +16,7 @@ public:
 	T *create();
 	Object pool[3];	
 	Object *firstAvailable;
+	void returnToPool(Object *obj);
 private:			
 
 	
@@ -52,5 +53,13 @@ T *ObjectPool<T>::create(){
 		return obj;
 	}
 	return NULL;	
+}
+
+template<typename T>
+void ObjectPool<T>::returnToPool(Object *obj)
+{
+	obj->available = true;
+	obj->next = firstAvailable;
+	firstAvailable = obj;
 }
 #endif

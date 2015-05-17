@@ -63,20 +63,15 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 }
 
 void Player::Update(u32 frameDeltaTime)
-{
-	/*
+{	
 	for (int i = 0; i < 3; i++)
-	{	    
-		if(pool.inUse[i] )
-		{	
-			if (!pool.pool[i].isAlive)
-			{
-				pool.inUse[i] = false;
-				std::cout << "disabling object in pool" << std::endl;
-			}			
-		}			
+	{	  		
+		if (!pool.pool[i].data.isAlive)
+		{
+			pool.returnToPool(&pool.pool[i]);			
+		}						
 	}
-	*/
+	
 	//only update when alive
 	if (health > 0 && isAlive)
 	{
