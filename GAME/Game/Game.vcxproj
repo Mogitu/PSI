@@ -75,6 +75,7 @@
     <ClCompile Include="BulletHelper.cpp" />
     <ClCompile Include="BurstAffector.cpp" />
     <ClCompile Include="Common.cpp" />
+    <ClCompile Include="FireWeapon.cpp" />
     <ClCompile Include="ForceOverLifeTimeAffector.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -89,9 +90,9 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ScaleOverLifeTimeAffector.cpp" />
+    <ClCompile Include="SingleShotBehaviour.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BeamShotBehaviour.h" />
     <ClInclude Include="BulletHelper.h" />
     <ClInclude Include="BurstAffector.h" />
     <ClInclude Include="Character.h" />
@@ -112,6 +113,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ScaleOverLifeTimeAffector.h" />
+    <ClInclude Include="SingleShotBehaviour.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponBehaviour.h" />
   </ItemGroup>

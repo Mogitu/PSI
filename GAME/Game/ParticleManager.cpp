@@ -17,7 +17,6 @@ namespace ParticleManager
 	void startParticleSystem(ParticleTag tag, u32 duration)
 	{
 		ParticleSystem* ps = findParticleSystem(tag);
-
 		if (!isEmitting(ps))
 		{
 			ps->psNode->setEmitter(ps->em);

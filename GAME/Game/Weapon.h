@@ -7,9 +7,33 @@ class Weapon
 {
 private:
 	WeaponBehaviour* weaponBehaviour;
+	u32 shootIntervalTimer;
+	u32 shootInterval;
 public:
-	void setWeaponBehaviour(WeaponBehaviour* wpb) { weaponBehaviour = wpb; }
-	virtual void fire() = 0;
+	bool canShoot;
+	void Initialize(WeaponBehaviour* wpb, GameWorld* w, u32 interval)
+	{ 
+		weaponBehaviour = wpb;
+		weaponBehaviour->setUpWeaponBehaviour(w); 
+		shootIntervalTimer = 0;
+		shootInterval = interval;
+		canShoot = true;
+
+	}
+	WeaponBehaviour* getWeaponBehaviour() const { return weaponBehaviour; }
+	void Update(irr::u32 frameDeltaTime)
+	{
+		if (!canShoot)
+			shootIntervalTimer += frameDeltaTime;
+
+		if (shootIntervalTimer >= shootInterval)
+		{
+			shootIntervalTimer = 0;
+			canShoot = true;
+		}
+	}
+	virtual void fire(btVector3 &offset, btVector3 &direction, stringw name) = 0;
+	~Weapon() { delete weaponBehaviour; }
 };
 
 

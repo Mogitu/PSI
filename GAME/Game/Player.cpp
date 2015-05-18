@@ -6,8 +6,6 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	this->Initialize(smgr, driver, helper, world, input, meshName, textureName, bodyType, bodyMass, position, rotation, scale);
 	this->world = world;
 	isAlive = true;
-	shootInterval = 250;//ms
-	shootIntervalTimer = 0;
 	world->setPlayer(this);
 	health = 100;
 	score = 0;
@@ -60,6 +58,9 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 	body->setAngularFactor(btVector3(0, 0, 0));
 
 	world->addGameObject(this);
+
+	setWeapon(new FireWeapon());
+	getWeapon()->Initialize(new SingleShotBehaviour(), world, 250);
 }
 
 void Player::Update(u32 frameDeltaTime)
@@ -68,12 +69,8 @@ void Player::Update(u32 frameDeltaTime)
 	if (health > 0 && isAlive)
 	{
 		PlayerMovement(frameDeltaTime);
-		shootIntervalTimer += frameDeltaTime;
-		if (shootIntervalTimer>shootInterval)
-		{
-			shootIntervalTimer = 0;
-			Fire();
-		}
+		getWeapon()->Update(frameDeltaTime);
+		Fire();
 		node->updateAbsolutePosition();
 	}
 }
@@ -153,13 +150,14 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 
 void Player::Fire()
 {
-	if (input->IsKeyDown(KEY_KEY_E))
+	if (input->GetMouseState().LeftButtonDown)
 	{
-		Projectile *p = new Projectile(smgr, helper,"PlayerProjectile");
+		
 		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY()+20, body->getWorldTransform().getOrigin().getZ());		
-		p->fire(pos + helper->extractForwardVector(body)*30, helper->extractForwardVector(body));
-		world->addGameObject(p);	
-		Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");
+		btVector3 dir = helper->extractForwardVector(body);
+
+		if (getWeapon() != NULL)
+			getWeapon()->fire(pos + dir * 30, dir, "PlayerProjectile");
 	}	
 }
 

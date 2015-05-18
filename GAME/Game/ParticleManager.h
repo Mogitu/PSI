@@ -10,7 +10,8 @@ namespace ParticleManager
 	enum ParticleTag
 	{
 		NONE,
-		PLAYER_HIT
+		PLAYER_HIT,
+		BEAM_FIRE
 	};
 	
 	struct ParticleSystem

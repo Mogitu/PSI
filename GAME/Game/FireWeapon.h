@@ -3,10 +3,11 @@
 
 #include "Weapon.h"
 
-class FireWeapon : Weapon
+class FireWeapon : public Weapon
 {
 public:
-	void fire() override;
+	FireWeapon();
+	void fire(btVector3 &offset, btVector3 &direction, stringw name) override;
 };
 
 #endif
