@@ -76,7 +76,7 @@ int main() {
 	device->getCursorControl()->setPosition(0.5f, 0.5f);
 	middleScreenPosition = device->getCursorControl()->getPosition();
 
-	Level *level = new Level(smgr, "../Assets/level.irr");
+	Level *level = new Level(smgr, "../Assets/Level1/level.irr");
 
 	// Create the initial scene
 	smgr->addLightSceneNode(0, core::vector3df(2, 5, -2), SColorf(4, 4, 4, 1));
@@ -85,7 +85,7 @@ int main() {
 
 	//Create the game world
 	GameWorld* gWorld = new GameWorld(helper,device,input);	
-	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(447, 100, -299));	
+	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(-2100,-200,-1200));	
 	
 	gWorld->buildIrrLevel(level);		
 
