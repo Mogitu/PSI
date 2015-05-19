@@ -7,6 +7,7 @@
 #include "BulletHelper.h"
 #include "GameWorld.h"
 #include "Character.h"
+#include "ObjectPool.h"
 
 class Enemy : public Character
 {
@@ -20,11 +21,13 @@ public:
 	void SetDeath(float begindeath = 0, float enddeath = 0, float deathspeed = 25);
 	void getcurrentframe();
 	virtual void kill();
+	virtual void revive();
 	void shoot();
 	GameObjectType getType() const;
 	void addAvoidance(vector3df delta);
 	void resetAvoidance();
 private:
+	ObjectPool<Projectile> *pool;
 	irr::scene::ISceneManager *smgr;
 	irr::video::IVideoDriver *irrDriver;
 	//irr::scene::IAnimatedMeshSceneNode* node;
@@ -46,6 +49,7 @@ private:
 	btVector3 direction;
 	void updateAvoidanceSpeed();
 	void moveEnemy(f32 dist);
+	
 };
 
 #endif ENEMY_H

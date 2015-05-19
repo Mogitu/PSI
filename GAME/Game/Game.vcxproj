@@ -106,6 +106,7 @@
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ParticleAffector.h" />
     <ClInclude Include="ParticleScaleAffector.h" />
     <ClInclude Include="ParticleSettings.h" />

@@ -8,6 +8,7 @@
 #include <math.h>
 #include "Enemy.h"
 #include "Hud.h"
+#include "ObjectPool.h"
 
 using namespace Common;
 
@@ -61,7 +62,8 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 
 
 
-int main() {
+
+int main() {	
 	//values for physics update speed(
 	const float pausedPhysicsSpeed=0.0f;
 	const float normalPhysicsSpeed = 0.001f;
@@ -92,8 +94,7 @@ int main() {
 	
 	Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
 	
-	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud.png");
-	
+	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud.png");	
 	//ParticleManager::createFullParticleEffect("../Assets/firesea.xml",vector3df(316,40,-200));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
@@ -132,7 +133,20 @@ int main() {
 				gWorld->gameState = PLAYING;
 				break;
 			}						
-		}			
+		}
+		else if (gWorld->gameState == PAUSED && input->IsKeyDown(KEY_KEY_Q))
+		{
+			device->closeDevice();
+		}
+		else if (gWorld->gameState == PAUSED && input->IsKeyDown(KEY_KEY_R))
+		{
+			physicsSpeed = pausedPhysicsSpeed;
+			//system("start Restart Game.cmd");
+			//device->closeDevice();
+			gWorld->restart(level);
+			physicsSpeed = normalPhysicsSpeed;			
+			
+		}
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();

@@ -40,19 +40,19 @@ void GameWorld::update(u32 frameDeltaTime)
 		for (core::list<IGameObject *>::Iterator Iterator = gameObjects.begin(); Iterator != gameObjects.end(); ++Iterator)
 		{
 			IGameObject* gameObject = *Iterator;
-			gameObject->Update(frameDeltaTime);
-			helper->updatePhysics(gameObject->body);
-
 			//gets the name of the node
 			stringw nodeName = gameObject->node->getName();
-
 			//if object not alive or name is dead we kill/clean it.
-			if (!gameObject->isAlive || nodeName == "dead")
+			if ((!gameObject->isAlive || nodeName == "dead"))
 			{
-				gameObject->kill();
-				gameObjects.erase(Iterator);
-				delete gameObject;
-				return;
+				gameObject->kill();				
+				//gameObjects.erase(Iterator);
+				//delete gameObject;				
+			}
+			else
+			{
+				gameObject->Update(frameDeltaTime);
+				helper->updatePhysics(gameObject->body);
 			}
 
 			//Flocking Separation
@@ -264,9 +264,59 @@ void GameWorld::buildIrrLevel(Level *level)
 		{		
 			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
 			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+			//enemy->node->setName("EN");
 		}	
 		//Done with the tempory body
 		tmp = 0;
 		delete tmp;
 	}
+}
+
+void GameWorld::restart(Level *level)
+{
+	/*
+	for (int i = 0; i < level->getNodes().size(); i++)
+	{
+		ISceneNode *node = level->getNodes()[i];
+		//retreive the full name of the current node
+		std::string name = node->getName();
+		
+		if (name=="Enemy")
+		{
+			std::cout << name << std::endl;
+			node->setName("dead");
+		}
+		//get the prefix to check against
+		
+	}
+	*/
+	/*
+	for (core::list<IGameObject *>::Iterator Iterator = gameObjects.begin(); Iterator != gameObjects.end(); ++Iterator)
+	{
+		IGameObject* gameObject = *Iterator;
+		std::string name = gameObject->node->getName();
+
+	
+		if (name== "Enemy")
+		{				
+		
+			//gameObject->node->setName("dead");
+			gameObject->node->setName("dead");
+		}		
+	}
+
+	//std::cout << "enee" << std::endl;
+	for (core::list<IGameObject *>::Iterator Iterator = gameObjects.begin(); Iterator != gameObjects.end(); ++Iterator)
+	{
+		IGameObject* gameObject = *Iterator;
+		std::string name = gameObject->node->getName();		
+		if (name== "dead")
+		{		
+			//gameObject->node->setName("Enemy");
+			
+		}
+	}
+
+	*/
+	gameState == PLAYING;
 }

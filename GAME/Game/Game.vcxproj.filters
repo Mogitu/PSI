@@ -173,5 +173,8 @@
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

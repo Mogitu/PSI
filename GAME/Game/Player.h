@@ -5,6 +5,7 @@
 #include "BulletHelper.h"
 #include "Character.h"
 #include "GameWorld.h"
+#include "ObjectPool.h"
 
 
 class Player : public Character
@@ -16,6 +17,7 @@ private:
 	ISceneManager* smgr;
 	vector2di centerScreenPosition;
 	GameWorld *world;	
+	ObjectPool<Projectile> *pool;
 	bool justJumped;
 	bool isGrounded();
 	int score;
@@ -29,6 +31,7 @@ public:
 	void PlayerMovement(u32 frameDeltaTime);
 	void Fire();
 	virtual void kill();
+	virtual void revive();
 	virtual void takeDamage(int amount);
 	const vector3df& getNodePosition() const;
 	const vector3df& getNodeAbsolutePosition() const;

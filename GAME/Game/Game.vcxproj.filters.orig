@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Particle Affectors">
+      <UniqueIdentifier>{17520a07-0a6c-4752-babf-ddd5657e22fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Particle Affectors">
+      <UniqueIdentifier>{a131c1d2-3fba-4fc3-831d-edca7f9002ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{b6db9748-58c0-4209-8db9-6b08ae58129f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{8de97047-86ef-4191-aa63-89871f615b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters">
+      <UniqueIdentifier>{e0c6e42d-10c3-41d2-b6e9-a07c20d785d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters\Weapons">
+      <UniqueIdentifier>{d6e24311-277e-4e7e-ae6d-d055f498d8a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters">
+      <UniqueIdentifier>{3a738680-5c8e-4837-a0eb-ceaaafba5db4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\Weapons">
+      <UniqueIdentifier>{fe3feb7b-f11c-4e15-b98f-096b272567ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWorld.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BurstAffector.cpp">
+      <Filter>Source Files\Particle Affectors</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceOverLifeTimeAffector.cpp">
+      <Filter>Source Files\Particle Affectors</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleAffector.cpp">
+      <Filter>Source Files\Particle Affectors</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleScaleAffector.cpp">
+      <Filter>Source Files\Particle Affectors</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaleOverLifeTimeAffector.cpp">
+      <Filter>Source Files\Particle Affectors</Filter>
+    </ClCompile>
+    <ClCompile Include="Hud.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="FireWeapon.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleShotBehaviour.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWorld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputReceiver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BurstAffector.h">
+      <Filter>Header Files\Particle Affectors</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceOverLifeTimeAffector.h">
+      <Filter>Header Files\Particle Affectors</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaleOverLifeTimeAffector.h">
+      <Filter>Header Files\Particle Affectors</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleScaleAffector.h">
+      <Filter>Header Files\Particle Affectors</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleAffector.h">
+      <Filter>Header Files\Particle Affectors</Filter>
+    </ClInclude>
+    <ClInclude Include="Hud.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponBehaviour.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="FireWeapon.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleShotBehaviour.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Characters</Filter>
+=======
+    <ClInclude Include="ObjectPool.h">
+      <Filter>Header Files</Filter>
+>>>>>>> 0d7390ca00594d90001a6fba6d0cf7a26b7d4a68
+    </ClInclude>
+  </ItemGroup>
+</Project>
