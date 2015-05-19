@@ -21,8 +21,6 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	avoidStrength = 2;
 	avoidance = btVector3(0, 0, 0);
 	direction = btVector3(0, 0, 0);
-	pool = new ObjectPool<Projectile>(3);
-
 }
 
 Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass , vector3df position , vector3df rotation, vector3df scale)
@@ -39,7 +37,6 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	avoidStrength = 2;
 	avoidance = btVector3(0, 0, 0);
 	direction = btVector3(0, 0, 0);
-	pool = new ObjectPool<Projectile>(2);
 }
 
 
@@ -109,13 +106,6 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 
 void Enemy::Update(u32 frameDeltaTime)
 {
-	for (int i = 0; i < pool->getSize(); i++)
-	{
-		if (!pool->getObjects()[i].data.isAlive)
-		{
-			pool->returnToPool(&pool->getObjects()[i]);
-		}
-	}
 	if (player && player->isAlive)
 	{
 		shootTimer += frameDeltaTime;
@@ -137,18 +127,14 @@ void Enemy::Update(u32 frameDeltaTime)
 //TODO: make more readable...
 void Enemy::shoot()
 {		
-		Projectile *projectile = pool->create();//new Projectile(smgr, helper,"EnemyProjectile");
 		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
 		btVector3 offSet((btVector3(player->node->getPosition().X, 50, player->node->getPosition().Z) - btVector3(node->getPosition().X, 50, node->getPosition().Z)).normalize() * 30);
 		vector3df playerToEnemy = (player->node->getPosition() - node->getPosition()) - vector3df(offSet.getX(), offSet.getY(), offSet.getZ());
 		playerToEnemy.normalize();
 		btVector3 dir(playerToEnemy.X, playerToEnemy.Y, playerToEnemy.Z);
-		projectile->Initialize(smgr, helper, "EnemyProjectile", pos + offSet, dir);
-		//projectile->fire(pos + offSet, dir);
-		
 
 		if (getWeapon() != NULL)
-			getWeapon()->fire(pos + offSet, direction, "EnemyProjectile");
+			getWeapon()->fire(pos + offSet, dir, "EnemyProjectile");
 		
 }
 

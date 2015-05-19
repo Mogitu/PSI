@@ -5,8 +5,6 @@
 #include "BulletHelper.h"
 #include "Character.h"
 #include "GameWorld.h"
-#include "ObjectPool.h"
-
 
 class Player : public Character
 {
@@ -17,7 +15,6 @@ private:
 	ISceneManager* smgr;
 	vector2di centerScreenPosition;
 	GameWorld *world;	
-	ObjectPool<Projectile> *pool;
 	bool justJumped;
 	bool isGrounded();
 	int score;

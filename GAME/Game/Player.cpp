@@ -6,7 +6,6 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	this->Initialize(smgr, driver, helper, world, input, meshName, textureName, bodyType, bodyMass, position, rotation, scale);
 	this->world = world;
 	isAlive = true;
-	pool = new ObjectPool<Projectile>(10);
 	world->setPlayer(this);	
 	health = 100;
 	score = 0;
@@ -66,14 +65,6 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 
 void Player::Update(u32 frameDeltaTime)
 {	
-	for (int i = 0; i < pool->getSize(); i++)
-	{	  		
-		if (!pool->getObjects()[i].data.isAlive)
-		{
-			pool->returnToPool(&pool->getObjects()[i]);			
-		}						
-	}
-	
 	//only update when alive
 	if (health > 0 && isAlive)
 	{
@@ -161,17 +152,11 @@ void Player::Fire()
 {
 	if (input->GetMouseState().LeftButtonDown)
 	{
-		Projectile *p = pool->create();//new Projectile(smgr, helper,"PlayerProjectile");
-		if (p){
-			btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
+		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
 		btVector3 dir = helper->extractForwardVector(body);
-			if (!p->warmedUp){
-				world->addGameObject(p);
-			}
-			p->Initialize(smgr, helper, "PlayerProjectile",pos + helper->extractForwardVector(body) * 30, helper->extractForwardVector(body));			
+
 		if (getWeapon() != NULL)
-			getWeapon()->fire(pos + dir * 30, dir, "PlayerProjectile");
-		}	
+			getWeapon()->fire(pos + dir * 30, dir, "PlayerProjectile");	
 	}	
 }
 

@@ -31,6 +31,8 @@ public:
 			shootIntervalTimer = 0;
 			canShoot = true;
 		}
+
+		weaponBehaviour->Update(frameDeltaTime);
 	}
 	virtual void fire(btVector3 &offset, btVector3 &direction, stringw name) = 0;
 	~Weapon() { delete weaponBehaviour; }
