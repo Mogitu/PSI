@@ -7,6 +7,7 @@
 #include "BulletHelper.h"
 #include "GameWorld.h"
 #include "Character.h"
+#include "TypeInterface.h"
 
 class Enemy : public Character
 {

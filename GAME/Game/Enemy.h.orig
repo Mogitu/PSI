@@ -10,8 +10,8 @@
 #include "Character.h"
 =======
 #include "IGameObject.h"
-#include "ObjectPool.h"
->>>>>>> 0d7390ca00594d90001a6fba6d0cf7a26b7d4a68
+#include "TypeInterface.h"
+>>>>>>> Elemental-Types
 
 class Enemy : public Character
 {
@@ -31,7 +31,6 @@ public:
 	void addAvoidance(vector3df delta);
 	void resetAvoidance();
 private:
-	ObjectPool<Projectile> *pool;
 	irr::scene::ISceneManager *smgr;
 	irr::video::IVideoDriver *irrDriver;
 	//irr::scene::IAnimatedMeshSceneNode* node;
