@@ -14,10 +14,7 @@ void SingleShotBehaviour::doWeaponBehaviour(btVector3 &offset, btVector3 &direct
 		{
 			this->getWorld()->addGameObject(p);
 		}
-
 		p->Initialize(Common::smgr, Common::helper, name, offset, direction);
-		p->fire(offset, direction);
-
 		Common::soundEngine->play2D("../Assets/Sounds/shoot.wav");
 	}
 }

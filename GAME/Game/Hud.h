@@ -17,6 +17,8 @@ public:
 	void draw();	
 private:
 	ITexture *image;
+	ITexture *gameWinImg;
+	ITexture *gameOverImg;
 	IVideoDriver *driver;	
 	IrrlichtDevice *device;
 	IGUIEnvironment *gui;

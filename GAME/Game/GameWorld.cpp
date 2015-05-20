@@ -266,6 +266,18 @@ void GameWorld::buildIrrLevel(Level *level)
 			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
 			//enemy->node->setName("EN");
 		}	
+		else if (namePrefix ==FIREWEAPON)
+		{
+			//spawn fire weapon
+		}
+		else if (namePrefix == ICEWEAPON)
+		{
+			//spawn ice weapon
+		}
+		else if (namePrefix == WINDWEAPON)
+		{
+			//spawn windweapon
+		}
 		//Done with the tempory body
 		tmp = 0;
 		delete tmp;
