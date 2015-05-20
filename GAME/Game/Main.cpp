@@ -98,7 +98,11 @@ int main() {
 	//ParticleManager::createFullParticleEffect("../Assets/firesea.xml",vector3df(316,40,-200));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
-	while (device->run()) {		
+	while (device->run()) {	
+		core::stringw fpsText = "FPS ";
+		
+		fpsText += Common::irrDriver->getFPS();
+		device->setWindowCaption(fpsText.c_str());
 		//basic stuff
 		deltaTime = irrTimer->getTime() - timeStamp;
 		//applying the fps
