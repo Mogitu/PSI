@@ -25,6 +25,12 @@
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{8de97047-86ef-4191-aa63-89871f615b72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Type Behaviour">
+      <UniqueIdentifier>{318a3e68-d728-42fb-9ce7-67325bc5c354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Type Behaviour">
+      <UniqueIdentifier>{c599d681-5700-41eb-b4db-3b0d083219c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -82,7 +88,10 @@
       <Filter>Source Files\GUI</Filter>
     </ClCompile>
     <ClCompile Include="TypeBehaviour.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Type Behaviour</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeInterface.cpp">
+      <Filter>Source Files\Type Behaviour</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +153,10 @@
       <Filter>Header Files\GUI</Filter>
     </ClInclude>
     <ClInclude Include="TypeBehaviour.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Type Behaviour</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeInterface.h">
+      <Filter>Header Files\Type Behaviour</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
