@@ -91,6 +91,8 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ScaleOverLifeTimeAffector.cpp" />
     <ClCompile Include="SingleShotBehaviour.cpp" />
+    <ClCompile Include="TypeBehaviour.cpp" />
+    <ClCompile Include="TypeInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletHelper.h" />
@@ -115,6 +117,8 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ScaleOverLifeTimeAffector.h" />
     <ClInclude Include="SingleShotBehaviour.h" />
+    <ClInclude Include="TypeBehaviour.h" />
+    <ClInclude Include="TypeInterface.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponBehaviour.h" />
   </ItemGroup>
