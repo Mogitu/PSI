@@ -1,73 +1,40 @@
-#include "irrlicht.h"
 #include "TypeBehaviour.h"
 
-using namespace irr;
-using namespace core;
-
-class TypeBehaviour;
-
-
-
-class TypeBehaviour
-{
-public:
-	TypeBehaviour(stringw type) : type_(type){}
-	stringw getType()
+	ElementalType TypeBehaviour::getType()
 	{
 		return type_;
 	}
 
-	void addWeakness(stringw weakness)
+	void TypeBehaviour::addWeakness(ElementalType weakness, int value)
 	{
-		weaknessElements.push_back(weakness);
+		weaknessElements.insert(weakness, value);
 	}
 
-	void addStrengths(stringw strengths)
+	void TypeBehaviour::addStrengths(ElementalType strengths, int value)
 	{
-		strengthsElements.push_back(strengths);
+		strengthsElements.insert(strengths, value);
 	}
 
-	int multiplyer(stringw bullettype)
+	int TypeBehaviour::multiplyer(ElementalType bullettype)
 	{
 		int base = 1;
 
-		s32 weakness = weaknessElements.linear_search(bullettype);
-		if (weakness >= 0)
+		map<ElementalType, int>::Node* weakness = weaknessElements.find(bullettype);
+		if (weakness)
 		{
-			base += 1;
+			base += weakness->getValue();
 		}
-		s32 strength = strengthsElements.linear_search(bullettype);
-		if (strength >= 0)
+		map<ElementalType, int>::Node* strengths = strengthsElements.find(bullettype);
+		if (strengths)
 		{
-			base -= 1;
+			base -= strengths->getValue();
 		}
 
 
 		return base;
 	}
 
-	void initializer()
+	void TypeBehaviour::initializer()
 	{
 		initialize();
 	}
-
-protected:
-	stringw type_;
-
-private:
-	array<stringw> weaknessElements;
-	array<stringw> strengthsElements;
-	virtual void initialize() = 0;
-};
-
-class FireType : public TypeBehaviour
-{
-	public:
-		FireType(stringw type) : TypeBehaviour(type){};
-	private:
-		void initialize()
-		{
-			addWeakness("Ice");
-			addStrengths("Wind");
-		}
-};

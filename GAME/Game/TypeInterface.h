@@ -6,16 +6,22 @@
 #include <string>
 #include "TypeBehaviour.h"
 
+using namespace irr;
+using namespace core;
+
 class TypeInterface
 {
-	public:
-		enum ElementalType;
-		TypeInterface();
-		void setType(int type);
-		stringw getType();
-		int getMultiplyer(stringw bulletType);
-	private:
-		TypeBehaviour *typebehave_;
+public:
+	
+	TypeInterface()
+	{
+		typebehave_ = NULL;
+	}
+	void setType(ElementalType type);
+	ElementalType getType();
+	int getMultiplyer(ElementalType bulletType);
+private:
+	TypeBehaviour *typebehave_;
 };
 
 #endif TypeInterface_H

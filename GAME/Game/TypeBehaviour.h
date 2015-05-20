@@ -4,31 +4,27 @@
 #include <irrlicht.h>
 #include <iostream>
 #include <string>
+#include "Elementals.h"
 
+using namespace irr;
+using namespace core;
 
 class TypeBehaviour
 {
 	public:
-		TypeBehaviour(stringw type);
-		stringw getType();
-		void addWeakness(stringw weakness);
-		void addStrengths(stringw strengths);
-		int multiplyer(stringw bullettype);
+		TypeBehaviour(ElementalType type) : type_(type){}
+		ElementalType getType();
+		void addWeakness(ElementalType weakness, int value);
+		void addStrengths(ElementalType strengths, int value);
+		int multiplyer(ElementalType bullettype);
 		void initializer();
 	protected:
-		stringw type_;
+		ElementalType type_;
 
 	private:
-		array<stringw> weaknessElements;
-		array<stringw> strengthsElements;
+		map<ElementalType, int> weaknessElements;
+		map<ElementalType, int> strengthsElements;
 		virtual void initialize() = 0;
-};
-class FireType : public TypeBehaviour
-{
-	public:
-		FireType(stringw type);
-	private:
-		void initialize();
 };
 class IceType;
 class WindType;
