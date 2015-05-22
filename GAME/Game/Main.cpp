@@ -9,7 +9,7 @@
 #include "Enemy.h"
 #include "Hud.h"
 #include "ObjectPool.h"
-
+#include <Windows.h>
 using namespace Common;
 
 //Camera
@@ -63,7 +63,7 @@ void updateCamera(IrrlichtDevice *device, vector3df nodePosition, f32 frameDelta
 
 
 
-int main() {	
+int main() {		
 	//values for physics update speed(
 	const float pausedPhysicsSpeed=0.0f;
 	const float normalPhysicsSpeed = 0.001f;
@@ -98,6 +98,8 @@ int main() {
 	//ParticleManager::createFullParticleEffect("../Assets/firesea.xml",vector3df(316,40,-200));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
+
+	
 	while (device->run()) {		
 		//basic stuff
 		deltaTime = irrTimer->getTime() - timeStamp;
@@ -119,14 +121,16 @@ int main() {
 		gWorld->update(deltaTime);
 		guiEnv->drawAll();
 		irrDriver->endScene();
+		
 		 //pause game
 		if (input->IsKeyDown(KEY_KEY_P))
-		{						
+		{			
+			Sleep(250);
 			switch (gWorld->gameState)
 			{
 			case PLAYING:
 				physicsSpeed = pausedPhysicsSpeed;
-				gWorld->gameState = PAUSED;
+				gWorld->gameState = PAUSED;			
 				break;
 			case PAUSED:
 				physicsSpeed = normalPhysicsSpeed;
@@ -140,12 +144,14 @@ int main() {
 		}
 		else if (gWorld->gameState == PAUSED && input->IsKeyDown(KEY_KEY_R))
 		{
-			physicsSpeed = pausedPhysicsSpeed;
-			//system("start Restart Game.cmd");
-			//device->closeDevice();
-			gWorld->restart(level);
-			physicsSpeed = normalPhysicsSpeed;			
-			
+			char buffer[MAX_PATH];
+			GetModuleFileName(NULL, buffer, MAX_PATH);
+			std::string f = buffer;
+			std::string p = f.substr(0, f.find_last_of("\\/"));
+			p.append("\\Game.exe");
+			std::cout << p << std::endl;
+			ShellExecute(NULL, "open", p.c_str(), NULL, NULL, SW_SHOWDEFAULT);
+			device->closeDevice();			
 		}
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
