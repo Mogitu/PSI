@@ -21,6 +21,7 @@ void Character::selectWeapon(ElementalType type, WeaponBehaviour* wpb, u32 inter
 		break;
 	default:
 		weapon = nullptr;
+		cout << "Unknown weapon type provided!!\n";
 		break;
 	}
 

@@ -100,9 +100,6 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	//body->setLinearFactor(btVector3(0, 1, 0));
 	body->setAngularFactor(btVector3(0, 0, 0));
 	world->addGameObject(this);
-
-	//TODO: Make selectweapon based on the type of enemy
-	selectWeapon(ElementalType::Fire, new SingleShotBehaviour(), 1500, 10, world);
 }
 
 
@@ -132,9 +129,6 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	//body->setLinearFactor(btVector3(0, 1, 0));
 	body->setAngularFactor(btVector3(0, 0, 0));
 	world->addGameObject(this);
-
-	//TODO: Make selectweapon based on the type of enemy
-	selectWeapon(ElementalType::Fire, new SingleShotBehaviour(), 1500, 10, world);
 }
 
 void Enemy::ElementInitialize(){
@@ -165,9 +159,8 @@ void Enemy::ElementInitialize(irr::scene::ISceneManager* smgr, irr::video::IVide
 	body->setAngularFactor(btVector3(0, 0, 0));
 	world->addGameObject(this);
 
-	//WeaponBehaviour
-	setWeapon(new FireWeapon());
-	getWeapon()->Initialize(new SingleShotBehaviour(), world, 1500);
+	//Weapon Choice based on Element
+	selectWeapon(element, new SingleShotBehaviour(), 1500, 10, world);
 
 	//Set the elemental type of the enemy
 	typeInterface.setType(element);
@@ -199,9 +192,8 @@ void Enemy::ElementInitialize(irr::scene::ISceneManager* smgr, irr::video::IVide
 	body->setAngularFactor(btVector3(0, 0, 0));
 	world->addGameObject(this);
 
-	//WeaponBehaviour
-	setWeapon(new FireWeapon());
-	getWeapon()->Initialize(new SingleShotBehaviour(), world, 1500);
+	//Weapon Choice based on Element
+	selectWeapon(element, new SingleShotBehaviour(), 1500, 10, world);
 
 	//Set the elemental type of the enemy
 	typeInterface.setType(element);
@@ -217,7 +209,9 @@ void Enemy::Update(u32 frameDeltaTime)
 		//if player is in range the enemy will shoot and attempt to follow at the same time.
 		if (player && player->isAlive && dist <= shootFollowRange)
 		{
-			getWeapon()->Update(frameDeltaTime);
+			if (getWeapon())
+				getWeapon()->Update(frameDeltaTime);
+
 			shoot();
 			followPlayer();
 		}
