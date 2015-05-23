@@ -257,6 +257,14 @@ void Player::addWeaponToArsenal(Weapon* w)
 
 	if (hud)
 		hud->setHasWeapon(w->getWeaponElementalType());
+
+	//Auto select if no weapon is found
+	if (!getWeapon())
+	{
+		setWeapon(w);
+		hud->moveWeaponSelectionHightlight(w->getWeaponElementalType());
+	}
+		
 }
 
 void Player::attachHUD(Hud* h)
