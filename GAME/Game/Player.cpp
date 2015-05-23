@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <iostream>
+#include "Hud.h"
 
 Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
 {
@@ -172,6 +173,10 @@ void Player::WeaponSelect()
 		{
 			setWeapon(w);
 			currentTypeWeapon = swapTo;
+
+			//Update HUD
+			if (hud)
+				hud->moveWeaponSelectionHightlight(swapTo);
 		}
 	}	
 }
@@ -249,4 +254,12 @@ void Player::revive()
 void Player::addWeaponToArsenal(Weapon* w)
 {
 	this->weaponArsenal->addWeapon(w);
+
+	if (hud)
+		hud->setHasWeapon(w->getWeaponElementalType());
+}
+
+void Player::attachHUD(Hud* h)
+{
+	hud = h;
 }

@@ -407,5 +407,5 @@ void GameWorld::restart(Level *level)
 	}
 
 	*/
-	gameState == PLAYING;
+	//gameState == PLAYING;
 }

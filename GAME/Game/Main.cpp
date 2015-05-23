@@ -92,9 +92,10 @@ int main() {
 	camera->setParent(player->getNode());
 	camera->setTarget(player->getNodeAbsolutePosition());
 	
-	Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
+	//TODO: Turn on again!!
+	//Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
 	
-	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud.png");	
+	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud_2.png");	
 	//ParticleManager::createFullParticleEffect("../Assets/firesea.xml",vector3df(316,40,-200));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;

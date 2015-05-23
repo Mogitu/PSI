@@ -1,4 +1,6 @@
 #include "Hud.h"
+#include "Elementals.h"
+#include "Player.h"
 
 
 Hud::Hud(IrrlichtDevice *device, Player *player, GameWorld *gameWorld, stringc imagePath) :device(device), player(player), gameWorld(gameWorld)
@@ -9,6 +11,7 @@ Hud::Hud(IrrlichtDevice *device, Player *player, GameWorld *gameWorld, stringc i
 	gameOverImg = driver->getTexture("../Assets/textures/gameover.png");
 	gameWinImg = driver->getTexture("../Assets/textures/winner.jpg");
 	font = gui->getFont("../Assets/Fonts/myfont.xml");
+	player->attachHUD(this);
 }
 
 Hud::~Hud()
@@ -27,12 +30,23 @@ void Hud::draw()
 	driver->draw2DImage(image, position2d<s32>(64, 0), rect<s32>(0, 64, 128, 128), 0, white, true);
 	driver->draw2DImage(image, position2d<s32>(64, 0), rect<s32>(0, 64, 128 * player->health*0.01, 128), 0, green, true);
 	//draw weapons inventory
-	driver->draw2DImage(image, position2d<s32>(256, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
-	driver->draw2DImage(image, position2d<s32>(356, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
-	driver->draw2DImage(image, position2d<s32>(456, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
-	//draw selection highlight around current weapon
-	driver->draw2DImage(image, position2d<s32>(256, 0), rect<s32>(0, 128, 64, 196), 0, white, true);
+	if (!hasFireWeapon)
+		driver->draw2DImage(image, position2d<s32>(256, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
+	else
+		driver->draw2DImage(image, position2d<s32>(256, 0), rect<s32>(128, 0, 192, 64), 0, white, true);
 	
+	if (!hasIceWeapon)
+		driver->draw2DImage(image, position2d<s32>(356, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
+	else
+		driver->draw2DImage(image, position2d<s32>(356, 0), rect<s32>(192, 0, 256, 64), 0, white, true);
+	
+	if (!hasWindWeapon)
+		driver->draw2DImage(image, position2d<s32>(456, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
+	else
+		driver->draw2DImage(image, position2d<s32>(456, 0), rect<s32>(257, 0, 320, 64), 0, white, true); //The three element items are not well aligned in the image file (did a +1 on the start pos of Wind)
+
+	//draw selection highlight around current weapon
+	driver->draw2DImage(image, position2d<s32>(xSelectionHighlight, 0), rect<s32>(0, 128, 64, 196), 0, white, true);
 	
 	/*
 	//score
@@ -53,7 +67,34 @@ void Hud::draw()
 	}	
 }
 
-void Hud::moveWeaponSelectionHightlight()
+void Hud::moveWeaponSelectionHightlight(ElementalType eType)
 {
+	switch (eType)
+	{
+	case Fire:
+		xSelectionHighlight = xFire;
+		break;
+	case Ice:
+		xSelectionHighlight = xIce;
+		break;
+	case Wind:
+		xSelectionHighlight = xWind;
+		break;
+	}	
+}
 
+void Hud::setHasWeapon(ElementalType eType)
+{
+	switch (eType)
+	{
+	case Fire:
+		hasFireWeapon = true;
+		break;
+	case Ice:
+		hasIceWeapon = true;
+		break;
+	case Wind:
+		hasWindWeapon = true;
+		break;
+	}
 }
