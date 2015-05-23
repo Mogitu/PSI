@@ -92,8 +92,7 @@ int main() {
 	camera->setParent(player->getNode());
 	camera->setTarget(player->getNodeAbsolutePosition());
 	
-	//TODO: Turn on again!!
-	//Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
+	Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
 	
 	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud_2.png");	
 	//ParticleManager::createFullParticleEffect("../Assets/firesea.xml",vector3df(316,40,-200));

@@ -6,60 +6,24 @@ using namespace scene;
 using namespace core;
 using namespace video;
 
-Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
-{
-	this->Initialize(smgr, irrDriver, helper, world, meshpath, texturepath, bodyType, bodyMass, position, rotation, scale);
-	this->world = world;
-	player = world->getPlayer();
-	isAlive = true;
-	shootTimer = 0;
-	shootTimerMax = 1.5;
-	shootFollowRange = 200;
-	walkSpeed = 75;	
-	body->setActivationState(DISABLE_DEACTIVATION);
-	avoidStrength = 2;
-	avoidance = btVector3(0, 0, 0);
-	direction = btVector3(0, 0, 0);
-}
-
-Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass , vector3df position , vector3df rotation, vector3df scale)
-{
-	this->Initialize(smgr, irrDriver, helper, world, mesh, bodyType, bodyMass, position, rotation, scale);
-	this->world = world;
-	player = world->getPlayer();
-	isAlive = true;
-	shootTimer = 0;
-	shootTimerMax = 5;
-	shootFollowRange = 200;
-	walkSpeed = 75;
-	body->setActivationState(DISABLE_DEACTIVATION);
-	avoidStrength = 2;
-	avoidance = btVector3(0, 0, 0);
-	direction = btVector3(0, 0, 0);
-}
-
 Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, ElementalType element, vector3df position, vector3df rotation, vector3df scale)
 {
-	this->ElementInitialize(smgr, irrDriver, helper, world, meshpath, texturepath, bodyType, bodyMass, position, rotation, scale, element);
-	this->world = world;
+	this->Initialize(smgr, irrDriver, helper, world, meshpath, texturepath, bodyType, bodyMass, position, rotation, scale, element);
+	this->Initialize();
+	
 	player = world->getPlayer();
-	isAlive = true;
-	shootTimer = 0;
-	shootTimerMax = 1.5;
-	shootFollowRange = 200;
-	walkSpeed = 75;
-	body->setActivationState(DISABLE_DEACTIVATION);
-	avoidStrength = 2;
-	avoidance = btVector3(0, 0, 0);
-	direction = btVector3(0, 0, 0);
-
 }
 
 Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, ElementalType element, vector3df position, vector3df rotation, vector3df scale)
 {
-	this->ElementInitialize(smgr, irrDriver, helper, world, mesh, bodyType, bodyMass, position, rotation, scale, element);
-	this->world = world;
+	this->Initialize(smgr, irrDriver, helper, world, mesh, bodyType, bodyMass, position, rotation, scale, element);
+	this->Initialize();
+
 	player = world->getPlayer();
+}
+
+void Enemy::Initialize()
+{
 	isAlive = true;
 	shootTimer = 0;
 	shootTimerMax = 5;
@@ -71,74 +35,12 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	direction = btVector3(0, 0, 0);
 }
 
-
-void Enemy::Initialize(){
-	
-}
-
-void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
+void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale, ElementalType element)
 {
 	this->helper = helper;
 	this->smgr = smgr;
 	this->irrDriver = irrDriver;
-	
-	//default node setup
-	node = mesh;
-	node->setName("Enemy");
-	if (node)
-	{
-		node->setPosition(position);
-		node->setRotation(rotation);
-		node->setScale(scale);
-		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMaterialTexture(0, mesh->getMaterial(0).getTexture(0));
-	}
-	body = helper->createBody(node, bodyType, bodyMass);
-	body->setRestitution(.1);
-	body->setFriction(.3);
-	//body->setLinearFactor(btVector3(0, 1, 0));
-	body->setAngularFactor(btVector3(0, 0, 0));
-	world->addGameObject(this);
-}
-
-
-
-void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
-{
-	this->helper = helper;
-	this->smgr = smgr;
-	this->irrDriver = irrDriver;
-
-	IAnimatedMesh* mesh = smgr->getMesh(meshpath);
-
-	//default node setup
-	node = smgr->addAnimatedMeshSceneNode(mesh);
-	node->setName("Enemy");
-	if (node)
-	{
-		node->setPosition(position);
-		node->setRotation(rotation);
-		node->setScale(scale);
-		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMaterialTexture(0, irrDriver->getTexture(texturepath));
-	}
-	body = helper->createBody(node, bodyType, bodyMass);
-	body->setRestitution(.1);
-	body->setFriction(.3);
-	//body->setLinearFactor(btVector3(0, 1, 0));
-	body->setAngularFactor(btVector3(0, 0, 0));
-	world->addGameObject(this);
-}
-
-void Enemy::ElementInitialize(){
-
-}
-
-void Enemy::ElementInitialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale, ElementalType element)
-{
-	this->helper = helper;
-	this->smgr = smgr;
-	this->irrDriver = irrDriver;
+	this->world = world;
 
 	//default node setup
 	node = mesh;
@@ -165,11 +67,12 @@ void Enemy::ElementInitialize(irr::scene::ISceneManager* smgr, irr::video::IVide
 	typeInterface.setType(element);
 }
 
-void Enemy::ElementInitialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale, ElementalType element)
+void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale, ElementalType element)
 {
 	this->helper = helper;
 	this->smgr = smgr;
 	this->irrDriver = irrDriver;
+	this->world = world;
 
 	IAnimatedMesh* mesh = smgr->getMesh(meshpath);
 

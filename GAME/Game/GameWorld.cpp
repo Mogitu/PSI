@@ -1,8 +1,8 @@
 #include "GameWorld.h"
-#include "Enemy.h"
 #include "Player.h"
 #include "WeaponPickup.h"
 #include "WeaponFactory.h"
+#include "EnemyFactory.h"
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
 {
@@ -312,25 +312,25 @@ void GameWorld::buildIrrLevel(Level *level)
 		else if (namePrefix == ENEMY)
 		{		
 			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
-			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+			Enemy* enemy = EnemyFactory::createEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
 			//enemy->node->setName("EN");
 		}	
 		else if (namePrefix == FIREENEMY)
 		{
 			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
-			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+			Enemy* enemy = EnemyFactory::createFireEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
 			//enemy->node->setName("EN");
 		}
 		else if (namePrefix == WINDENEMY)
 		{
 			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
-			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+			Enemy* enemy = EnemyFactory::createWindEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
 			//enemy->node->setName("EN");
 		}
 		else if (namePrefix == ICEENEMY)
 		{
 			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
-			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+			Enemy* enemy = EnemyFactory::createIceEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
 			//enemy->node->setName("EN");
 		}
 		else if (namePrefix ==FIREWEAPON)
