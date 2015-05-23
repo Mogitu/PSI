@@ -1,5 +1,7 @@
 #include "TypeInterface.h"
-
+#include "FireType.h"
+#include "IceType.h"
+#include "WindType.h"
 
 void TypeInterface::setType(ElementalType type)
 {

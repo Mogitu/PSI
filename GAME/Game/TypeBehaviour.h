@@ -5,9 +5,7 @@
 #include <iostream>
 #include <string>
 #include "Elementals.h"
-#include "FireType.h"
-#include "IceType.h"
-#include "WindType.h"
+
 
 using namespace irr;
 using namespace core;
