@@ -58,7 +58,7 @@ void Hud::draw()
 	if (player->health <= 0 || !player->isAlive)
 	{
 		//font->draw(L"GAME OVER", rect<s32>(300, 300, 300, 50), white);
-		driver->draw2DImage(gameOverImg, position2d<s32>(150, 150), rect<s32>(0, 0, 515, 161), 0, white, true);
+		driver->draw2DImage(gameOverImg, position2d<s32>(150, 150), rect<s32>(0, 0, 515, 200), 0, white, true);
 	}
 	if (gameWorld->gameState == GAMESTATE::LEVELCOMPLETE)
 	{

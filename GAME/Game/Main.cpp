@@ -138,11 +138,11 @@ int main() {
 				break;
 			}						
 		}
-		else if (gWorld->gameState == PAUSED && input->IsKeyDown(KEY_KEY_Q))
+		else if ((gWorld->gameState == PAUSED || gWorld->gameState==GAMEOVER) && input->IsKeyDown(KEY_KEY_Q))
 		{
 			device->closeDevice();
 		}
-		else if (gWorld->gameState == PAUSED && input->IsKeyDown(KEY_KEY_R))
+		else if ((gWorld->gameState == PAUSED || gWorld->gameState==GAMEOVER)&& input->IsKeyDown(KEY_KEY_R))
 		{
 			char buffer[MAX_PATH];
 			GetModuleFileName(NULL, buffer, MAX_PATH);
@@ -153,6 +153,7 @@ int main() {
 			ShellExecute(NULL, "open", p.c_str(), NULL, NULL, SW_SHOWDEFAULT);
 			device->closeDevice();			
 		}
+		
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();
