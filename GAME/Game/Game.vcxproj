@@ -83,6 +83,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="IceWeapon.cpp" />
+    <ClCompile Include="IceType.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -96,7 +97,9 @@
     <ClCompile Include="SingleShotBehaviour.cpp" />
     <ClCompile Include="TypeBehaviour.cpp" />
     <ClCompile Include="TypeInterface.cpp" />
+    <ClCompile Include="WeaponPickup.cpp" />
     <ClCompile Include="WindWeapon.cpp" />
+    <ClCompile Include="WindType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletHelper.h" />
@@ -111,6 +114,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="IceWeapon.h" />
+    <ClInclude Include="IceType.h" />
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="Level.h" />
@@ -128,7 +132,9 @@
     <ClInclude Include="TypeInterface.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponBehaviour.h" />
+    <ClInclude Include="WeaponPickup.h" />
     <ClInclude Include="WindWeapon.h" />
+    <ClInclude Include="WindType.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

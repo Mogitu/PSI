@@ -94,7 +94,8 @@ void Projectile::revive()
 	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 	Node->setVisible(true);
 	aliveTime = 0;		
-	body->setActivationState(1);	
+	body->setActivationState(1);
+	body->setCollisionFlags(0);
 	isAlive = true;
 }
 
@@ -122,6 +123,7 @@ void Projectile::kill()
 	//Node->remove();
 	isAlive = false;
 	Node->setVisible(false);
+	body->setCollisionFlags(4);
 	//// Remove the object from the world
 	//h->getWorld()->removeRigidBody(body);
 	//// Free memory

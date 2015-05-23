@@ -6,6 +6,7 @@
 #include <string>
 #include "Elementals.h"
 
+
 using namespace irr;
 using namespace core;
 
@@ -26,7 +27,5 @@ class TypeBehaviour
 		map<ElementalType, int> strengthsElements;
 		virtual void initialize() = 0;
 };
-class IceType;
-class WindType;
 
 #endif TypeBehaviour_H

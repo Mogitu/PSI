@@ -1,5 +1,7 @@
 #include "TypeInterface.h"
 #include "FireType.h"
+#include "IceType.h"
+#include "WindType.h"
 
 void TypeInterface::setType(ElementalType type)
 {
@@ -9,6 +11,17 @@ void TypeInterface::setType(ElementalType type)
 		typebehave_ = new FireType(ElementalType::Fire);
 		typebehave_->initializer();
 	}
+	else if (type == Ice)
+	{
+		typebehave_ = new IceType(ElementalType::Ice);
+		typebehave_->initializer();
+	}
+	else if (type == Wind)
+	{
+		typebehave_ = new WindType(ElementalType::Wind);
+		typebehave_->initializer();
+	}
+	
 }
 
 int TypeInterface::getMultiplyer(ElementalType bulletType)

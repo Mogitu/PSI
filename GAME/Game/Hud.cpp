@@ -26,8 +26,10 @@ void Hud::draw()
 	//draw healthbar
 	driver->draw2DImage(image, position2d<s32>(64, 0), rect<s32>(0, 64, 128, 128), 0, white, true);
 	driver->draw2DImage(image, position2d<s32>(64, 0), rect<s32>(0, 64, 128 * player->health*0.01, 128), 0, green, true);
-	//draw weapon inventory
+	//draw weapons inventory
 	driver->draw2DImage(image, position2d<s32>(256, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
+	driver->draw2DImage(image, position2d<s32>(356, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
+	driver->draw2DImage(image, position2d<s32>(456, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
 	//draw selection highlight around current weapon
 	driver->draw2DImage(image, position2d<s32>(256, 0), rect<s32>(0, 128, 64, 196), 0, white, true);
 	

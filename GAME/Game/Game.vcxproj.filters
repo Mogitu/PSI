@@ -117,11 +117,20 @@
     <ClCompile Include="Character.cpp">
       <Filter>Source Files\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="WeaponPickup.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
     <ClCompile Include="IceWeapon.cpp">
       <Filter>Source Files\Characters\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="IceType.cpp">
+      <Filter>Source Files\Characters\Types</Filter>
+    </ClCompile>
     <ClCompile Include="WindWeapon.cpp">
       <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="WindType.cpp">
+      <Filter>Source Files\Characters\Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -210,6 +219,15 @@
       <Filter>Header Files\Characters\Types</Filter>
     </ClInclude>
     <ClInclude Include="Elementals.h">
+      <Filter>Header Files\Characters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponPickup.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="IceType.h">
+      <Filter>Header Files\Characters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="WindType.h">
       <Filter>Header Files\Characters\Types</Filter>
     </ClInclude>
     <ClInclude Include="IceWeapon.h">
