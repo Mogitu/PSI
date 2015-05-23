@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Characters\Weapons">
       <UniqueIdentifier>{fe3feb7b-f11c-4e15-b98f-096b272567ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Characters\Types">
+      <UniqueIdentifier>{332a6d06-19e3-425a-8782-88d94fd7b456}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\Types">
+      <UniqueIdentifier>{7bcf6759-3e6c-4d3d-8e45-e82da57e23ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -98,6 +104,15 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeBehaviour.cpp">
+      <Filter>Source Files\Characters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeInterface.cpp">
+      <Filter>Source Files\Characters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="FireType.cpp">
+      <Filter>Source Files\Characters\Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +190,18 @@
     </ClInclude>
     <ClInclude Include="ObjectPool.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeBehaviour.h">
+      <Filter>Header Files\Characters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeInterface.h">
+      <Filter>Header Files\Characters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="FireType.h">
+      <Filter>Header Files\Characters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Elementals.h">
+      <Filter>Header Files\Characters\Types</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -40,6 +40,9 @@ private:
 	const std::string PARTICLE = "PS";
 	const std::string ENEMY = "EN";
 	const std::string PLAYER = "PL";
+	const std::string FIREWEAPON = "FW";
+	const std::string ICEWEAPON = "IW";
+	const std::string WINDWEAPON = "WW";
 
 	InputReceiver *playerInputReceiver;
 	core::list<IGameObject*> gameObjects;
