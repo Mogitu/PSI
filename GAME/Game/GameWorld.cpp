@@ -1,6 +1,7 @@
 #include "GameWorld.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "WeaponPickup.h"
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
 {
@@ -167,6 +168,44 @@ void GameWorld::update(u32 frameDeltaTime)
 				}				
 				p->takeDamage(10);								
 			}				
+
+
+			//check collisions between player and weapon pickups..
+			if ((nameB == "IceWeapon"&&nameA == "Player") || (nameA == "IceWeapon"&&nameB == "Player"))
+			{
+				std::cout << "Ice weapon picked up" << std::endl;				
+				if (nameB=="IceWeapon")
+				{
+					nodeB->setName("dead");
+				}
+				else{
+					nodeA->setName("dead");
+				}
+			}
+
+			if ((nameB == "FireWeapon"&&nameA == "Player") || (nameA == "FireWeapon"&&nameB == "Player"))
+			{
+				std::cout << "Fire weapon picked up" << std::endl;
+				if (nameB == "FireWeapon")
+				{
+					nodeB->setName("dead");
+				}
+				else{
+					nodeA->setName("dead");
+				}
+			}
+
+			if ((nameB == "WindWeapon"&&nameA == "Player") || (nameA == "WindWeapon"&&nameB == "Player"))
+			{
+				std::cout << "Wind weapon picked up" << std::endl;
+				if (nameB == "WindWeapon")
+				{
+					nodeB->setName("dead");
+				}
+				else{
+					nodeA->setName("dead");
+				}
+			}
 		}//End collision detection
 	}
 	else if (gameState==PAUSED)
@@ -269,14 +308,24 @@ void GameWorld::buildIrrLevel(Level *level)
 		else if (namePrefix ==FIREWEAPON)
 		{
 			//spawn fire weapon
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			WeaponPickup *pickUp = new WeaponPickup("FireWeapon", helper,node);
+			this->addGameObject(pickUp);
+
 		}
 		else if (namePrefix == ICEWEAPON)
 		{
 			//spawn ice weapon
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			WeaponPickup *pickUp = new WeaponPickup("IceWeapon",helper, node);
+			this->addGameObject(pickUp);
 		}
 		else if (namePrefix == WINDWEAPON)
 		{
 			//spawn windweapon
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			WeaponPickup *pickUp = new WeaponPickup("WindWeapon",helper, node);
+			this->addGameObject(pickUp);
 		}
 		//Done with the tempory body
 		tmp = 0;

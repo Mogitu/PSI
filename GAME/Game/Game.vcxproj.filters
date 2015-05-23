@@ -114,6 +114,9 @@
     <ClCompile Include="FireType.cpp">
       <Filter>Source Files\Characters\Types</Filter>
     </ClCompile>
+    <ClCompile Include="WeaponPickup.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="Elementals.h">
       <Filter>Header Files\Characters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponPickup.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

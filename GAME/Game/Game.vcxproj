@@ -94,6 +94,7 @@
     <ClCompile Include="SingleShotBehaviour.cpp" />
     <ClCompile Include="TypeBehaviour.cpp" />
     <ClCompile Include="TypeInterface.cpp" />
+    <ClCompile Include="WeaponPickup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletHelper.h" />
@@ -124,6 +125,7 @@
     <ClInclude Include="TypeInterface.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponBehaviour.h" />
+    <ClInclude Include="WeaponPickup.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
