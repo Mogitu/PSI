@@ -1,10 +1,4 @@
 #include "FireWeapon.h"
-#include "SingleShotBehaviour.h"
-
-FireWeapon::FireWeapon()
-{
-
-}
 
 void FireWeapon::fire(btVector3 &offset, btVector3 &direction, stringw name)
 {

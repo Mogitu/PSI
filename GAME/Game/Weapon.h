@@ -10,10 +10,10 @@ private:
 	WeaponBehaviour* weaponBehaviour;
 	u32 shootIntervalTimer;
 	u32 shootInterval;
-	float damagePerProjectile;
+	int damagePerProjectile;
 public:
 	bool canShoot;
-	void Initialize(WeaponBehaviour* wpb, GameWorld* w, u32 interval, float dpp) 
+	void Initialize(WeaponBehaviour* wpb, GameWorld* w, u32 interval, int dpp) 
 	{ 
 		weaponBehaviour = wpb;
 		weaponBehaviour->setUpWeaponBehaviour(w); 
@@ -38,7 +38,7 @@ public:
 	}
 	virtual void fire(btVector3 &offset, btVector3 &direction, stringw name) = 0;
 	virtual ElementalType getWeaponElementalType() = 0;
-	float getDamagePerProjectile() { return damagePerProjectile; }
+	int getDamagePerProjectile() { return damagePerProjectile; }
 	~Weapon() { delete weaponBehaviour; }
 };
 

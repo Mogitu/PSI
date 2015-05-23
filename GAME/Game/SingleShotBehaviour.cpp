@@ -5,7 +5,7 @@ void SingleShotBehaviour::setUpWeaponBehaviour(GameWorld* w)
 	this->setWorld(w);
 }
 
-void SingleShotBehaviour::doWeaponBehaviour(btVector3 &offset, btVector3 &direction, stringw name, ElementalType eType, float damagePerProjectile)
+void SingleShotBehaviour::doWeaponBehaviour(btVector3 &offset, btVector3 &direction, stringw name, ElementalType eType, int damagePerProjectile)
 {
 	Projectile *p = getPool()->create();
 	if (p)

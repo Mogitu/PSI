@@ -114,6 +114,15 @@
     <ClCompile Include="FireType.cpp">
       <Filter>Source Files\Characters\Types</Filter>
     </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="IceWeapon.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="WindWeapon.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level.h">
@@ -202,6 +211,12 @@
     </ClInclude>
     <ClInclude Include="Elementals.h">
       <Filter>Header Files\Characters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="IceWeapon.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="WindWeapon.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

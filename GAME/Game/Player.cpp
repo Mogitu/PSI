@@ -59,8 +59,8 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 
 	world->addGameObject(this);
 
-	setWeapon(new FireWeapon());
-	getWeapon()->Initialize(new SingleShotBehaviour(), world, 250, 10);
+	selectWeapon(ElementalType::Fire, new SingleShotBehaviour(), 250, 10, world);
+	currentSelectedWeapon = 1;
 }
 
 void Player::Update(u32 frameDeltaTime)
@@ -69,6 +69,7 @@ void Player::Update(u32 frameDeltaTime)
 	if (health > 0 && isAlive)
 	{
 		PlayerMovement(frameDeltaTime);
+		WeaponSelect();
 		getWeapon()->Update(frameDeltaTime);
 		Fire();
 		node->updateAbsolutePosition();		
@@ -88,7 +89,6 @@ void Player::takeDamage(int amount)
 		node->setVisible(false);
 	}
 }
-
 
 void Player::PlayerMovement(u32 frameDeltaTime)
 {
@@ -146,6 +146,29 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 
 	body->applyCentralImpulse(jump);
 	body->setAngularVelocity(turningVel);
+}
+
+void Player::WeaponSelect()
+{
+	if (input->IsKeyDown(KEY_KEY_1) && currentSelectedWeapon != 1)
+	{
+		currentSelectedWeapon = 1;
+		selectWeapon(ElementalType::Fire, new SingleShotBehaviour(), 250, 10, world);
+	}	
+	else if (input->IsKeyDown(KEY_KEY_2) && currentSelectedWeapon != 2) 
+	{
+		currentSelectedWeapon = 2;
+		selectWeapon(ElementalType::Ice, new SingleShotBehaviour(), 250, 10, world);
+	}
+	else if (input->IsKeyDown(KEY_KEY_3) && currentSelectedWeapon != 3) 
+	{
+		currentSelectedWeapon = 3;
+		selectWeapon(ElementalType::Wind, new SingleShotBehaviour(), 250, 10, world);
+	}
+	//else if (input->IsKeyDown(KEY_KEY_4) && currentSelectedWeapon != 4) 
+	//{
+	//	currentSelectedWeapon = 4;
+	//}
 }
 
 void Player::Fire()

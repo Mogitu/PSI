@@ -74,6 +74,7 @@
   <ItemGroup>
     <ClCompile Include="BulletHelper.cpp" />
     <ClCompile Include="BurstAffector.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="FireType.cpp" />
     <ClCompile Include="FireWeapon.cpp" />
@@ -81,6 +82,7 @@
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Hud.cpp" />
+    <ClCompile Include="IceWeapon.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -94,6 +96,7 @@
     <ClCompile Include="SingleShotBehaviour.cpp" />
     <ClCompile Include="TypeBehaviour.cpp" />
     <ClCompile Include="TypeInterface.cpp" />
+    <ClCompile Include="WindWeapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletHelper.h" />
@@ -107,6 +110,7 @@
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Hud.h" />
+    <ClInclude Include="IceWeapon.h" />
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="Level.h" />
@@ -124,6 +128,7 @@
     <ClInclude Include="TypeInterface.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponBehaviour.h" />
+    <ClInclude Include="WindWeapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

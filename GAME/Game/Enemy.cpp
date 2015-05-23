@@ -68,9 +68,8 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	body->setAngularFactor(btVector3(0, 0, 0));
 	world->addGameObject(this);
 
-	//WeaponBehaviour
-	setWeapon(new FireWeapon());
-	getWeapon()->Initialize(new SingleShotBehaviour(), world, 1500, 10);
+	//TODO: Make selectweapon based on the type of enemy
+	selectWeapon(ElementalType::Fire, new SingleShotBehaviour(), 1500, 10, world);
 }
 
 void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
@@ -99,9 +98,8 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	body->setAngularFactor(btVector3(0, 0, 0));
 	world->addGameObject(this);
 
-	//WeaponBehaviour
-	setWeapon(new FireWeapon());
-	getWeapon()->Initialize(new SingleShotBehaviour(), world, 1500, 10);
+	//TODO: Make selectweapon based on the type of enemy
+	selectWeapon(ElementalType::Fire, new SingleShotBehaviour(), 1500, 10, world);
 }
 
 void Enemy::Update(u32 frameDeltaTime)

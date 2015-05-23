@@ -1,9 +1,9 @@
-#ifndef FIREWEAPON_H
-#define FIREWEAPON_H
+#ifndef WINDWEAPON_H
+#define WINDWEAPON_H
 
 #include "Weapon.h"
 
-class FireWeapon : public Weapon
+class WindWeapon : public Weapon
 {
 public:
 	void fire(btVector3 &offset, btVector3 &direction, stringw name) override;

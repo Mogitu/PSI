@@ -30,7 +30,7 @@ void Projectile::Initialize()
 	body->setLinearFactor(btVector3(1, 0, 1));	
 }
 
-void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir, ElementalType eType, float dmg)
+void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir, ElementalType eType, int dmg)
 {	
 	aliveTime = 0.0f;
 	maxLifeTime = 3.0f;
@@ -135,7 +135,7 @@ ElementalType Projectile::getElementalType()
 	return elementalType;
 }
 
-float Projectile::getDamage()
+int Projectile::getDamage()
 {
 	return damage;
 }
