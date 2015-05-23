@@ -17,8 +17,6 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-using namespace irr;
-
 enum GAMESTATE
 {
 	PLAYING,

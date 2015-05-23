@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "WeaponPickup.h"
+#include "WeaponFactory.h"
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
 {
@@ -169,22 +170,28 @@ void GameWorld::update(u32 frameDeltaTime)
 				p->takeDamage(10);								
 			}				
 
-
 			//check collisions between player and weapon pickups..
 			if ((nameB == "IceWeapon"&&nameA == "Player") || (nameA == "IceWeapon"&&nameB == "Player"))
 			{
+				Player *p = (Player*)getPlayer();
+				p->addWeaponToArsenal(WeaponFactory::createIceWeapon(new SingleShotBehaviour(), 250, 10, this));
+
 				std::cout << "Ice weapon picked up" << std::endl;				
 				if (nameB=="IceWeapon")
 				{
 					nodeB->setName("dead");
 				}
-				else{
+				else
+				{
 					nodeA->setName("dead");
 				}
 			}
 
 			if ((nameB == "FireWeapon"&&nameA == "Player") || (nameA == "FireWeapon"&&nameB == "Player"))
 			{
+				Player *p = (Player*)getPlayer();
+				p->addWeaponToArsenal(WeaponFactory::createFireWeapon(new SingleShotBehaviour(), 250, 10, this));
+
 				std::cout << "Fire weapon picked up" << std::endl;
 				if (nameB == "FireWeapon")
 				{
@@ -197,6 +204,9 @@ void GameWorld::update(u32 frameDeltaTime)
 
 			if ((nameB == "WindWeapon"&&nameA == "Player") || (nameA == "WindWeapon"&&nameB == "Player"))
 			{
+				Player *p = (Player*)getPlayer();
+				p->addWeaponToArsenal(WeaponFactory::createWindWeapon(new SingleShotBehaviour(), 250, 10, this));
+
 				std::cout << "Wind weapon picked up" << std::endl;
 				if (nameB == "WindWeapon")
 				{

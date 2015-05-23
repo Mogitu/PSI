@@ -1,6 +1,5 @@
-#include "irrlicht.h"
 #include "Enemy.h"
-
+#include "WeaponFactory.h"
 
 using namespace irr;
 using namespace scene;
@@ -160,7 +159,7 @@ void Enemy::ElementInitialize(irr::scene::ISceneManager* smgr, irr::video::IVide
 	world->addGameObject(this);
 
 	//Weapon Choice based on Element
-	selectWeapon(element, new SingleShotBehaviour(), 1500, 10, world);
+	setWeapon(WeaponFactory::createWeaponBasedOnElement(element, new SingleShotBehaviour(), 1500, 10, world));
 
 	//Set the elemental type of the enemy
 	typeInterface.setType(element);
@@ -193,7 +192,7 @@ void Enemy::ElementInitialize(irr::scene::ISceneManager* smgr, irr::video::IVide
 	world->addGameObject(this);
 
 	//Weapon Choice based on Element
-	selectWeapon(element, new SingleShotBehaviour(), 1500, 10, world);
+	setWeapon(WeaponFactory::createWeaponBasedOnElement(element, new SingleShotBehaviour(), 1500, 10, world));
 
 	//Set the elemental type of the enemy
 	typeInterface.setType(element);
@@ -210,9 +209,10 @@ void Enemy::Update(u32 frameDeltaTime)
 		if (player && player->isAlive && dist <= shootFollowRange)
 		{
 			if (getWeapon())
+			{
 				getWeapon()->Update(frameDeltaTime);
-
-			shoot();
+				shoot();
+			}
 			followPlayer();
 		}
 
@@ -230,8 +230,7 @@ void Enemy::shoot()
 		playerToEnemy.normalize();
 		btVector3 dir(playerToEnemy.X, playerToEnemy.Y, playerToEnemy.Z);
 
-		if (getWeapon() != NULL)
-			getWeapon()->fire(pos + offSet, dir, "EnemyProjectile");
+		getWeapon()->fire(pos + offSet, dir, "EnemyProjectile");
 		
 }
 

@@ -114,9 +114,6 @@
     <ClCompile Include="FireType.cpp">
       <Filter>Source Files\Characters\Types</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Source Files\Characters</Filter>
-    </ClCompile>
     <ClCompile Include="WeaponPickup.cpp">
       <Filter>Source Files\Characters\Weapons</Filter>
     </ClCompile>
@@ -131,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="WindType.cpp">
       <Filter>Source Files\Characters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponArsenal.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +234,15 @@
       <Filter>Header Files\Characters\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="WindWeapon.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponArsenal.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponFactory.h">
       <Filter>Header Files\Characters\Weapons</Filter>
     </ClInclude>
   </ItemGroup>

@@ -59,8 +59,8 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 
 	world->addGameObject(this);
 
-	selectWeapon(ElementalType::Fire, new SingleShotBehaviour(), 250, 10, world);
-	currentSelectedWeapon = 1;
+	weaponArsenal = new WeaponArsenal();
+	currentTypeWeapon = ElementalType::NONE;
 }
 
 void Player::Update(u32 frameDeltaTime)
@@ -70,8 +70,13 @@ void Player::Update(u32 frameDeltaTime)
 	{
 		PlayerMovement(frameDeltaTime);
 		WeaponSelect();
-		getWeapon()->Update(frameDeltaTime);
-		Fire();
+		
+		if (getWeapon())
+		{
+			getWeapon()->Update(frameDeltaTime);
+			Fire();
+		}
+		
 		node->updateAbsolutePosition();		
 	}
 }
@@ -150,25 +155,25 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 
 void Player::WeaponSelect()
 {
-	if (input->IsKeyDown(KEY_KEY_1) && currentSelectedWeapon != 1)
+	ElementalType swapTo = ElementalType::NONE;
+
+	if (input->IsKeyDown(KEY_KEY_1))
+		swapTo = ElementalType::Fire;
+	else if (input->IsKeyDown(KEY_KEY_2)) 
+		swapTo = ElementalType::Ice;
+	else if (input->IsKeyDown(KEY_KEY_3)) 
+		swapTo = ElementalType::Wind;
+	
+	if (swapTo != ElementalType::NONE && currentTypeWeapon != swapTo)
 	{
-		currentSelectedWeapon = 1;
-		selectWeapon(ElementalType::Fire, new SingleShotBehaviour(), 250, 10, world);
+		Weapon* w = weaponArsenal->getWeaponOfElementalType(swapTo);
+		// If weapon exists in arsenal then swap
+		if (w)
+		{
+			setWeapon(w);
+			currentTypeWeapon = swapTo;
+		}
 	}	
-	else if (input->IsKeyDown(KEY_KEY_2) && currentSelectedWeapon != 2) 
-	{
-		currentSelectedWeapon = 2;
-		selectWeapon(ElementalType::Ice, new SingleShotBehaviour(), 250, 10, world);
-	}
-	else if (input->IsKeyDown(KEY_KEY_3) && currentSelectedWeapon != 3) 
-	{
-		currentSelectedWeapon = 3;
-		selectWeapon(ElementalType::Wind, new SingleShotBehaviour(), 250, 10, world);
-	}
-	//else if (input->IsKeyDown(KEY_KEY_4) && currentSelectedWeapon != 4) 
-	//{
-	//	currentSelectedWeapon = 4;
-	//}
 }
 
 void Player::Fire()
@@ -178,8 +183,7 @@ void Player::Fire()
 		btVector3 pos(body->getWorldTransform().getOrigin().getX(), body->getWorldTransform().getOrigin().getY() + 20, body->getWorldTransform().getOrigin().getZ());
 		btVector3 dir = helper->extractForwardVector(body);
 
-		if (getWeapon() != NULL)
-			getWeapon()->fire(pos + dir * 30, dir, "PlayerProjectile");	
+		getWeapon()->fire(pos + dir * 30, dir, "PlayerProjectile");	
 	}	
 }
 
@@ -240,4 +244,9 @@ IAnimatedMeshSceneNode* Player::getNode()
 void Player::revive()
 {
 
+}
+
+void Player::addWeaponToArsenal(Weapon* w)
+{
+	this->weaponArsenal->addWeapon(w);
 }
