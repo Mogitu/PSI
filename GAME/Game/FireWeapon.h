@@ -8,6 +8,7 @@ class FireWeapon : public Weapon
 public:
 	FireWeapon();
 	void fire(btVector3 &offset, btVector3 &direction, stringw name) override;
+	ElementalType getWeaponElementalType() override;
 };
 
 #endif

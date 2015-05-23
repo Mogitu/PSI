@@ -7,7 +7,7 @@ class SingleShotBehaviour : public WeaponBehaviour
 {
 public:
 	void setUpWeaponBehaviour(GameWorld* w) override;
-	void doWeaponBehaviour(btVector3 &offset, btVector3 &direction, stringw name) override;
+	void doWeaponBehaviour(btVector3 &offset, btVector3 &direction, stringw name, ElementalType eType, float damagePerProjectile) override;
 };
 
 #endif

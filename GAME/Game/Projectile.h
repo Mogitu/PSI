@@ -2,6 +2,7 @@
 #include "BulletHelper.h"
 #include "ParticleManager.h"
 #include "IGameObject.h"
+#include "Elementals.h"
 
 
 #ifndef PROJECTILE_H
@@ -15,13 +16,15 @@ public:
 	void fire(btVector3 &pos, btVector3 &direction);
 	virtual void kill();
 	virtual void Initialize();	
-	virtual void Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir);
+	virtual void Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir, ElementalType eType, float dmg);
 	virtual void Update(u32 deltaTime);	
 	virtual void revive();
 	ParticleManager::ParticleSystem *a;
 	ParticleManager::ParticleSystem *b;
 	ParticleManager::ParticleSystem *c;
 	GameObjectType getType() const;
+	ElementalType getElementalType();
+	float getDamage();
 	bool warmedUp;
 private:
 	ISceneManager *smgr;
@@ -34,6 +37,8 @@ private:
 	float maxLifeTime;
 	stringw projectileName;
 	ParticleManager::ParticleSystem *particleEffect;
+	ElementalType elementalType;
+	int damage;
 };
 #endif // !PROJECTILE_H
 

@@ -8,11 +8,14 @@ FireWeapon::FireWeapon()
 
 void FireWeapon::fire(btVector3 &offset, btVector3 &direction, stringw name)
 {
-	//FIRE!!!!! BURN!!! AHAHAHAHA!!
 	if (canShoot)
 	{
-		getWeaponBehaviour()->doWeaponBehaviour(offset, direction, name);
+		getWeaponBehaviour()->doWeaponBehaviour(offset, direction, name, getWeaponElementalType(), getDamagePerProjectile());
 		canShoot = false;
 	}
-	
+}
+
+ElementalType FireWeapon::getWeaponElementalType()
+{
+	return ElementalType::Fire;
 }

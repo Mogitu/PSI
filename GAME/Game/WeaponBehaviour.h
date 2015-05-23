@@ -18,7 +18,7 @@ public:
 	GameWorld* getWorld() { return world; }
 	ObjectPool<Projectile>* getPool() const { return pool; }
 	virtual void setUpWeaponBehaviour(GameWorld* w) = 0;
-	virtual void doWeaponBehaviour(btVector3 &offset, btVector3 &direction, stringw name) = 0;
+	virtual void doWeaponBehaviour(btVector3 &offset, btVector3 &direction, stringw name, ElementalType eType, float damagePerProjectile) = 0;
 
 	void Update(irr::u32 frameDeltaTime)
 	{

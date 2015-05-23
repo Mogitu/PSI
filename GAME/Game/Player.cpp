@@ -60,7 +60,7 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 	world->addGameObject(this);
 
 	setWeapon(new FireWeapon());
-	getWeapon()->Initialize(new SingleShotBehaviour(), world, 250);
+	getWeapon()->Initialize(new SingleShotBehaviour(), world, 250, 10);
 }
 
 void Player::Update(u32 frameDeltaTime)

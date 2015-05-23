@@ -21,6 +21,7 @@ void Projectile::Initialize()
 	aliveTime = 0.0f;
 	maxLifeTime = 3.0f;
 	speed = 4000;
+	damage = 10;
 	isAlive = true;
 	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
 	node = smgr->addMeshSceneNode(mesh);
@@ -29,10 +30,12 @@ void Projectile::Initialize()
 	body->setLinearFactor(btVector3(1, 0, 1));	
 }
 
-void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir)
+void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir, ElementalType eType, float dmg)
 {	
 	aliveTime = 0.0f;
 	maxLifeTime = 3.0f;
+	elementalType = eType;
+	damage = dmg;
 	if (!warmedUp)
 	{		
 		speed = 4000;
@@ -46,6 +49,19 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 		warmedUp = true;
 		a = ParticleManager::createFullParticleEffect("../Assets/shootEffect.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()));
 		b = ParticleManager::createFullParticleEffect("../Assets/trail.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
+		//TODO: Make different partile effects for the elements
+		/*switch (elementalType)
+		{
+		case Fire:
+			break;
+		case Ice:
+			break;
+		case Wind:
+			break;
+		default:
+			break;
+		}*/
+
 		c = ParticleManager::createFullParticleEffect("../Assets/projectilefire.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 	}
 	else
@@ -82,8 +98,6 @@ void Projectile::revive()
 	isAlive = true;
 }
 
-
-
 void Projectile::fire(btVector3 &pos, btVector3 &dir)
 {	
 	a=ParticleManager::createFullParticleEffect("../Assets/shootEffect.xml", vector3df(pos.getX(),pos.getY(),pos.getZ()));
@@ -114,6 +128,16 @@ void Projectile::kill()
 	////delete body->getMotionState();
 	//delete body->getCollisionShape();
 	//delete body;
+}
+
+ElementalType Projectile::getElementalType()
+{
+	return elementalType;
+}
+
+float Projectile::getDamage()
+{
+	return damage;
 }
 
 
