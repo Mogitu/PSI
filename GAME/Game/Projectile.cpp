@@ -47,22 +47,29 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 		body = h->createBody(node, Shape_Type::SPHERE, 10);
 		body->setLinearFactor(btVector3(1, 0, 1));
 		warmedUp = true;
-		a = ParticleManager::createFullParticleEffect("../Assets/shootEffect.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()));
-		b = ParticleManager::createFullParticleEffect("../Assets/trail.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
+		
 		//TODO: Make different partile effects for the elements
-		/*switch (elementalType)
+		switch (elementalType)
 		{
 		case Fire:
+			a = ParticleManager::createFullParticleEffect("../Assets/shootEffect.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()));
+			b = ParticleManager::createFullParticleEffect("../Assets/trail.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
+			c = ParticleManager::createFullParticleEffect("../Assets/projectilefire.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 			break;
 		case Ice:
+			a = nullptr;
+			b = nullptr;
+			c = ParticleManager::createFullParticleEffect("../Assets/projectileIce.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 			break;
 		case Wind:
+			a = nullptr;
+			b = nullptr;
+			c = ParticleManager::createFullParticleEffect("../Assets/projectileWind.xml", vector3df(0, 0, 0), node);
 			break;
-		default:
-			break;
-		}*/
 
-		c = ParticleManager::createFullParticleEffect("../Assets/projectilefire.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
+		}
+		
+		
 	}
 	else
 	{
@@ -117,9 +124,16 @@ void Projectile::kill()
 	//delete particleEffect;
 	//particleEffect = 0;
 	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
-	a->psNode->clearParticles();
-	b->psNode->clearParticles();
-	c->psNode->clearParticles();	
+
+	if (a)
+		a->psNode->clearParticles();
+	
+	if (b)
+		b->psNode->clearParticles();
+	
+	if (c)
+		c->psNode->clearParticles();
+
 	//Node->remove();
 	isAlive = false;
 	Node->setVisible(false);
