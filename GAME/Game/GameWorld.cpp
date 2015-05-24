@@ -47,6 +47,7 @@ void GameWorld::update(u32 frameDeltaTime)
 			//if object not alive or name is dead we kill/clean it.
 			if ((!gameObject->isAlive || nodeName == "dead"))
 			{
+				gameObject->node->setName("killed");
 				gameObject->kill();				
 				//gameObjects.erase(Iterator);
 				//delete gameObject;				
@@ -175,7 +176,7 @@ void GameWorld::update(u32 frameDeltaTime)
 			{
 				Player *p = (Player*)getPlayer();
 				p->addWeaponToArsenal(WeaponFactory::createIceWeapon(new SingleShotBehaviour(), 250, 10, this));
-
+				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
 				std::cout << "Ice weapon picked up" << std::endl;				
 				if (nameB=="IceWeapon")
 				{
@@ -191,7 +192,7 @@ void GameWorld::update(u32 frameDeltaTime)
 			{
 				Player *p = (Player*)getPlayer();
 				p->addWeaponToArsenal(WeaponFactory::createFireWeapon(new SingleShotBehaviour(), 250, 10, this));
-
+				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
 				std::cout << "Fire weapon picked up" << std::endl;
 				if (nameB == "FireWeapon")
 				{
@@ -206,7 +207,7 @@ void GameWorld::update(u32 frameDeltaTime)
 			{
 				Player *p = (Player*)getPlayer();
 				p->addWeaponToArsenal(WeaponFactory::createWindWeapon(new SingleShotBehaviour(), 250, 10, this));
-
+				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
 				std::cout << "Wind weapon picked up" << std::endl;
 				if (nameB == "WindWeapon")
 				{
@@ -337,23 +338,22 @@ void GameWorld::buildIrrLevel(Level *level)
 		{
 			//spawn fire weapon
 			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
-			WeaponPickup *pickUp = new WeaponPickup("FireWeapon", helper,node);
+			WeaponPickup *pickUp = new WeaponPickup("FireWeapon", helper,node);			
 			this->addGameObject(pickUp);
-
 		}
 		else if (namePrefix == ICEWEAPON)
 		{
 			//spawn ice weapon
 			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
 			WeaponPickup *pickUp = new WeaponPickup("IceWeapon",helper, node);
-			this->addGameObject(pickUp);
+			this->addGameObject(pickUp);			
 		}
 		else if (namePrefix == WINDWEAPON)
 		{
 			//spawn windweapon
 			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
 			WeaponPickup *pickUp = new WeaponPickup("WindWeapon",helper, node);
-			this->addGameObject(pickUp);
+			this->addGameObject(pickUp);			
 		}
 		//Done with the tempory body
 		tmp = 0;

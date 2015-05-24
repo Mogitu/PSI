@@ -16,7 +16,7 @@ public:
 	virtual void revive();
 	~WeaponPickup();
 private:
-
+	ParticleManager::ParticleSystem *effect;
 };
 
 
