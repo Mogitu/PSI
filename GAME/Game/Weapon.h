@@ -19,7 +19,6 @@ public:
 		weaponBehaviour->setUpWeaponBehaviour(w); 
 		shootIntervalTimer = 0;
 		shootInterval = interval;
-		canShoot = true;
 		damagePerProjectile = dpp;
 	}
 	WeaponBehaviour* getWeaponBehaviour() const { return weaponBehaviour; }
