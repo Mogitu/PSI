@@ -63,6 +63,14 @@ void ParticleSettings::init()
     rotation_speed = vector3df(0,0,0);
     rotation_pivotPoint = vector3df(0,0,0);
 
+    //ring settings
+    ringRadius=20;
+    ringThickness=20;
+
+    //cylinder settings
+    cylinderRadius =20;
+    cylinderOutLineOnly =false;
+
     imagepath= "";
     createParticle();
 }
@@ -175,6 +183,36 @@ void ParticleSettings::createEmitter()
                             minTime,maxTime,0,
                             dimension2df(minStartSize,minStartSize),
                             dimension2df(maxStartSize,maxStartSize));
+    }
+    else if(type.toStdString() == "cylinder")
+    {
+        particleEmitter = particleNode->createCylinderEmitter(vector3df(0,0,0),
+                                                              cylinderRadius,vector3df(0,1,0),10,cylinderOutLineOnly,
+                                                              direction,                                                                                                                     minRate,maxRate,
+                                                              minColor,maxColor,
+                                                              minTime,maxTime,0,
+                                                              dimension2df(minStartSize,minStartSize),
+                                                              dimension2df(maxStartSize,maxStartSize));
+
+    }
+    else if(type.toStdString() == "point")
+    {
+       particleEmitter = particleNode->createPointEmitter(direction,
+                                                          minRate,maxRate,
+                                                          minColor,maxColor,
+                                                          minTime,maxTime,0,
+                                                          dimension2df(minStartSize,minStartSize),
+                                                          dimension2df(maxStartSize,maxStartSize));
+    }else if(type.toStdString() == "ring")
+    {
+        particleEmitter = particleNode->createRingEmitter(vector3df(0,0,0),
+                                                          ringRadius,ringThickness,
+                                                          direction,
+                                                          minRate, maxRate,
+                                                          minColor,maxColor,
+                                                          minTime,maxTime,0,
+                                                          dimension2df(minStartSize,minStartSize),
+                                                          dimension2df(maxStartSize,maxStartSize));
     }
     particleNode->setEmitter(particleEmitter);
 }

@@ -78,6 +78,17 @@ public:
     QLineEdit *lineMaxBoxZ;
     QLineEdit *lineMaxBoxY;
     QLineEdit *lineMaxBoxX;
+    QGroupBox *groupPointSettings;
+    QLabel *label_2;
+    QGroupBox *groupCylinderSettings;
+    QLabel *label;
+    QLineEdit *lineCylinderRadius;
+    QCheckBox *checkCylinderOutlineOnly;
+    QGroupBox *groupRingSettings;
+    QLineEdit *lineRingRadius;
+    QLabel *labelRingRadius;
+    QLabel *labelRingThickness;
+    QLineEdit *lineRingThickness;
     QGroupBox *groupSphereSettings;
     QLineEdit *lineSpereRadius;
     QLabel *labelSphereRadius;
@@ -319,7 +330,7 @@ public:
 
         horizontalLayoutWidget_3 = new QWidget(groupBox);
         horizontalLayoutWidget_3->setObjectName(QStringLiteral("horizontalLayoutWidget_3"));
-        horizontalLayoutWidget_3->setGeometry(QRect(10, 40, 431, 111));
+        horizontalLayoutWidget_3->setGeometry(QRect(10, 40, 462, 111));
         horizontalLayout_3 = new QHBoxLayout(horizontalLayoutWidget_3);
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -351,8 +362,60 @@ public:
         lineMaxBoxX = new QLineEdit(groupBoxSettings);
         lineMaxBoxX->setObjectName(QStringLiteral("lineMaxBoxX"));
         lineMaxBoxX->setGeometry(QRect(10, 80, 31, 20));
+        labelMinBoxDimension->raise();
+        labelMaxBoxDimension->raise();
+        lineMinBoxX->raise();
+        lineMinBoxY->raise();
+        lineMinBoxZ->raise();
+        lineMaxBoxZ->raise();
+        lineMaxBoxY->raise();
+        lineMaxBoxX->raise();
 
         horizontalLayout_3->addWidget(groupBoxSettings);
+
+        groupPointSettings = new QGroupBox(horizontalLayoutWidget_3);
+        groupPointSettings->setObjectName(QStringLiteral("groupPointSettings"));
+        label_2 = new QLabel(groupPointSettings);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(10, 40, 151, 16));
+        QFont font1;
+        font1.setBold(true);
+        font1.setItalic(true);
+        font1.setWeight(75);
+        label_2->setFont(font1);
+
+        horizontalLayout_3->addWidget(groupPointSettings);
+
+        groupCylinderSettings = new QGroupBox(horizontalLayoutWidget_3);
+        groupCylinderSettings->setObjectName(QStringLiteral("groupCylinderSettings"));
+        label = new QLabel(groupCylinderSettings);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(10, 20, 47, 13));
+        lineCylinderRadius = new QLineEdit(groupCylinderSettings);
+        lineCylinderRadius->setObjectName(QStringLiteral("lineCylinderRadius"));
+        lineCylinderRadius->setGeometry(QRect(10, 40, 61, 20));
+        checkCylinderOutlineOnly = new QCheckBox(groupCylinderSettings);
+        checkCylinderOutlineOnly->setObjectName(QStringLiteral("checkCylinderOutlineOnly"));
+        checkCylinderOutlineOnly->setGeometry(QRect(10, 70, 101, 17));
+
+        horizontalLayout_3->addWidget(groupCylinderSettings);
+
+        groupRingSettings = new QGroupBox(horizontalLayoutWidget_3);
+        groupRingSettings->setObjectName(QStringLiteral("groupRingSettings"));
+        lineRingRadius = new QLineEdit(groupRingSettings);
+        lineRingRadius->setObjectName(QStringLiteral("lineRingRadius"));
+        lineRingRadius->setGeometry(QRect(10, 40, 51, 20));
+        labelRingRadius = new QLabel(groupRingSettings);
+        labelRingRadius->setObjectName(QStringLiteral("labelRingRadius"));
+        labelRingRadius->setGeometry(QRect(10, 20, 47, 13));
+        labelRingThickness = new QLabel(groupRingSettings);
+        labelRingThickness->setObjectName(QStringLiteral("labelRingThickness"));
+        labelRingThickness->setGeometry(QRect(10, 60, 47, 13));
+        lineRingThickness = new QLineEdit(groupRingSettings);
+        lineRingThickness->setObjectName(QStringLiteral("lineRingThickness"));
+        lineRingThickness->setGeometry(QRect(10, 80, 51, 20));
+
+        horizontalLayout_3->addWidget(groupRingSettings);
 
         groupSphereSettings = new QGroupBox(horizontalLayoutWidget_3);
         groupSphereSettings->setObjectName(QStringLiteral("groupSphereSettings"));
@@ -805,6 +868,9 @@ public:
         comboShape->insertItems(0, QStringList()
          << QApplication::translate("MainWindow", "box", 0)
          << QApplication::translate("MainWindow", "sphere", 0)
+         << QApplication::translate("MainWindow", "ring", 0)
+         << QApplication::translate("MainWindow", "cylinder", 0)
+         << QApplication::translate("MainWindow", "point", 0)
         );
         groupBoxSettings->setTitle(QApplication::translate("MainWindow", "Box settings", 0));
         labelMinBoxDimension->setText(QApplication::translate("MainWindow", "Min dimensions", 0));
@@ -815,6 +881,17 @@ public:
         lineMaxBoxZ->setText(QApplication::translate("MainWindow", "7", 0));
         lineMaxBoxY->setText(QApplication::translate("MainWindow", "0", 0));
         lineMaxBoxX->setText(QApplication::translate("MainWindow", "7", 0));
+        groupPointSettings->setTitle(QApplication::translate("MainWindow", "Point settings", 0));
+        label_2->setText(QApplication::translate("MainWindow", "NO OPTIONS AVAILABLE", 0));
+        groupCylinderSettings->setTitle(QApplication::translate("MainWindow", "Cylinder settings", 0));
+        label->setText(QApplication::translate("MainWindow", "Radius", 0));
+        lineCylinderRadius->setText(QApplication::translate("MainWindow", "20", 0));
+        checkCylinderOutlineOnly->setText(QApplication::translate("MainWindow", "Outline only", 0));
+        groupRingSettings->setTitle(QApplication::translate("MainWindow", "Ring settings", 0));
+        lineRingRadius->setText(QApplication::translate("MainWindow", "20", 0));
+        labelRingRadius->setText(QApplication::translate("MainWindow", "Radius:", 0));
+        labelRingThickness->setText(QApplication::translate("MainWindow", "Thickness", 0));
+        lineRingThickness->setText(QApplication::translate("MainWindow", "20", 0));
         groupSphereSettings->setTitle(QApplication::translate("MainWindow", "Sphere settings", 0));
         lineSpereRadius->setText(QApplication::translate("MainWindow", "20", 0));
         labelSphereRadius->setText(QApplication::translate("MainWindow", "Radius", 0));
