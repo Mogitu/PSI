@@ -3,7 +3,7 @@
 
 enum ElementalType
 {
-	Fire, Ice, Wind, NONE
+	NONE, Fire, Ice, Wind, Earth
 };
 
 
