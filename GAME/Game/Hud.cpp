@@ -84,6 +84,7 @@ void Hud::moveWeaponSelectionHightlight(ElementalType eType)
 		break;
 	case Wind:
 		xSelectionHighlight = xWind;
+		break;
 	case Earth:
 		xSelectionHighlight = xEarth;
 		break;

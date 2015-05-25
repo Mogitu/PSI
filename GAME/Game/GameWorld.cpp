@@ -376,6 +376,11 @@ void GameWorld::buildIrrLevel(Level *level)
 			Enemy* enemy = EnemyFactory::createIceEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
 			//enemy->node->setName("EN");
 		}
+		else if (namePrefix == EARTHENEMY)
+		{
+			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
+			Enemy* enemy = EnemyFactory::createEarthEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+		}
 		else if (namePrefix ==FIREWEAPON)
 		{
 			//spawn fire weapon

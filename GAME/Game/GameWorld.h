@@ -40,6 +40,7 @@ private:
 	const std::string FIREENEMY			= "FE";
 	const std::string ICEENEMY			= "IE";
 	const std::string WINDENEMY			= "WE";
+	const std::string EARTHENEMY		= "EE";
 	const std::string PLAYER			= "PL";
 	const std::string FIREWEAPON		= "FW";
 	const std::string ICEWEAPON			= "IW";
