@@ -69,7 +69,7 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 				{
 					
 					cylinderRadius = xml->getAttributeValueAsFloat(L"cylinderRadius");
-					cylinderOutlineOnly = false;// etAttributeValueAsInt(L"cylinderOutlineOnly");					
+					cylinderOutlineOnly = xml->getAttributeValueAsInt(L"cylinderOutlineOnly");				
 				}
 				else if (nodeName.equals_ignore_case("ringSettings") && xml->getAttributeValueAsInt(L"value") == 1)
 				{
