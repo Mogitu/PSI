@@ -48,7 +48,6 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 		body->setLinearFactor(btVector3(1, 0, 1));
 		warmedUp = true;
 		
-		//TODO: Make different partile effects for the elements
 		switch (elementalType)
 		{
 		case Fire:
