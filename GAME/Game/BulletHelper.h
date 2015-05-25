@@ -16,6 +16,8 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+class IGameObject;
+
 enum Shape_Type
 {
 	BOX,
@@ -31,17 +33,17 @@ public:
 	~BulletHelper();
 
 	float gravityMultiplier;
-	btRigidBody *createBody(ISceneNode* n, Shape_Type type,btScalar mass);
+	btRigidBody *createBody(IGameObject* gameObject, Shape_Type type, btScalar mass);
 	void updatePhysics(btRigidBody *body);	
 	void clearObjects();	
 	btDiscreteDynamicsWorld *getWorld();
 	btVector3 extractForwardVector(const btRigidBody *body);
 	btVector3 extractRightVector(const btRigidBody *body);
-	btRigidBody *createCube(ISceneNode* node, btScalar mass);
-	btRigidBody *createSphere(ISceneNode* node, btScalar mass);
-	btRigidBody *createTriangleBody(ISceneNode *node);
-	btRigidBody *createConvexTriangleBody(ISceneNode *node);
-	btRigidBody *createCapsule(ISceneNode *node, btScalar mass);
+	btRigidBody *createCube(IGameObject* gameObject, btScalar mass);
+	btRigidBody *createSphere(IGameObject* gameObject, btScalar mass);
+	btRigidBody *createTriangleBody(IGameObject* gameObject);
+	btRigidBody *createConvexTriangleBody(IGameObject* gameObject);
+	btRigidBody *createCapsule(IGameObject* gameObject, btScalar mass);
 	btTriangleMesh *ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, const vector3df& scaling);
 
 private:

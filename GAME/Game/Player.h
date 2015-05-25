@@ -35,7 +35,7 @@ public:
 	void Fire();
 	virtual void kill();
 	virtual void revive();
-	virtual void takeDamage(int amount);
+	virtual void takeDamage(int damage, ElementalType eType = ElementalType::NONE) override;
 	const vector3df& getNodePosition() const;
 	const vector3df& getNodeAbsolutePosition() const;
 	scene::IAnimatedMeshSceneNode* getNode();

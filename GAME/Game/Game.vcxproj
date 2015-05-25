@@ -111,6 +111,7 @@
     <ClInclude Include="FireType.h" />
     <ClInclude Include="FireWeapon.h" />
     <ClInclude Include="ForceOverLifeTimeAffector.h" />
+    <ClInclude Include="GameObjectPlaceHolder.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Hud.h" />

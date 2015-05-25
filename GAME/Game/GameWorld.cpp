@@ -3,6 +3,7 @@
 #include "WeaponPickup.h"
 #include "WeaponFactory.h"
 #include "EnemyFactory.h"
+#include "GameObjectPlaceHolder.h"
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
 {
@@ -96,8 +97,11 @@ void GameWorld::update(u32 frameDeltaTime)
 			btCollisionObject* obA = (btCollisionObject*)contactManifold->getBody0();
 			btCollisionObject* obB = (btCollisionObject*)contactManifold->getBody1();
 
-			ISceneNode *nodeA = (ISceneNode*)contactManifold->getBody0()->getUserPointer();
-			ISceneNode *nodeB = (ISceneNode*)contactManifold->getBody1()->getUserPointer();
+			IGameObject* gameObjA = (IGameObject*)contactManifold->getBody0()->getUserPointer();
+			IGameObject* gameObjB = (IGameObject*)contactManifold->getBody1()->getUserPointer();
+
+			ISceneNode *nodeA = gameObjA->node;
+			ISceneNode *nodeB = gameObjB->node;
 
 			std::string nameA = nodeA->getName();
 			std::string nameB = nodeB->getName();
@@ -105,7 +109,21 @@ void GameWorld::update(u32 frameDeltaTime)
 			//check collisions between enemies and projectiles
 			if ((nameB == "Enemy"&&nameA == "PlayerProjectile") || (nameA == "Enemy"&&nameB == "PlayerProjectile"))
 			{
-				Player *p = (Player*)getPlayer();				
+				Enemy* en;
+				Projectile* proj;
+				Player *p = (Player*)getPlayer();
+
+				if (gameObjA->getType() == GameObjectType::ENEMY)
+				{
+					en  = (Enemy*)gameObjA;
+					proj = (Projectile*)gameObjB;
+				}
+				else
+				{
+					en = (Enemy*)gameObjB;
+					proj = (Projectile*)gameObjA;
+				}
+					
 				int numContacts = contactManifold->getNumContacts();
 				for (int j = 0; j<numContacts; j++)
 				{
@@ -119,8 +137,10 @@ void GameWorld::update(u32 frameDeltaTime)
 					}
 					ParticleManager::createFullParticleEffect("../Assets/bloodsplat.xml", nodeB->getPosition());
 					ParticleManager::createFullParticleEffect("../Assets/bloodsplat.xml", nodeA->getPosition());
-					nodeA->setName("dead");
-					nodeB->setName("dead");
+					
+					en->takeDamage(proj->getDamage(), proj->getElementalType());
+					proj->node->setName("dead");
+					
 					Common::soundEngine->play2D("../Assets/Sounds/splat.wav");
 					p->increaseScore(10);
 				}			
@@ -158,17 +178,22 @@ void GameWorld::update(u32 frameDeltaTime)
 			//check collisions between player and projectiles
 			if ((nameB == "EnemyProjectile"&&nameA == "Player") || (nameA == "EnemyProjectile"&&nameB == "Player"))
 			{
-				Player *p = (Player*)getPlayer();				
+				Player *p = (Player*)getPlayer();
+				Projectile* proj = nullptr;
 				
 				if (nameA == "EnemyProjectile")
 				{
 					nodeA->setName("dead");
+					proj = (Projectile*)gameObjA;
 				}
 				else if (nameB == "EnemyProjectile")
 				{
 					nodeB->setName("dead");
-				}				
-				p->takeDamage(10);								
+					proj = (Projectile*)gameObjB;
+				}
+				
+				if (proj)
+					p->takeDamage(proj->getDamage());								
 			}				
 
 			//check collisions between player and weapon pickups..
@@ -273,8 +298,9 @@ void GameWorld::buildIrrLevel(Level *level)
 		{
 			//We know the prefix, so now we can create a scene node 
 			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			IGameObject* gameObj = new GameObjectPlaceHolder(node);
 			//create the body from the node and a given mass
-			tmp = helper->createCube(node, 50);
+			tmp = helper->createCube(gameObj, 50);
 			//set some defaults
 			tmp->setRestitution(0.8);
 			tmp->setFriction(0.6);
@@ -282,14 +308,16 @@ void GameWorld::buildIrrLevel(Level *level)
 		else if (namePrefix == STATIC_CUBE)
 		{
 			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
-			tmp = helper->createCube(node, 0);
+			IGameObject* gameObj = new GameObjectPlaceHolder(node);
+			tmp = helper->createCube(gameObj, 0);
 			tmp->setRestitution(0.2);
 			tmp->setFriction(0.3);
 		}
 		else if (namePrefix == DYNAMIC_SPHERE)
 		{
 			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
-			tmp = helper->createSphere(node, 50);
+			IGameObject* gameObj = new GameObjectPlaceHolder(node);
+			tmp = helper->createSphere(gameObj, 50);
 			tmp->setRestitution(0.8);
 			tmp->setFriction(0.6);
 		}
@@ -297,7 +325,8 @@ void GameWorld::buildIrrLevel(Level *level)
 		else if (namePrefix == WORLD)
 		{
 			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
-			tmp = helper->createConvexTriangleBody(node);
+			IGameObject* gameObj = new GameObjectPlaceHolder(node);
+			tmp = helper->createConvexTriangleBody(gameObj);
 			tmp->setRestitution(0.2);
 			tmp->setFriction(0.3);
 		}

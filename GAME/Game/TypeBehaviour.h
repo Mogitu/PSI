@@ -17,7 +17,7 @@ class TypeBehaviour
 		ElementalType getType();
 		void addWeakness(ElementalType weakness, int value);
 		void addStrengths(ElementalType strengths, int value);
-		int multiplyer(ElementalType bullettype);
+		int multiplier(ElementalType bullettype);
 		void initializer();
 	protected:
 		ElementalType type_;
