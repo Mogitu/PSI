@@ -407,6 +407,23 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
         xml->writeElement(L"cylinderSettings",false,cylinderElements,cylinderValues);
         xml->writeLineBreak();
     }
+    else if(ui->comboShape->currentText().toStdString()=="ring")
+    {
+        array<stringw> ringElements;
+        array<stringw> ringValues;
+        //the value=1 is currently mandatory as we check in the game framework for this. might get rid of this later.
+        ringElements.push_back(L"value");
+        ringValues.push_back(L"1");
+
+        ringElements.push_back(L"ringRadius");
+        ringValues.push_back(ui->lineRingRadius->text().toStdString().c_str());
+
+        ringElements.push_back(L"ringThickness");
+        ringValues.push_back(ui->lineRingThickness->text().toStdString().c_str());
+
+        xml->writeElement(L"ringSettings",false,ringElements,ringValues);
+        xml->writeLineBreak();
+    }
 
     //affector settings
     array<stringw> affectorElements;

@@ -95,7 +95,6 @@ int main() {
 	Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
 	
 	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud_2.png");	
-	ParticleManager::createFullParticleEffect("../Assets/cylinder.xml",vector3df(0,0,0));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 

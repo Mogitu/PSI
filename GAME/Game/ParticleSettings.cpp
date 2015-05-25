@@ -69,16 +69,16 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 				{
 					
 					cylinderRadius = xml->getAttributeValueAsFloat(L"cylinderRadius");
-					cylinderOutlineOnly = false;// etAttributeValueAsInt(L"cylinderOutlineOnly");
-					std::cout << cylinderRadius << std::endl;
+					cylinderOutlineOnly = false;// etAttributeValueAsInt(L"cylinderOutlineOnly");					
 				}
 				else if (nodeName.equals_ignore_case("ringSettings") && xml->getAttributeValueAsInt(L"value") == 1)
 				{
-
+					ringRadius = xml->getAttributeValueAsFloat(L"ringRadius");
+					ringThickness= xml->getAttributeValueAsFloat(L"ringThickness");
 				}
 				else if (nodeName.equals_ignore_case("pointSettings") && xml->getAttributeValueAsInt(L"value") == 1)
 				{
-
+					//no settings needed here as of yet....
 				}
 				else if (nodeName.equals_ignore_case("AffectorSettings") && xml->getAttributeValueAsInt(L"value") == 1)
 				{

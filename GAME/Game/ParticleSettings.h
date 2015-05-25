@@ -74,6 +74,7 @@ public:
 	u32 cylinderRadius;
 	bool cylinderOutlineOnly;
 
+
 private :
 
 	stringw settingsFile; // location of the xml, usually the

@@ -39,6 +39,8 @@ namespace ParticleManager
 	void createBoxParticle(ParticleSystem* ps, aabbox3d<f32> size, vector3df dir, u32 minRate, u32 maxRate, SColor minColor, SColor maxColor, u32 minTime, u32 maxTime, u32 angle, dimension2df minSize, dimension2df maxSize);
 	void createSphereParticle(ParticleSystem* ps, vector3df center, f32 radius, vector3df dir, u32 minRate, u32 maxRate, SColor minColor, SColor maxColor, u32 minTime, u32 maxTime, u32 angle, dimension2df minSize, dimension2df maxSize);
 	void createCylinderParticle(ParticleSystem* ps, vector3df center, f32 cylinderRadius, vector3df normal, f32 length, bool outlineOnly, vector3df direction, f32 minRate, f32 maxRate, SColor minColor, SColor maxColor, u32 minTime, u32 maxTime, u32 angle, dimension2df minSize, dimension2df maxSize);
+	void createPointParticle(ParticleSystem* ps, vector3df direction, f32 minRate, f32 maxRate, SColor minColor, SColor maxColor, u32 minTime, u32 maxTime, u32 angle, dimension2df minSize, dimension2df maxSize);
+	void createRingParticle(ParticleSystem* ps, u32 ringRadius, u32 ringThickness, vector3df direction, f32 minRate, f32 maxRate, SColor minColor, SColor maxColor, u32 minTime, u32 maxTime, u32 angle, dimension2df minSize, dimension2df maxSize);
 };
 #endif
 
