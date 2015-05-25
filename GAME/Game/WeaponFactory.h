@@ -5,6 +5,7 @@
 #include "FireWeapon.h"
 #include "IceWeapon.h"
 #include "WindWeapon.h"
+#include "EarthWeapon.h"
 #include "WeaponBehaviour.h"
 #include "SingleShotBehaviour.h"
 #include "Elementals.h"
@@ -22,6 +23,8 @@ public:
 			return createIceWeapon(wpb, interval, damage, world);
 		case Wind:
 			return createWindWeapon(wpb, interval, damage, world);
+		case Earth:
+			return createEarthWeapon(wpb, interval, damage, world);
 		case NONE:
 			return nullptr;
 		default:
@@ -47,6 +50,14 @@ public:
 	static Weapon* createWindWeapon(WeaponBehaviour* wpb, u32 interval, int damage, GameWorld* world)
 	{
 		Weapon* w = new WindWeapon();
+		w->Initialize(wpb, world, interval, damage);
+
+		return w;
+	}
+
+	static Weapon* createEarthWeapon(WeaponBehaviour* wpb, u32 interval, int damage, GameWorld* world)
+	{
+		Weapon* w = new EarthWeapon();
 		w->Initialize(wpb, world, interval, damage);
 
 		return w;

@@ -66,7 +66,11 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 			c = ParticleManager::createFullParticleEffect("../Assets/projectileWind.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 			c->psNode->setParticlesAreGlobal(false);
 			break;
-
+		case Earth:
+			a = nullptr;
+			b = nullptr;
+			c = ParticleManager::createFullParticleEffect("../Assets/projectileEarth.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
+			break;
 		}
 		
 		

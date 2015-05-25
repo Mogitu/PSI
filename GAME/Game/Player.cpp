@@ -162,8 +162,10 @@ void Player::WeaponSelect()
 		swapTo = ElementalType::Fire;
 	else if (input->IsKeyDown(KEY_KEY_2)) 
 		swapTo = ElementalType::Ice;
-	else if (input->IsKeyDown(KEY_KEY_3)) 
+	else if (input->IsKeyDown(KEY_KEY_3))
 		swapTo = ElementalType::Wind;
+	else if (input->IsKeyDown(KEY_KEY_4))
+		swapTo = ElementalType::Earth;
 	
 	if (swapTo != ElementalType::NONE && currentTypeWeapon != swapTo)
 	{

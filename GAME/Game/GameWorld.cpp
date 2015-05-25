@@ -217,6 +217,19 @@ void GameWorld::update(u32 frameDeltaTime)
 					nodeA->setName("dead");
 				}
 			}
+
+			if ((nameB == "EarthWeapon"&&nameA == "Player") || (nameA == "EarthWeapon"&&nameB == "Player"))
+			{
+				Player *p = (Player*)getPlayer();
+				p->addWeaponToArsenal(WeaponFactory::createEarthWeapon(new SingleShotBehaviour(), 250, 10, this));
+				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
+				std::cout << "Earth weapon picked up" << std::endl;
+				
+				if (nameB == "EarthWeapon")
+					nodeB->setName("dead");
+				else
+					nodeA->setName("dead");
+			}
 		}//End collision detection
 	}
 	else if (gameState==PAUSED)
@@ -354,6 +367,13 @@ void GameWorld::buildIrrLevel(Level *level)
 			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
 			WeaponPickup *pickUp = new WeaponPickup("WindWeapon",helper, node);
 			this->addGameObject(pickUp);			
+		}
+		else if (namePrefix == EARTHWEAPON)
+		{
+			//spawn windweapon
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			WeaponPickup *pickUp = new WeaponPickup("EarthWeapon", helper, node);
+			this->addGameObject(pickUp);
 		}
 		//Done with the tempory body
 		tmp = 0;

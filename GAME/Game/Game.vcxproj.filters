@@ -132,6 +132,9 @@
     <ClCompile Include="WeaponArsenal.cpp">
       <Filter>Source Files\Characters\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="EarthWeapon.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level.h">
@@ -243,6 +246,9 @@
       <Filter>Header Files\Characters</Filter>
     </ClInclude>
     <ClInclude Include="WeaponFactory.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="EarthWeapon.h">
       <Filter>Header Files\Characters\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
