@@ -12,7 +12,7 @@ public:
 	int health;
 	void setWeapon(Weapon* w) { weapon = w; }
 	Weapon* getWeapon() const { return weapon; }
-	virtual void takeDamage(int amount) {};
+	virtual void takeDamage(int damage, ElementalType eType = ElementalType::NONE) = 0;
 	~Character()
 	{
 		delete weapon;

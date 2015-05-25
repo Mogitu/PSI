@@ -24,9 +24,9 @@ void TypeInterface::setType(ElementalType type)
 	
 }
 
-int TypeInterface::getMultiplyer(ElementalType bulletType)
+int TypeInterface::getMultiplier(ElementalType bulletType)
 {
-	return typebehave_->multiplyer(bulletType);
+	return typebehave_->multiplier(bulletType);
 }
 
 ElementalType TypeInterface::getType()

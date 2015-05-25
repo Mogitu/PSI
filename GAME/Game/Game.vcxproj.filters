@@ -245,5 +245,8 @@
     <ClInclude Include="WeaponFactory.h">
       <Filter>Header Files\Characters\Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectPlaceHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
