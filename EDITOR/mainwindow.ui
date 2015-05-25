@@ -263,6 +263,21 @@
              <string>sphere</string>
             </property>
            </item>
+           <item>
+            <property name="text">
+             <string>ring</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>cylinder</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>point</string>
+            </property>
+           </item>
           </widget>
          </item>
         </layout>
@@ -272,7 +287,7 @@
          <rect>
           <x>10</x>
           <y>40</y>
-          <width>431</width>
+          <width>462</width>
           <height>111</height>
          </rect>
         </property>
@@ -384,6 +399,151 @@
             </property>
             <property name="text">
              <string>7</string>
+            </property>
+           </widget>
+           <zorder>labelMinBoxDimension</zorder>
+           <zorder>labelMaxBoxDimension</zorder>
+           <zorder>lineMinBoxX</zorder>
+           <zorder>lineMinBoxY</zorder>
+           <zorder>lineMinBoxZ</zorder>
+           <zorder>lineMaxBoxZ</zorder>
+           <zorder>lineMaxBoxY</zorder>
+           <zorder>lineMaxBoxX</zorder>
+           <zorder>groupSphereSettings</zorder>
+           <zorder>groupSphereSettings</zorder>
+           <zorder>groupSphereSettings</zorder>
+           <zorder>groupSphereSettings</zorder>
+           <zorder>groupSphereSettings</zorder>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupPointSettings">
+           <property name="title">
+            <string>Point settings</string>
+           </property>
+           <widget class="QLabel" name="label_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>40</y>
+              <width>151</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <italic>true</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>NO OPTIONS AVAILABLE</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupCylinderSettings">
+           <property name="title">
+            <string>Cylinder settings</string>
+           </property>
+           <widget class="QLabel" name="label">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>47</width>
+              <height>13</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Radius</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineCylinderRadius">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>40</y>
+              <width>61</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>20</string>
+            </property>
+           </widget>
+           <widget class="QCheckBox" name="checkCylinderOutlineOnly">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>70</y>
+              <width>101</width>
+              <height>17</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Outline only</string>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupRingSettings">
+           <property name="title">
+            <string>Ring settings</string>
+           </property>
+           <widget class="QLineEdit" name="lineRingRadius">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>40</y>
+              <width>51</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>20</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="labelRingRadius">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>47</width>
+              <height>13</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Radius:</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="labelRingThickness">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>60</y>
+              <width>47</width>
+              <height>13</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Thickness</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="lineRingThickness">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>80</y>
+              <width>51</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>20</string>
             </property>
            </widget>
           </widget>

@@ -2,6 +2,7 @@
 #define WEAPON_H
 
 #include "WeaponBehaviour.h"
+#include "Elementals.h"
 
 class Weapon
 {
@@ -9,16 +10,16 @@ private:
 	WeaponBehaviour* weaponBehaviour;
 	u32 shootIntervalTimer;
 	u32 shootInterval;
+	int damagePerProjectile;
 public:
 	bool canShoot;
-	void Initialize(WeaponBehaviour* wpb, GameWorld* w, u32 interval)
+	void Initialize(WeaponBehaviour* wpb, GameWorld* w, u32 interval, int dpp) 
 	{ 
 		weaponBehaviour = wpb;
 		weaponBehaviour->setUpWeaponBehaviour(w); 
 		shootIntervalTimer = 0;
 		shootInterval = interval;
-		canShoot = true;
-
+		damagePerProjectile = dpp;
 	}
 	WeaponBehaviour* getWeaponBehaviour() const { return weaponBehaviour; }
 	void Update(irr::u32 frameDeltaTime)
@@ -35,6 +36,8 @@ public:
 		weaponBehaviour->Update(frameDeltaTime);
 	}
 	virtual void fire(btVector3 &offset, btVector3 &direction, stringw name) = 0;
+	virtual ElementalType getWeaponElementalType() = 0;
+	int getDamagePerProjectile() { return damagePerProjectile; }
 	~Weapon() { delete weaponBehaviour; }
 };
 

@@ -1,5 +1,6 @@
 #include "TypeBehaviour.h"
 
+
 	ElementalType TypeBehaviour::getType()
 	{
 		return type_;

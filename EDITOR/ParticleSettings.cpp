@@ -63,6 +63,14 @@ void ParticleSettings::init()
     rotation_speed = vector3df(0,0,0);
     rotation_pivotPoint = vector3df(0,0,0);
 
+    //ring settings
+    ringRadius=20;
+    ringThickness=20;
+
+    //cylinder settings
+    cylinderRadius =20;
+    cylinderOutLineOnly =false;
+
     imagepath= "";
     createParticle();
 }
@@ -175,6 +183,36 @@ void ParticleSettings::createEmitter()
                             minTime,maxTime,0,
                             dimension2df(minStartSize,minStartSize),
                             dimension2df(maxStartSize,maxStartSize));
+    }
+    else if(type.toStdString() == "cylinder")
+    {
+        particleEmitter = particleNode->createCylinderEmitter(vector3df(0,0,0),
+                                                              cylinderRadius,vector3df(0,1,0),10,cylinderOutLineOnly,
+                                                              direction,                                                                                                                     minRate,maxRate,
+                                                              minColor,maxColor,
+                                                              minTime,maxTime,0,
+                                                              dimension2df(minStartSize,minStartSize),
+                                                              dimension2df(maxStartSize,maxStartSize));
+
+    }
+    else if(type.toStdString() == "point")
+    {
+       particleEmitter = particleNode->createPointEmitter(direction,
+                                                          minRate,maxRate,
+                                                          minColor,maxColor,
+                                                          minTime,maxTime,0,
+                                                          dimension2df(minStartSize,minStartSize),
+                                                          dimension2df(maxStartSize,maxStartSize));
+    }else if(type.toStdString() == "ring")
+    {
+        particleEmitter = particleNode->createRingEmitter(vector3df(0,0,0),
+                                                          ringRadius,ringThickness,
+                                                          direction,
+                                                          minRate, maxRate,
+                                                          minColor,maxColor,
+                                                          minTime,maxTime,0,
+                                                          dimension2df(minStartSize,minStartSize),
+                                                          dimension2df(maxStartSize,maxStartSize));
     }
     particleNode->setEmitter(particleEmitter);
 }
@@ -362,16 +400,16 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
     }
 
     affectorElements.push_back(L"attraction_pointX");
-    affectorValues.push_back(ui->attrX->text().toStdString().c_str());
+    affectorValues.push_back(stringw(attraction_point.X));
 
     affectorElements.push_back(L"attraction_pointY");
-    affectorValues.push_back(ui->attrY->text().toStdString().c_str());
+    affectorValues.push_back(stringw(attraction_point.Y));
 
     affectorElements.push_back(L"attraction_pointZ");
-    affectorValues.push_back(ui->attrZ->text().toStdString().c_str());
+    affectorValues.push_back(stringw(attraction_point.Z));
 
     affectorElements.push_back(L"attraction_speed");
-    affectorValues.push_back(ui->attrSpeed->text().toStdString().c_str());
+    affectorValues.push_back(stringw(attraction_speed));
 
     affectorElements.push_back(L"attraction_attract");
     if(ui->attrAttr->isChecked() == true)
@@ -419,10 +457,10 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
     }
 
     affectorElements.push_back(L"scale_scaleToWidth");
-    affectorValues.push_back(ui->S_Width->text().toStdString().c_str());
+    affectorValues.push_back(stringw(scale_scaleTo.Width));
 
     affectorElements.push_back(L"scale_scaleToHeight");
-    affectorValues.push_back(ui->S_Height->text().toStdString().c_str());
+    affectorValues.push_back(stringw(scale_scaleTo.Height));
 
     affectorElements.push_back(L"fade");
     if(ui->checkFade->isChecked() == true)
@@ -446,7 +484,7 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
     affectorValues.push_back(L"0");
 
     affectorElements.push_back(L"fade_timeNeededToFadeOut");
-    affectorValues.push_back(ui->fadeTime->text().toStdString().c_str());
+    affectorValues.push_back(stringw(fade_timeNeededToFadeOut));
 
     affectorElements.push_back(L"gravity");
     if(ui->checkGravity->isChecked() == true)
@@ -458,16 +496,16 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
     }
 
     affectorElements.push_back(L"gravity_gravityX");
-    affectorValues.push_back(ui->gravX->text().toStdString().c_str());
+    affectorValues.push_back(stringw(gravity_gravity.X));
 
     affectorElements.push_back(L"gravity_gravityY");
-    affectorValues.push_back(ui->gravY->text().toStdString().c_str());
+    affectorValues.push_back(stringw(gravity_gravity.Y));
 
     affectorElements.push_back(L"gravity_gravityZ");
-    affectorValues.push_back(ui->gravZ->text().toStdString().c_str());
+    affectorValues.push_back(stringw(gravity_gravity.Z));
 
     affectorElements.push_back(L"gravity_timeForceLost");
-    affectorValues.push_back(ui->gravForcelost->text().toStdString().c_str());
+    affectorValues.push_back(stringw(gravity_timeForceLost));
 
     affectorElements.push_back(L"rotation");
     if(ui->checkRotation->isChecked() == true)
@@ -479,22 +517,22 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
     }
 
     affectorElements.push_back(L"rotation_speedX");
-    affectorValues.push_back(ui->rotSpeedX->text().toStdString().c_str());
+    affectorValues.push_back(stringw(rotation_speed.X));
 
     affectorElements.push_back(L"rotation_speedY");
-    affectorValues.push_back(ui->rotSpeedY->text().toStdString().c_str());
+    affectorValues.push_back(stringw(rotation_speed.Y));
 
     affectorElements.push_back(L"rotation_speedZ");
-    affectorValues.push_back(ui->rotSpeedZ->text().toStdString().c_str());
+    affectorValues.push_back(stringw(rotation_speed.Z));
 
     affectorElements.push_back(L"rotation_pivotPointX");
-    affectorValues.push_back(ui->rotPivotX->text().toStdString().c_str());
+    affectorValues.push_back(stringw(rotation_pivotPoint.X));
 
     affectorElements.push_back(L"rotation_pivotPointY");
-    affectorValues.push_back(ui->rotPivotY->text().toStdString().c_str());
+    affectorValues.push_back(stringw(rotation_pivotPoint.Y));
 
     affectorElements.push_back(L"rotation_pivotPointZ");
-    affectorValues.push_back(ui->rotPivotZ->text().toStdString().c_str());
+    affectorValues.push_back(stringw(rotation_pivotPoint.Z));
 
     xml->writeElement(L"AffectorSettings",false,affectorElements,affectorValues);
     xml->writeLineBreak();

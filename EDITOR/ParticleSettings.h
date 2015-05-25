@@ -67,6 +67,15 @@ class ParticleSettings{
         u32 sphereRadius;
         //box settings
         aabbox3d<f32> boxSize;
+        //point settings
+
+        //Ring settings
+        u32 ringRadius;
+        u32 ringThickness;
+
+        //cylinder settings
+        u32 cylinderRadius;
+        bool cylinderOutLineOnly;
 
         //functions
         void setColorBright(QColor& color);

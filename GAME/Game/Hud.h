@@ -2,19 +2,21 @@
 #define HUD_H
 
 #include "irrlicht.h"
-#include "Player.h"
 #include "GameWorld.h"
 
 using namespace irr;
 using namespace gui;
 
-class Hud{
+class Player; //defining player; Forward declaring because we can't include each others headers
 
-
+class Hud
+{
 public:
 	Hud(IrrlichtDevice *device, Player *p, GameWorld *gameWorld, stringc imagePath);
 	~Hud();
-	void draw();	
+	void draw();
+	void moveWeaponSelectionHightlight(ElementalType eType);
+	void setHasWeapon(ElementalType eType);
 private:
 	ITexture *image;
 	ITexture *gameWinImg;
@@ -25,8 +27,16 @@ private:
 	IGUIFont *font;
 	Player *player;
 	GameWorld *gameWorld;
-	void moveWeaponSelectionHightlight();
+	
+	bool hasFireWeapon;
+	bool hasIceWeapon;
+	bool hasWindWeapon;
 
+	const u32 xFire = 256;
+	const u32 xIce = 356;
+	const u32 xWind = 456;
+
+	u32 xSelectionHighlight = 256;
 };
 
 

@@ -2,9 +2,7 @@
 #define CHARACTER_H
 
 #include "IGameObject.h"
-#include "Weapon.h"
-#include "FireWeapon.h"
-#include "SingleShotBehaviour.h"
+#include "WeaponFactory.h"
 
 class Character : public IGameObject
 {

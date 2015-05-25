@@ -5,12 +5,14 @@
 #include "BulletHelper.h"
 #include "Character.h"
 #include "GameWorld.h"
+#include "WeaponArsenal.h"
+
+class Hud; //Defining HUD; Forward declaring because we can't include each others headers
 
 class Player : public Character
 {
 private:
 	InputReceiver* input;
-	//scene::IAnimatedMeshSceneNode* node;
 	BulletHelper* helper;
 	ISceneManager* smgr;
 	vector2di centerScreenPosition;
@@ -20,12 +22,16 @@ private:
 	int score;
 	float restriction = 1; //1 = no restriction; 0 = stop movement
 	float speed = 50;
+	WeaponArsenal* weaponArsenal;
+	ElementalType currentTypeWeapon;
+	Hud* hud;
 public:
-	Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world,InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass = 1,vector3df position = vector3df(0, 0, 0), vector3df rotation = vector3df(0, 0, 0), vector3df scale = vector3df(1, 1, 1));
+	Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass = 1,vector3df position = vector3df(0, 0, 0), vector3df rotation = vector3df(0, 0, 0), vector3df scale = vector3df(1, 1, 1));
 	void Initialize();
 	void Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position = vector3df(0, 0, 0), vector3df rotation = vector3df(0, 0, 0), vector3df scale = vector3df(1, 1, 1));
 	void Update(u32 frameDeltaTime);
 	void PlayerMovement(u32 frameDeltaTime);
+	void WeaponSelect();
 	void Fire();
 	virtual void kill();
 	virtual void revive();
@@ -36,7 +42,8 @@ public:
 	GameObjectType getType() const;
 	void increaseScore(int amount);
 	int getScore();
-	//scene::IAnimatedMeshSceneNode*& n = (IAnimatedMeshSceneNode*)node;
+	void addWeaponToArsenal(Weapon* w);
+	void attachHUD(Hud* h);
 };
 
 #endif // !__PLAYER_H__

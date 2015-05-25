@@ -1,33 +1,29 @@
-#include "irrlicht.h"
 #include "Enemy.h"
-
+#include "WeaponFactory.h"
 
 using namespace irr;
 using namespace scene;
 using namespace core;
 using namespace video;
 
-Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
+Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, ElementalType element, vector3df position, vector3df rotation, vector3df scale)
 {
-	this->Initialize(smgr, irrDriver, helper, world, meshpath, texturepath, bodyType, bodyMass, position, rotation, scale);
-	this->world = world;
+	this->Initialize(smgr, irrDriver, helper, world, meshpath, texturepath, bodyType, bodyMass, position, rotation, scale, element);
+	this->Initialize();
+	
 	player = world->getPlayer();
-	isAlive = true;
-	shootTimer = 0;
-	shootTimerMax = 1.5;
-	shootFollowRange = 200;
-	walkSpeed = 75;	
-	body->setActivationState(DISABLE_DEACTIVATION);
-	avoidStrength = 2;
-	avoidance = btVector3(0, 0, 0);
-	direction = btVector3(0, 0, 0);
 }
 
-Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass , vector3df position , vector3df rotation, vector3df scale)
+Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, ElementalType element, vector3df position, vector3df rotation, vector3df scale)
 {
-	this->Initialize(smgr, irrDriver, helper, world, mesh, bodyType, bodyMass, position, rotation, scale);
-	this->world = world;
+	this->Initialize(smgr, irrDriver, helper, world, mesh, bodyType, bodyMass, position, rotation, scale, element);
+	this->Initialize();
+
 	player = world->getPlayer();
+}
+
+void Enemy::Initialize()
+{
 	isAlive = true;
 	shootTimer = 0;
 	shootTimerMax = 5;
@@ -39,17 +35,13 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 	direction = btVector3(0, 0, 0);
 }
 
-
-void Enemy::Initialize(){
-	
-}
-
-void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
+void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale, ElementalType element)
 {
 	this->helper = helper;
 	this->smgr = smgr;
 	this->irrDriver = irrDriver;
-	
+	this->world = world;
+
 	//default node setup
 	node = mesh;
 	node->setName("Enemy");
@@ -68,16 +60,19 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	body->setAngularFactor(btVector3(0, 0, 0));
 	world->addGameObject(this);
 
-	//WeaponBehaviour
-	setWeapon(new FireWeapon());
-	getWeapon()->Initialize(new SingleShotBehaviour(), world, 1500);
+	//Weapon Choice based on Element
+	setWeapon(WeaponFactory::createWeaponBasedOnElement(element, new SingleShotBehaviour(), 1500, 10, world));
+
+	//Set the elemental type of the enemy
+	typeInterface.setType(element);
 }
 
-void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
+void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale, ElementalType element)
 {
 	this->helper = helper;
 	this->smgr = smgr;
 	this->irrDriver = irrDriver;
+	this->world = world;
 
 	IAnimatedMesh* mesh = smgr->getMesh(meshpath);
 
@@ -99,9 +94,11 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	body->setAngularFactor(btVector3(0, 0, 0));
 	world->addGameObject(this);
 
-	//WeaponBehaviour
-	setWeapon(new FireWeapon());
-	getWeapon()->Initialize(new SingleShotBehaviour(), world, 1500);
+	//Weapon Choice based on Element
+	setWeapon(WeaponFactory::createWeaponBasedOnElement(element, new SingleShotBehaviour(), 1500, 10, world));
+
+	//Set the elemental type of the enemy
+	typeInterface.setType(element);
 }
 
 void Enemy::Update(u32 frameDeltaTime)
@@ -114,8 +111,11 @@ void Enemy::Update(u32 frameDeltaTime)
 		//if player is in range the enemy will shoot and attempt to follow at the same time.
 		if (player && player->isAlive && dist <= shootFollowRange)
 		{
-			getWeapon()->Update(frameDeltaTime);
-			shoot();
+			if (getWeapon())
+			{
+				getWeapon()->Update(frameDeltaTime);
+				shoot();
+			}
 			followPlayer();
 		}
 
@@ -133,8 +133,7 @@ void Enemy::shoot()
 		playerToEnemy.normalize();
 		btVector3 dir(playerToEnemy.X, playerToEnemy.Y, playerToEnemy.Z);
 
-		if (getWeapon() != NULL)
-			getWeapon()->fire(pos + offSet, dir, "EnemyProjectile");
+		getWeapon()->fire(pos + offSet, dir, "EnemyProjectile");
 		
 }
 

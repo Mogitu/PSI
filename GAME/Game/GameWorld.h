@@ -17,8 +17,6 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-using namespace irr;
-
 enum GAMESTATE
 {
 	PLAYING,
@@ -39,6 +37,9 @@ private:
 	const std::string WORLD = "WB";
 	const std::string PARTICLE = "PS";
 	const std::string ENEMY = "EN";
+	const std::string FIREENEMY = "FE";
+	const std::string ICEENEMY = "IE";
+	const std::string WINDENEMY = "WE";
 	const std::string PLAYER = "PL";
 	const std::string FIREWEAPON = "FW";
 	const std::string ICEWEAPON = "IW";

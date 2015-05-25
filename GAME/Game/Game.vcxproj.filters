@@ -114,6 +114,24 @@
     <ClCompile Include="FireType.cpp">
       <Filter>Source Files\Characters\Types</Filter>
     </ClCompile>
+    <ClCompile Include="WeaponPickup.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="IceWeapon.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="IceType.cpp">
+      <Filter>Source Files\Characters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="WindWeapon.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="WindType.cpp">
+      <Filter>Source Files\Characters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponArsenal.cpp">
+      <Filter>Source Files\Characters\Weapons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Level.h">
@@ -202,6 +220,30 @@
     </ClInclude>
     <ClInclude Include="Elementals.h">
       <Filter>Header Files\Characters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponPickup.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="IceType.h">
+      <Filter>Header Files\Characters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="WindType.h">
+      <Filter>Header Files\Characters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="IceWeapon.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="WindWeapon.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponArsenal.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponFactory.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -94,7 +94,7 @@ int main() {
 	
 	Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
 	
-	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud.png");	
+	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud_2.png");	
 	//ParticleManager::createFullParticleEffect("../Assets/firesea.xml",vector3df(316,40,-200));
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
@@ -142,11 +142,11 @@ int main() {
 				break;
 			}						
 		}
-		else if (gWorld->gameState == PAUSED && input->IsKeyDown(KEY_KEY_Q))
+		else if ((gWorld->gameState == PAUSED || gWorld->gameState==GAMEOVER) && input->IsKeyDown(KEY_KEY_Q))
 		{
 			device->closeDevice();
 		}
-		else if (gWorld->gameState == PAUSED && input->IsKeyDown(KEY_KEY_R))
+		else if ((gWorld->gameState == PAUSED || gWorld->gameState==GAMEOVER)&& input->IsKeyDown(KEY_KEY_R))
 		{
 			char buffer[MAX_PATH];
 			GetModuleFileName(NULL, buffer, MAX_PATH);
@@ -157,6 +157,7 @@ int main() {
 			ShellExecute(NULL, "open", p.c_str(), NULL, NULL, SW_SHOWDEFAULT);
 			device->closeDevice();			
 		}
+		
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))
 			device->closeDevice();

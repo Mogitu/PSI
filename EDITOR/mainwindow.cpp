@@ -92,6 +92,13 @@ void MainWindow::connectInputElements(){
     connect(ui->S_Width,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
     connect(ui->S_Height,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
 
+    connect(ui->lineRingRadius,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->lineRingThickness,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+
+    connect(ui->lineCylinderRadius,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
+    connect(ui->checkCylinderOutlineOnly,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+
+
 }
 
 void MainWindow::InitIrrRenderWidget(QWidget *irrRenderTarget)
@@ -157,6 +164,14 @@ void MainWindow::applySettings()
     irrRenderWidget->particleSettings->scale_scaleTo.Width = ui->S_Width->text().toFloat();
     irrRenderWidget->particleSettings->scale_scaleTo.Height = ui->S_Height->text().toFloat();
 
+    //ring settings
+    irrRenderWidget->particleSettings->ringRadius=ui->lineRingRadius->text().toFloat();
+    irrRenderWidget->particleSettings->ringThickness=ui->lineRingThickness->text().toFloat();
+
+    //cylinder settings
+    irrRenderWidget->particleSettings->cylinderRadius =ui->lineCylinderRadius->text().toFloat();
+    irrRenderWidget->particleSettings->cylinderOutLineOnly = ui->checkCylinderOutlineOnly->isChecked();
+
 
     //create the emitter
     irrRenderWidget->particleSettings->createEmitter();
@@ -208,11 +223,41 @@ void MainWindow::openShapeBox(const QString text)
     {
         ui->groupBoxSettings->setVisible(true);
         ui->groupSphereSettings->setVisible(false);
+        ui->groupPointSettings->setVisible(false);
+        ui->groupRingSettings->setVisible(false);
+        ui->groupCylinderSettings->setVisible(false);
     }
     else if(text.toStdString() == "sphere")
     {
         ui->groupSphereSettings->setVisible(true);
         ui->groupBoxSettings->setVisible(false);
+        ui->groupPointSettings->setVisible(false);
+        ui->groupRingSettings->setVisible(false);
+        ui->groupCylinderSettings->setVisible(false);
+    }
+    else if(text.toStdString() == "cylinder")
+    {
+        ui->groupCylinderSettings->setVisible(true);
+        ui->groupSphereSettings->setVisible(false);
+        ui->groupBoxSettings->setVisible(false);
+        ui->groupPointSettings->setVisible(false);
+        ui->groupRingSettings->setVisible(false);
+    }
+    else if(text.toStdString() == "ring")
+    {
+        ui->groupCylinderSettings->setVisible(false);
+        ui->groupSphereSettings->setVisible(false);
+        ui->groupBoxSettings->setVisible(false);
+        ui->groupPointSettings->setVisible(false);
+        ui->groupRingSettings->setVisible(true);
+    }
+    else if(text.toStdString() == "point")
+    {
+        ui->groupCylinderSettings->setVisible(false);
+        ui->groupSphereSettings->setVisible(false);
+        ui->groupBoxSettings->setVisible(false);
+        ui->groupPointSettings->setVisible(true);
+        ui->groupRingSettings->setVisible(false);
     }
     applySettings();
 }

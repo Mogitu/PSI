@@ -1,6 +1,8 @@
 #include "GameWorld.h"
-#include "Enemy.h"
 #include "Player.h"
+#include "WeaponPickup.h"
+#include "WeaponFactory.h"
+#include "EnemyFactory.h"
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
 {
@@ -45,6 +47,7 @@ void GameWorld::update(u32 frameDeltaTime)
 			//if object not alive or name is dead we kill/clean it.
 			if ((!gameObject->isAlive || nodeName == "dead"))
 			{
+				gameObject->node->setName("killed");
 				gameObject->kill();				
 				//gameObjects.erase(Iterator);
 				//delete gameObject;				
@@ -167,6 +170,53 @@ void GameWorld::update(u32 frameDeltaTime)
 				}				
 				p->takeDamage(10);								
 			}				
+
+			//check collisions between player and weapon pickups..
+			if ((nameB == "IceWeapon"&&nameA == "Player") || (nameA == "IceWeapon"&&nameB == "Player"))
+			{
+				Player *p = (Player*)getPlayer();
+				p->addWeaponToArsenal(WeaponFactory::createIceWeapon(new SingleShotBehaviour(), 250, 10, this));
+				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
+				std::cout << "Ice weapon picked up" << std::endl;				
+				if (nameB=="IceWeapon")
+				{
+					nodeB->setName("dead");
+				}
+				else
+				{
+					nodeA->setName("dead");
+				}
+			}
+
+			if ((nameB == "FireWeapon"&&nameA == "Player") || (nameA == "FireWeapon"&&nameB == "Player"))
+			{
+				Player *p = (Player*)getPlayer();
+				p->addWeaponToArsenal(WeaponFactory::createFireWeapon(new SingleShotBehaviour(), 250, 10, this));
+				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
+				std::cout << "Fire weapon picked up" << std::endl;
+				if (nameB == "FireWeapon")
+				{
+					nodeB->setName("dead");
+				}
+				else{
+					nodeA->setName("dead");
+				}
+			}
+
+			if ((nameB == "WindWeapon"&&nameA == "Player") || (nameA == "WindWeapon"&&nameB == "Player"))
+			{
+				Player *p = (Player*)getPlayer();
+				p->addWeaponToArsenal(WeaponFactory::createWindWeapon(new SingleShotBehaviour(), 250, 10, this));
+				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
+				std::cout << "Wind weapon picked up" << std::endl;
+				if (nameB == "WindWeapon")
+				{
+					nodeB->setName("dead");
+				}
+				else{
+					nodeA->setName("dead");
+				}
+			}
 		}//End collision detection
 	}
 	else if (gameState==PAUSED)
@@ -263,20 +313,47 @@ void GameWorld::buildIrrLevel(Level *level)
 		else if (namePrefix == ENEMY)
 		{		
 			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
-			Enemy* enemy = new Enemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+			Enemy* enemy = EnemyFactory::createEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
 			//enemy->node->setName("EN");
 		}	
+		else if (namePrefix == FIREENEMY)
+		{
+			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
+			Enemy* enemy = EnemyFactory::createFireEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+			//enemy->node->setName("EN");
+		}
+		else if (namePrefix == WINDENEMY)
+		{
+			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
+			Enemy* enemy = EnemyFactory::createWindEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+			//enemy->node->setName("EN");
+		}
+		else if (namePrefix == ICEENEMY)
+		{
+			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
+			Enemy* enemy = EnemyFactory::createIceEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
+			//enemy->node->setName("EN");
+		}
 		else if (namePrefix ==FIREWEAPON)
 		{
 			//spawn fire weapon
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			WeaponPickup *pickUp = new WeaponPickup("FireWeapon", helper,node);			
+			this->addGameObject(pickUp);
 		}
 		else if (namePrefix == ICEWEAPON)
 		{
 			//spawn ice weapon
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			WeaponPickup *pickUp = new WeaponPickup("IceWeapon",helper, node);
+			this->addGameObject(pickUp);			
 		}
 		else if (namePrefix == WINDWEAPON)
 		{
 			//spawn windweapon
+			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			WeaponPickup *pickUp = new WeaponPickup("WindWeapon",helper, node);
+			this->addGameObject(pickUp);			
 		}
 		//Done with the tempory body
 		tmp = 0;
@@ -330,5 +407,5 @@ void GameWorld::restart(Level *level)
 	}
 
 	*/
-	gameState == PLAYING;
+	//gameState == PLAYING;
 }
