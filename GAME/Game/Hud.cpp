@@ -43,7 +43,12 @@ void Hud::draw()
 	if (!hasWindWeapon)
 		driver->draw2DImage(image, position2d<s32>(456, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
 	else
-		driver->draw2DImage(image, position2d<s32>(456, 0), rect<s32>(257, 0, 320, 64), 0, white, true); //The three element items are not well aligned in the image file (did a +1 on the start pos of Wind)
+		driver->draw2DImage(image, position2d<s32>(456, 0), rect<s32>(256, 0, 320, 64), 0, white, true);
+
+	if (!hasEarthWeapon)
+		driver->draw2DImage(image, position2d<s32>(556, 0), rect<s32>(64, 0, 128, 64), 0, white, true);
+	else
+		driver->draw2DImage(image, position2d<s32>(556, 0), rect<s32>(320, 0, 384, 64), 0, white, true);
 
 	//draw selection highlight around current weapon
 	driver->draw2DImage(image, position2d<s32>(xSelectionHighlight, 0), rect<s32>(0, 128, 64, 196), 0, white, true);
@@ -79,6 +84,8 @@ void Hud::moveWeaponSelectionHightlight(ElementalType eType)
 		break;
 	case Wind:
 		xSelectionHighlight = xWind;
+	case Earth:
+		xSelectionHighlight = xEarth;
 		break;
 	}	
 }
@@ -95,6 +102,9 @@ void Hud::setHasWeapon(ElementalType eType)
 		break;
 	case Wind:
 		hasWindWeapon = true;
+		break;
+	case Earth:
+		hasEarthWeapon = true;
 		break;
 	}
 }
