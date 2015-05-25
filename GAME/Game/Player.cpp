@@ -51,7 +51,7 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 		node->setMaterialTexture(0, driver->getTexture(textureName));
 	}
 	
-	body = helper->createBody(node, bodyType, bodyMass);
+	body = helper->createBody(this, bodyType, bodyMass);
 	body->setActivationState(DISABLE_DEACTIVATION);
 	body->setRestitution(.1);
 	body->setFriction(.3);
@@ -82,9 +82,9 @@ void Player::Update(u32 frameDeltaTime)
 	}
 }
 
-void Player::takeDamage(int amount)
+void Player::takeDamage(int damage, ElementalType eType)
 {
-	health -= amount;
+	health -= damage;
 	ParticleManager::createFullParticleEffect("../Assets/bloodsplat.xml", node->getPosition());
 	Common::soundEngine->play2D("../Assets/Sounds/splat.wav");
 	if (health <= 0)
@@ -162,8 +162,10 @@ void Player::WeaponSelect()
 		swapTo = ElementalType::Fire;
 	else if (input->IsKeyDown(KEY_KEY_2)) 
 		swapTo = ElementalType::Ice;
-	else if (input->IsKeyDown(KEY_KEY_3)) 
+	else if (input->IsKeyDown(KEY_KEY_3))
 		swapTo = ElementalType::Wind;
+	else if (input->IsKeyDown(KEY_KEY_4))
+		swapTo = ElementalType::Earth;
 	
 	if (swapTo != ElementalType::NONE && currentTypeWeapon != swapTo)
 	{
@@ -215,9 +217,9 @@ bool Player::isGrounded()
 
 void Player::kill()
 {
-	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	//ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 	isAlive = false;
-	Node->remove();
+	node->remove();
 	// Remove the object from the world
 	helper->getWorld()->removeRigidBody(body);
 	// Free memory

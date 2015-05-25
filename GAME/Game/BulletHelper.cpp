@@ -1,5 +1,6 @@
 #include "BulletHelper.h"
 #include "ParticleManager.h"
+#include "IGameObject.h"
 
 BulletHelper::BulletHelper()
 {
@@ -30,7 +31,7 @@ void BulletHelper::clearObjects() {
 	for (list<btRigidBody *>::Iterator Iterator = objects.begin(); Iterator != objects.end(); ++Iterator) {
 		btRigidBody *Object = *Iterator;
 		// Delete irrlicht node
-		ISceneNode *Node = static_cast<ISceneNode *>(Object->getUserPointer());
+		ISceneNode *Node = static_cast<IGameObject *>(Object->getUserPointer())->node;
 		Node->remove();
 		// Remove the object from the world
 		world->removeRigidBody(Object);
@@ -53,7 +54,7 @@ btDiscreteDynamicsWorld *BulletHelper::getWorld()
 void BulletHelper::updatePhysics(btRigidBody *body)
 {
 	//Retreive the node by casting the user pointer.
-	ISceneNode *node = static_cast<ISceneNode *>(body->getUserPointer());
+	ISceneNode *node = static_cast<IGameObject *>(body->getUserPointer())->node;
 	//Set position
 	btVector3 point = body->getCenterOfMassPosition();
 	//Copy the position of the rigidbody into that of the scenenode
@@ -72,23 +73,23 @@ void BulletHelper::updatePhysics(btRigidBody *body)
 }
 
 
-btRigidBody *BulletHelper::createBody(ISceneNode* node,Shape_Type type, btScalar mass) {	
+btRigidBody *BulletHelper::createBody(IGameObject* gameObject,Shape_Type type, btScalar mass) {	
 	btRigidBody *body = 0;
 	
 	switch (type)
 	{
 		case CAPSULE:
-			body = createCapsule(node, mass);
+			body = createCapsule(gameObject, mass);
 			break;
 		case SPHERE:
-			body = createSphere(node, mass);
+			body = createSphere(gameObject, mass);
 			break;
 		case TRIANGLE:
-			body = createTriangleBody(node);
+			body = createTriangleBody(gameObject);
 			break;
 		case BOX:
 		default:
-			body = createCube(node, mass);
+			body = createCube(gameObject, mass);
 			break;
 	}
 	
@@ -98,23 +99,23 @@ btRigidBody *BulletHelper::createBody(ISceneNode* node,Shape_Type type, btScalar
 }
 
 // Create a box rigid body to attach to the node. Use 0 mass for a static version
-btRigidBody *BulletHelper::createCube(ISceneNode* node, btScalar mass)
+btRigidBody *BulletHelper::createCube(IGameObject* gameObject, btScalar mass)
 {		
 	// Create a transform
 	btTransform transform;
 	transform.setIdentity();
 	//the origin must be aligned with the position of the node
-	transform.setOrigin(btVector3(node->getPosition().X, node->getPosition().Y, node->getPosition().Z));
+	transform.setOrigin(btVector3(gameObject->node->getPosition().X, gameObject->node->getPosition().Y, gameObject->node->getPosition().Z));
 	//The rotation of the body needs to be identical to that of the node
 	btQuaternion q;
-	q.setEulerZYX(node->getRotation().Z*DEGTORAD, node->getRotation().Y*DEGTORAD, node->getRotation().X*DEGTORAD);
+	q.setEulerZYX(gameObject->node->getRotation().Z*DEGTORAD, gameObject->node->getRotation().Y*DEGTORAD, gameObject->node->getRotation().X*DEGTORAD);
 	transform.setRotation(q);
 
 	//apply the transform to a new motionstate
 	btDefaultMotionState *motionState = new btDefaultMotionState(transform);
 	
 	// Create the shape	by the size of the node
-	btVector3 halfExtents(node->getTransformedBoundingBox().getExtent().X*0.5, node->getTransformedBoundingBox().getExtent().Y*0.5, node->getTransformedBoundingBox().getExtent().Z*0.5);	
+	btVector3 halfExtents(gameObject->node->getTransformedBoundingBox().getExtent().X*0.5, gameObject->node->getTransformedBoundingBox().getExtent().Y*0.5, gameObject->node->getTransformedBoundingBox().getExtent().Z*0.5);	
 	btCollisionShape *shape = new btBoxShape(halfExtents);
 	
 	// Add mass
@@ -124,7 +125,7 @@ btRigidBody *BulletHelper::createCube(ISceneNode* node, btScalar mass)
 	btRigidBody *rigidBody = new btRigidBody(mass, motionState, shape, localInertia);		
 	
 	// Store a pointer to the irrlicht node so we can update it later
-	rigidBody->setUserPointer((void *)(node));
+	rigidBody->setUserPointer((void *)(gameObject));
 	// Add it to the world	
 	world->addRigidBody(rigidBody);
 	objects.push_back(rigidBody);
@@ -132,21 +133,21 @@ btRigidBody *BulletHelper::createCube(ISceneNode* node, btScalar mass)
 	return rigidBody;
 }
 
-btRigidBody *BulletHelper::createCapsule(ISceneNode *node, btScalar mass)
+btRigidBody *BulletHelper::createCapsule(IGameObject *gameObject, btScalar mass)
 {	
 	// Set the initial position of the object	
 	btTransform transform;
 	transform.setIdentity();
-	transform.setOrigin(btVector3(node->getPosition().X, node->getPosition().Y, node->getPosition().Z));
+	transform.setOrigin(btVector3(gameObject->node->getPosition().X, gameObject->node->getPosition().Y, gameObject->node->getPosition().Z));
 	btQuaternion q;
-	q.setEulerZYX(node->getRotation().Z*DEGTORAD, node->getRotation().Y*DEGTORAD, node->getRotation().X*DEGTORAD);
+	q.setEulerZYX(gameObject->node->getRotation().Z*DEGTORAD, gameObject->node->getRotation().Y*DEGTORAD, gameObject->node->getRotation().X*DEGTORAD);
 	transform.setRotation(q);
 
 	btDefaultMotionState *motionState = new btDefaultMotionState(transform);
 
 	// Create the shape	
-	btScalar radius = node->getTransformedBoundingBox().getExtent().X*0.5;
-	btScalar height = node->getTransformedBoundingBox().getExtent().Y*0.5;
+	btScalar radius = gameObject->node->getTransformedBoundingBox().getExtent().X*0.5;
+	btScalar height = gameObject->node->getTransformedBoundingBox().getExtent().Y*0.5;
 	btCapsuleShape *shape = new btCapsuleShape(radius,height);
 
 	// Add mass
@@ -156,7 +157,7 @@ btRigidBody *BulletHelper::createCapsule(ISceneNode *node, btScalar mass)
 	btRigidBody *rigidBody = new btRigidBody(mass, motionState, shape, localInertia);
 
 	// Store a pointer to the irrlicht node so we can update it later
-	rigidBody->setUserPointer((void *)(node));
+	rigidBody->setUserPointer((void *)(gameObject));
 	// Add it to the world
 
 	world->addRigidBody(rigidBody);
@@ -166,25 +167,25 @@ btRigidBody *BulletHelper::createCapsule(ISceneNode *node, btScalar mass)
 }
 
 
-btRigidBody *BulletHelper::createTriangleBody(ISceneNode *node)
+btRigidBody *BulletHelper::createTriangleBody(IGameObject *gameObject)
 {	
-	btTriangleMesh* triMesh = ConvertIrrMeshToBulletTriangleMesh(getMesh(node), node->getScale());
+	btTriangleMesh* triMesh = ConvertIrrMeshToBulletTriangleMesh(getMesh(gameObject->node), gameObject->node->getScale());
 
 	btBvhTriangleMeshShape* shape = new btBvhTriangleMeshShape(triMesh,true);	
 
 	btQuaternion quat;
-	quat.setEulerZYX(node->getRotation().Z*DEGTORAD, node->getRotation().Y*DEGTORAD, node->getRotation().X*DEGTORAD);
+	quat.setEulerZYX(gameObject->node->getRotation().Z*DEGTORAD, gameObject->node->getRotation().Y*DEGTORAD, gameObject->node->getRotation().X*DEGTORAD);
 
 	btTransform transform;
 	transform.setIdentity();
-	transform.setOrigin(btVector3(node->getAbsolutePosition().X, node->getAbsolutePosition().Y, node->getAbsolutePosition().Z));
+	transform.setOrigin(btVector3(gameObject->node->getAbsolutePosition().X, gameObject->node->getAbsolutePosition().Y, gameObject->node->getAbsolutePosition().Z));
 	transform.setRotation(quat);
 
 	btDefaultMotionState *motionState = new btDefaultMotionState(transform);	
 
 	btRigidBody* rigidBody = new btRigidBody(0, motionState, shape);
 	
-	rigidBody->setUserPointer((void *)(node));
+	rigidBody->setUserPointer((void *)(gameObject));
 	rigidBody->setActivationState(DISABLE_DEACTIVATION);
 
 	world->addRigidBody(rigidBody);
@@ -193,21 +194,21 @@ btRigidBody *BulletHelper::createTriangleBody(ISceneNode *node)
 	return rigidBody;
 }
 
-btRigidBody *BulletHelper::createConvexTriangleBody(ISceneNode *node)
+btRigidBody *BulletHelper::createConvexTriangleBody(IGameObject *gameObject)
 {	
 	// Set the initial position of the object
 	btTransform transform;
 	transform.setIdentity();
-	transform.setOrigin(btVector3(node->getAbsolutePosition().X, node->getAbsolutePosition().Y, node->getAbsolutePosition().Z));
+	transform.setOrigin(btVector3(gameObject->node->getAbsolutePosition().X, gameObject->node->getAbsolutePosition().Y, gameObject->node->getAbsolutePosition().Z));
 	btQuaternion btQuat;
-	btQuat.setEulerZYX(node->getRotation().Z*DEGTORAD, node->getRotation().Y*DEGTORAD, node->getRotation().X*DEGTORAD);
+	btQuat.setEulerZYX(gameObject->node->getRotation().Z*DEGTORAD, gameObject->node->getRotation().Y*DEGTORAD, gameObject->node->getRotation().X*DEGTORAD);
 	transform.setRotation(btQuat);
 
 	btDefaultMotionState *motionState = new btDefaultMotionState(transform);
 	// Create the shape
-	btVector3 HalfExtents(node->getTransformedBoundingBox().getExtent().X*0.5, node->getTransformedBoundingBox().getExtent().Y*0.5, node->getTransformedBoundingBox().getExtent().Z*0.5);
+	btVector3 HalfExtents(gameObject->node->getTransformedBoundingBox().getExtent().X*0.5, gameObject->node->getTransformedBoundingBox().getExtent().Y*0.5, gameObject->node->getTransformedBoundingBox().getExtent().Z*0.5);
 
-	btTriangleMesh* trimesh = ConvertIrrMeshToBulletTriangleMesh(getMesh(node), node->getScale());
+	btTriangleMesh* trimesh = ConvertIrrMeshToBulletTriangleMesh(getMesh(gameObject->node), gameObject->node->getScale());
 	btConvexShape* shape = new btConvexTriangleMeshShape(trimesh);
 	// Add mass
 	btVector3 localInertia;
@@ -216,7 +217,7 @@ btRigidBody *BulletHelper::createConvexTriangleBody(ISceneNode *node)
 	btRigidBody *RigidBody = new btRigidBody(0, motionState, shape, localInertia);
 
 	// Store a pointer to the irrlicht node so we can update it later
-	RigidBody->setUserPointer((void *)(node));
+	RigidBody->setUserPointer((void *)(gameObject));
 	// Add it to the world
 	world->addRigidBody(RigidBody);
 	objects.push_back(RigidBody);	
@@ -249,16 +250,16 @@ btTriangleMesh *BulletHelper::ConvertIrrMeshToBulletTriangleMesh(IMesh* mesh, co
 };
 
 
-btRigidBody *BulletHelper::createSphere(ISceneNode* node, btScalar mass)
+btRigidBody *BulletHelper::createSphere(IGameObject* gameObject, btScalar mass)
 {
 	// Set the initial position of the object
 	btTransform transform;
 	transform.setIdentity();
-	transform.setOrigin(btVector3(node->getAbsolutePosition().X, node->getAbsolutePosition().Y, node->getAbsolutePosition().Z));
+	transform.setOrigin(btVector3(gameObject->node->getAbsolutePosition().X, gameObject->node->getAbsolutePosition().Y, gameObject->node->getAbsolutePosition().Z));
 
 	btDefaultMotionState *motionState = new btDefaultMotionState(transform);
 	// Create the shape	
-	btVector3 halfExtents(node->getTransformedBoundingBox().getExtent().X*0.5, node->getTransformedBoundingBox().getExtent().Y*0.5, node->getTransformedBoundingBox().getExtent().Z*0.5);
+	btVector3 halfExtents(gameObject->node->getTransformedBoundingBox().getExtent().X*0.5, gameObject->node->getTransformedBoundingBox().getExtent().Y*0.5, gameObject->node->getTransformedBoundingBox().getExtent().Z*0.5);
 	btCollisionShape *shape = new btSphereShape(halfExtents.getX());
 	// Add mass
 	btVector3 localInertia;
@@ -267,7 +268,7 @@ btRigidBody *BulletHelper::createSphere(ISceneNode* node, btScalar mass)
 	btRigidBody *rigidBody = new btRigidBody(mass, motionState, shape, localInertia);	
 
 	// Store a pointer to the irrlicht node so we can update it later
-	rigidBody->setUserPointer((void *)(node));
+	rigidBody->setUserPointer((void *)(gameObject));
 	// Add it to the world
 	world->addRigidBody(rigidBody);
 	objects.push_back(rigidBody);

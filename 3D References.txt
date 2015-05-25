@@ -1,0 +1,9 @@
+http://letsmakegames.org/resources/art-assets-for-game-developers/
+http://irrlicht.sourcearchive.com/documentation/1.7plus-pdfsg1/classirr_1_1scene_1_1ISceneManager_63894c3f3d46cfc385116f1705935e03.html
+http://www.models-resource.com/
+http://www.md2.sitters-electronics.nl/models.html
+
+
+/* ---Exporters ---*/
+https://github.com/neumond/blender-md3   /*MD3 exporter plugin for blender to export md3 from Blend file, you need to fetch the texture where the uv-mapping is handled. Have only a single model in your blend file, otherwise the export may fail! tested this and works*/
+http://irrlicht3d.org/wiki/index.php?n=Main.Exporters

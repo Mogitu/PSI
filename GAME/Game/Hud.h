@@ -31,10 +31,12 @@ private:
 	bool hasFireWeapon;
 	bool hasIceWeapon;
 	bool hasWindWeapon;
+	bool hasEarthWeapon;
 
 	const u32 xFire = 256;
 	const u32 xIce = 356;
 	const u32 xWind = 456;
+	const u32 xEarth = 556;
 
 	u32 xSelectionHighlight = 256;
 };

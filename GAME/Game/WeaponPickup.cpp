@@ -5,7 +5,7 @@ WeaponPickup::WeaponPickup(irr::core::stringw name,BulletHelper *h, irr::scene::
 {
 	node = m;
 	node->setName(name);
-	body = h->createBody(node,Shape_Type::BOX,0);
+	body = h->createBody(this,Shape_Type::BOX,0);
 	isAlive = true;
 	stringw path = "../Assets/";
 	effect = ParticleManager::createFullParticleEffect(path.append(name).append(".xml"),node->getAbsolutePosition());
@@ -25,9 +25,9 @@ void WeaponPickup::kill()
 {
 	if (isAlive)
 	{
-		ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+		//ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 		isAlive = false;
-		Node->setVisible(false);
+		node->setVisible(false);
 		body->setActivationState(0);
 		body->setCollisionFlags(4);
 		node->setName("dead");

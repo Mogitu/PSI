@@ -383,6 +383,48 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
         xml->writeLineBreak();
     }
 
+    //cylinder settings
+    if(ui->comboShape->currentText().toStdString()=="cylinder")
+    {
+        array<stringw> cylinderElements;
+        array<stringw> cylinderValues;
+        //the value=1 is currently mandatory as we check in the game framework for this. might get rid of this later.
+        cylinderElements.push_back(L"value");
+        cylinderValues.push_back(L"1");
+
+        cylinderElements.push_back(L"cylinderRadius");
+        cylinderValues.push_back(ui->lineCylinderRadius->text().toStdString().c_str());
+
+        cylinderElements.push_back(L"cylinderOutlineOnly");
+        if(ui->checkCylinderOutlineOnly->isChecked())
+        {
+            cylinderValues.push_back(L"1");
+        }else{
+            cylinderValues.push_back(L"0");
+        }
+
+
+        xml->writeElement(L"cylinderSettings",false,cylinderElements,cylinderValues);
+        xml->writeLineBreak();
+    }
+    else if(ui->comboShape->currentText().toStdString()=="ring")
+    {
+        array<stringw> ringElements;
+        array<stringw> ringValues;
+        //the value=1 is currently mandatory as we check in the game framework for this. might get rid of this later.
+        ringElements.push_back(L"value");
+        ringValues.push_back(L"1");
+
+        ringElements.push_back(L"ringRadius");
+        ringValues.push_back(ui->lineRingRadius->text().toStdString().c_str());
+
+        ringElements.push_back(L"ringThickness");
+        ringValues.push_back(ui->lineRingThickness->text().toStdString().c_str());
+
+        xml->writeElement(L"ringSettings",false,ringElements,ringValues);
+        xml->writeLineBreak();
+    }
+
     //affector settings
     array<stringw> affectorElements;
     array<stringw> affectorValues;

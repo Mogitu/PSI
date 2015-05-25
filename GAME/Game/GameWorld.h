@@ -30,20 +30,22 @@ class GameWorld
 	
 private:
 	//constants for objects in a level
-	const std::string DYNAMIC_SPHERE = "DS";
-	const std::string DYNAMIC_CUBE = "DB";
-	const std::string STATIC_SPHERE = "SS";
-	const std::string STATIC_CUBE = "SB";
-	const std::string WORLD = "WB";
-	const std::string PARTICLE = "PS";
-	const std::string ENEMY = "EN";
-	const std::string FIREENEMY = "FE";
-	const std::string ICEENEMY = "IE";
-	const std::string WINDENEMY = "WE";
-	const std::string PLAYER = "PL";
-	const std::string FIREWEAPON = "FW";
-	const std::string ICEWEAPON = "IW";
-	const std::string WINDWEAPON = "WW";
+	const std::string DYNAMIC_SPHERE	= "DS";
+	const std::string DYNAMIC_CUBE		= "DB";
+	const std::string STATIC_SPHERE		= "SS";
+	const std::string STATIC_CUBE		= "SB";
+	const std::string WORLD				= "WB";
+	const std::string PARTICLE			= "PS";
+	const std::string ENEMY				= "EN";
+	const std::string FIREENEMY			= "FE";
+	const std::string ICEENEMY			= "IE";
+	const std::string WINDENEMY			= "WE";
+	const std::string EARTHENEMY		= "EE";
+	const std::string PLAYER			= "PL";
+	const std::string FIREWEAPON		= "FW";
+	const std::string ICEWEAPON			= "IW";
+	const std::string WINDWEAPON		= "WW";
+	const std::string EARTHWEAPON		= "EW";
 
 	InputReceiver *playerInputReceiver;
 	core::list<IGameObject*> gameObjects;

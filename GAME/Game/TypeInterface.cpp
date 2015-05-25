@@ -2,6 +2,7 @@
 #include "FireType.h"
 #include "IceType.h"
 #include "WindType.h"
+#include "EarthType.h"
 
 void TypeInterface::setType(ElementalType type)
 {
@@ -21,12 +22,17 @@ void TypeInterface::setType(ElementalType type)
 		typebehave_ = new WindType(ElementalType::Wind);
 		typebehave_->initializer();
 	}
+	else if (type == Earth)
+	{
+		typebehave_ = new EarthType(ElementalType::Earth);
+		typebehave_->initializer();
+	}
 	
 }
 
-int TypeInterface::getMultiplyer(ElementalType bulletType)
+int TypeInterface::getMultiplier(ElementalType bulletType)
 {
-	return typebehave_->multiplyer(bulletType);
+	return typebehave_->multiplier(bulletType);
 }
 
 ElementalType TypeInterface::getType()

@@ -25,6 +25,7 @@ Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDrive
 void Enemy::Initialize()
 {
 	isAlive = true;
+	health = 20;
 	shootTimer = 0;
 	shootTimerMax = 5;
 	shootFollowRange = 200;
@@ -53,7 +54,7 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 		node->setMaterialFlag(EMF_LIGHTING, false);
 		node->setMaterialTexture(0, mesh->getMaterial(0).getTexture(0));
 	}
-	body = helper->createBody(node, bodyType, bodyMass);
+	body = helper->createBody(this, bodyType, bodyMass);
 	body->setRestitution(.1);
 	body->setFriction(.3);
 	//body->setLinearFactor(btVector3(0, 1, 0));
@@ -87,7 +88,7 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 		node->setMaterialFlag(EMF_LIGHTING, false);
 		node->setMaterialTexture(0, irrDriver->getTexture(texturepath));
 	}
-	body = helper->createBody(node, bodyType, bodyMass);
+	body = helper->createBody(this, bodyType, bodyMass);
 	body->setRestitution(.1);
 	body->setFriction(.3);
 	//body->setLinearFactor(btVector3(0, 1, 0));
@@ -149,6 +150,14 @@ void Enemy::getcurrentframe()
 	frameget = ((IAnimatedMeshSceneNode*)node)->getFrameNr();
 }
 
+void Enemy::takeDamage(int bulldamage, ElementalType bullelement)
+{
+	health -= bulldamage * typeInterface.getMultiplier(bullelement);
+
+	if (health <= 0)
+		isAlive = false;
+}
+
 void Enemy::followPlayer()
 {		
 		//Get transforms from the bodys
@@ -180,9 +189,9 @@ void Enemy::followPlayer()
 
 void Enemy::kill()
 {	
-	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	//ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 	isAlive = false;
-	Node->setVisible(false);
+	node->setVisible(false);
 	body->setActivationState(0);
 	node->setName("dead");
 	
@@ -198,11 +207,11 @@ void Enemy::kill()
 }
 
 void Enemy::revive(){
-	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	//ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 	isAlive = true;
-	Node->setVisible(true);
+	node->setVisible(true);
 	body->setActivationState(1);
-	Node->setName("Enemy");
+	node->setName("Enemy");
 }
 
 //flocking separation

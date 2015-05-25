@@ -20,7 +20,7 @@ public:
 	}
 	void setType(ElementalType type);
 	ElementalType getType();
-	int getMultiplyer(ElementalType bulletType);
+	int getMultiplier(ElementalType bulletType);
 private:
 	TypeBehaviour *typebehave_;
 };

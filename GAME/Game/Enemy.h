@@ -23,6 +23,7 @@ public:
 	void getcurrentframe();
 	virtual void kill();
 	virtual void revive();
+	void takeDamage(int bulldamage, ElementalType bullelement = ElementalType::NONE);
 	void shoot();
 	GameObjectType getType() const;
 	void addAvoidance(vector3df delta);

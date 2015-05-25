@@ -130,7 +130,43 @@ namespace ParticleManager
 				s.minTime,s.maxTime, 0,
 				dimension2df(s.minStartSize, s.minStartSize),
 				dimension2df(s.maxStartSize, s.maxStartSize));				
-		}	
+		}
+		else if (s.type =="cylinder")
+		{
+			std::cout << "CYLINDER DING" << std::endl;						
+			createCylinderParticle(ps, vector3df(0,0,0),
+				s.cylinderRadius,
+				vector3df(0,1,0),
+				10.0f, s.cylinderOutlineOnly,
+				s.direction,
+				s.minRate, s.maxRate,
+				s.minColor,
+				s.maxColor,
+				s.minTime, s.maxTime, 0,
+				dimension2df(s.minStartSize, s.minStartSize),
+				dimension2df(s.maxStartSize, s.maxStartSize));			
+		}
+		else if (s.type == "point")
+		{
+			createPointParticle(ps,s.direction,
+				s.minRate, s.maxRate,
+				s.minColor,
+				s.maxColor,
+				s.minTime, s.maxTime, 0,
+				dimension2df(s.minStartSize, s.minStartSize),
+				dimension2df(s.maxStartSize, s.maxStartSize));
+		}
+		else if (s.type =="ring")
+		{
+			createRingParticle(ps, s.ringRadius,s.ringThickness,
+				s.direction,
+				s.minRate, s.maxRate,
+				s.minColor,
+				s.maxColor,
+				s.minTime, s.maxTime, 0,
+				dimension2df(s.minStartSize, s.minStartSize),
+				dimension2df(s.maxStartSize, s.maxStartSize));
+		}
 		//Adding the affectors
 		std::vector<IParticleAffector*> affectors;//list to make this part less big
 		if (s.scaleAF)affectors.push_back(ps->psNode->createScaleParticleAffector(s.scale_scaleTo));//adding affectors if they are needed
@@ -192,6 +228,25 @@ namespace ParticleManager
 	void createSphereParticle(ParticleSystem* ps, vector3df center, f32 radius, vector3df dir, u32 minRate, u32 maxRate, SColor minColor, SColor maxColor, u32 minTime, u32 maxTime, u32 angle, dimension2df minSize, dimension2df maxSize)
 	{
 		IParticleEmitter* em = ps->psNode->createSphereEmitter(center, radius, dir, minRate, maxRate, minColor, maxColor, minTime, maxTime, angle, minSize, maxSize);
+		ps->psNode->setEmitter(em);
+		ps->em = em;
+	}
+
+	void ParticleManager::createCylinderParticle(ParticleSystem* ps, vector3df center, f32 cylinderRadius, vector3df normal, f32 length, bool outlineOnly, vector3df direction, f32 minRate, f32 maxRate, SColor minColor, SColor maxColor, u32 minTime, u32 maxTime, u32 angle, dimension2df minSize, dimension2df maxSize)
+	{
+		IParticleEmitter* em = ps->psNode->createCylinderEmitter(center, cylinderRadius, normal, length, outlineOnly, direction, minRate, maxRate, minColor, maxColor, minTime, maxTime, angle, minSize, maxSize);
+		ps->psNode->setEmitter(em);
+		ps->em = em;
+	}
+
+	void ParticleManager::createPointParticle(ParticleSystem* ps, vector3df direction, f32 minRate, f32 maxRate, SColor minColor, SColor maxColor, u32 minTime, u32 maxTime, u32 angle, dimension2df minSize, dimension2df maxSize){
+		IParticleEmitter *em = ps->psNode->createPointEmitter(direction,  minRate, maxRate,  minColor,maxColor, minTime, maxTime,  angle, minSize,  maxSize);
+		ps->psNode->setEmitter(em);
+		ps->em = em;
+	}
+
+	void ParticleManager::createRingParticle(ParticleSystem* ps, u32 ringRadius, u32 ringThickness, vector3df direction, f32 minRate, f32 maxRate, SColor minColor, SColor maxColor, u32 minTime, u32 maxTime, u32 angle, dimension2df minSize, dimension2df maxSize){
+		IParticleEmitter *em = ps->psNode->createRingEmitter(vector3df(),ringRadius,ringThickness,direction, minRate, maxRate, minColor, maxColor, minTime, maxTime, angle, minSize, maxSize);
 		ps->psNode->setEmitter(em);
 		ps->em = em;
 	}

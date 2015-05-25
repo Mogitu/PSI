@@ -75,6 +75,8 @@
     <ClCompile Include="BulletHelper.cpp" />
     <ClCompile Include="BurstAffector.cpp" />
     <ClCompile Include="Common.cpp" />
+    <ClCompile Include="EarthWeapon.cpp" />
+    <ClCompile Include="EarthType.cpp" />
     <ClCompile Include="FireType.cpp" />
     <ClCompile Include="FireWeapon.cpp" />
     <ClCompile Include="ForceOverLifeTimeAffector.cpp" />
@@ -106,11 +108,14 @@
     <ClInclude Include="BurstAffector.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="EarthWeapon.h" />
+    <ClInclude Include="EarthType.h" />
     <ClInclude Include="Elementals.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="FireType.h" />
     <ClInclude Include="FireWeapon.h" />
     <ClInclude Include="ForceOverLifeTimeAffector.h" />
+    <ClInclude Include="GameObjectPlaceHolder.h" />
     <ClInclude Include="GameWorld.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Hud.h" />

@@ -26,7 +26,7 @@ void Projectile::Initialize()
 	mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
 	node = smgr->addMeshSceneNode(mesh);
 	node->setName(projectileName);		
-	body = h->createBody(node, Shape_Type::SPHERE,10);
+	body = h->createBody(this, Shape_Type::SPHERE,10);
 	body->setLinearFactor(btVector3(1, 0, 1));	
 }
 
@@ -44,11 +44,10 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 		node = smgr->addMeshSceneNode(mesh);
 		node->setName(projectileName);
 		//node->setPosition(vector3df(0, 20, 0));
-		body = h->createBody(node, Shape_Type::SPHERE, 10);
+		body = h->createBody(this, Shape_Type::SPHERE, 10);
 		body->setLinearFactor(btVector3(1, 0, 1));
 		warmedUp = true;
 		
-		//TODO: Make different partile effects for the elements
 		switch (elementalType)
 		{
 		case Fire:
@@ -67,7 +66,11 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 			c = ParticleManager::createFullParticleEffect("../Assets/projectileWind.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 			c->psNode->setParticlesAreGlobal(false);
 			break;
-
+		case Earth:
+			a = nullptr;
+			b = nullptr;
+			c = ParticleManager::createFullParticleEffect("../Assets/projectileEarth.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
+			break;
 		}
 		
 		
@@ -99,8 +102,8 @@ void Projectile::Update(u32 deltaTime)
 void Projectile::revive()
 {
 	body->setLinearVelocity(btVector3(0, 0, 0));
-	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
-	Node->setVisible(true);
+	//ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	node->setVisible(true);
 	aliveTime = 0;		
 	body->setActivationState(1);
 	body->setCollisionFlags(0);
@@ -124,7 +127,7 @@ void Projectile::kill()
 	//particleEffect->psNode->drop();
 	//delete particleEffect;
 	//particleEffect = 0;
-	ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
+	//ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 
 	if (a)
 		a->psNode->clearParticles();
@@ -137,7 +140,7 @@ void Projectile::kill()
 
 	//Node->remove();
 	isAlive = false;
-	Node->setVisible(false);
+	node->setVisible(false);
 	body->setCollisionFlags(4);
 	//// Remove the object from the world
 	//h->getWorld()->removeRigidBody(body);
