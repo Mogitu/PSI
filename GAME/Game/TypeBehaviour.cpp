@@ -16,7 +16,7 @@
 		strengthsElements.insert(strengths, value);
 	}
 
-	int TypeBehaviour::multiplyer(ElementalType bullettype)
+	int TypeBehaviour::multiplier(ElementalType bullettype)
 	{
 		int base = 1;
 

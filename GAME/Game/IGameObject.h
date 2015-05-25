@@ -9,7 +9,8 @@ enum GameObjectType
 	UNKNOWN = 0,
 	PLAYER,
 	PROJECTILE,
-	ENEMY
+	ENEMY,
+	PLACEHOLDER
 };
 
 class IGameObject
