@@ -65,6 +65,21 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 					boxSize.MaxEdge.Z = xml->getAttributeValueAsFloat(L"maxZ");
 
 				}
+				else if (nodeName.equals_ignore_case("cylinderSettings") && xml->getAttributeValueAsInt(L"value") == 1)
+				{
+					
+					cylinderRadius = xml->getAttributeValueAsFloat(L"cylinderRadius");
+					cylinderOutlineOnly = false;// etAttributeValueAsInt(L"cylinderOutlineOnly");
+					std::cout << cylinderRadius << std::endl;
+				}
+				else if (nodeName.equals_ignore_case("ringSettings") && xml->getAttributeValueAsInt(L"value") == 1)
+				{
+
+				}
+				else if (nodeName.equals_ignore_case("pointSettings") && xml->getAttributeValueAsInt(L"value") == 1)
+				{
+
+				}
 				else if (nodeName.equals_ignore_case("AffectorSettings") && xml->getAttributeValueAsInt(L"value") == 1)
 				{
 					//ScaleAffector

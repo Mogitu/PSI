@@ -383,6 +383,31 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
         xml->writeLineBreak();
     }
 
+    //cylinder settings
+    if(ui->comboShape->currentText().toStdString()=="cylinder")
+    {
+        array<stringw> cylinderElements;
+        array<stringw> cylinderValues;
+        //the value=1 is currently mandatory as we check in the game framework for this. might get rid of this later.
+        cylinderElements.push_back(L"value");
+        cylinderValues.push_back(L"1");
+
+        cylinderElements.push_back(L"cylinderRadius");
+        cylinderValues.push_back(ui->lineCylinderRadius->text().toStdString().c_str());
+
+        cylinderElements.push_back(L"cylinderOutlineOnly");
+        if(ui->checkCylinderOutlineOnly->isChecked())
+        {
+            cylinderValues.push_back(L"1");
+        }else{
+            cylinderValues.push_back(L"0");
+        }
+
+
+        xml->writeElement(L"cylinderSettings",false,cylinderElements,cylinderValues);
+        xml->writeLineBreak();
+    }
+
     //affector settings
     array<stringw> affectorElements;
     array<stringw> affectorValues;

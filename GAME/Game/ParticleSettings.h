@@ -64,6 +64,16 @@ public:
 	vector3df		rotation_speed;
 	vector3df		rotation_pivotPoint;
 
+	//ring settings
+	u32 ringRadius;
+	u32 ringThickness;
+
+	//point settings...
+
+	//cylinder settings
+	u32 cylinderRadius;
+	bool cylinderOutlineOnly;
+
 private :
 
 	stringw settingsFile; // location of the xml, usually the
