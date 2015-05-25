@@ -304,7 +304,9 @@ void GameWorld::buildIrrLevel(Level *level)
 		//Create a particle
 		else if (namePrefix == PARTICLE)
 		{
-			ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			//ISceneNode *node = (ISceneNode*)level->getNamedNode(name);
+			//that other line didnt allow for multiple ps of the same type
+			ISceneNode *node = (ISceneNode*)level->getNodes()[i];
 			stringw last = core::stringw(name.c_str());
 			stringw path = "../Assets/";			
 			ParticleManager::createFullParticleEffect(path.append(last.subString(3, last.size()).append(".xml")), node->getPosition());
@@ -318,19 +320,19 @@ void GameWorld::buildIrrLevel(Level *level)
 		}	
 		else if (namePrefix == FIREENEMY)
 		{
-			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
+			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNodes()[i];
 			Enemy* enemy = EnemyFactory::createFireEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
 			//enemy->node->setName("EN");
 		}
 		else if (namePrefix == WINDENEMY)
 		{
-			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
+			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNodes()[i];
 			Enemy* enemy = EnemyFactory::createWindEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
 			//enemy->node->setName("EN");
 		}
 		else if (namePrefix == ICEENEMY)
 		{
-			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNamedNode(name);
+			IAnimatedMeshSceneNode *node = (IAnimatedMeshSceneNode*)level->getNodes()[i];
 			Enemy* enemy = EnemyFactory::createIceEnemy(Common::smgr, Common::irrDriver, helper, this, node, Shape_Type::CAPSULE, 300, node->getPosition(), vector3df(0, 0, 0), vector3df(1, 1, 1));
 			//enemy->node->setName("EN");
 		}

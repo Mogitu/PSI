@@ -86,7 +86,8 @@ int main() {
 	//Create the game world
 	GameWorld* gWorld = new GameWorld(helper,device,input);	
 	Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(-2100,-200,-1200));	
-	
+	//IceAreaTest//Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(-400, -100, -200));
+	//FireAreaTest//Player* player = new Player(smgr, irrDriver, helper, gWorld, input, "../Assets/sydney.md2", "../Assets/sydney.bmp", Shape_Type::CAPSULE, 80, vector3df(-1900, 0, 600));
 	gWorld->buildIrrLevel(level);		
 
 	camera->setParent(player->getNode());
