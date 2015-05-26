@@ -31,6 +31,7 @@ class ParticleSettings{
         f32 maxTime;
         SColor minColor;
         SColor maxColor;
+        bool isSolid;
 
         //Affectors etc.
 

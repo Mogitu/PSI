@@ -103,9 +103,18 @@ namespace ParticleManager
 		{
 			ps = createParticleSystem(ParticleManager::ParticleTag::NONE, position, s.scale, s.imagepath);
 			ps->duration = s.duration;
-		}			
-		
-		ps->psNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
+		}				
+		if (s.isSolid)
+		{
+			ps->psNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL);
+			if (s.imagepath==""){
+				ps->psNode->setMaterialType(EMT_SOLID);
+			}
+		}
+		else{
+			ps->psNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
+		}
+	
 		//load an emitter type depending on the settings file
 		if (s.type=="box")
 		{
@@ -132,8 +141,7 @@ namespace ParticleManager
 				dimension2df(s.maxStartSize, s.maxStartSize));				
 		}
 		else if (s.type =="cylinder")
-		{
-			std::cout << "CYLINDER DING" << std::endl;						
+		{					
 			createCylinderParticle(ps, vector3df(0,0,0),
 				s.cylinderRadius,
 				vector3df(0,1,0),
@@ -207,9 +215,9 @@ namespace ParticleManager
 			ps->setPosition(position);
 			ps->setScale(scale);
 			ps->setMaterialFlag(lightning, flagLight);
-			ps->setMaterialFlag(zwr, flagZWR);
+			//ps->setMaterialFlag(zwr, flagZWR);
 			ps->setMaterialTexture(textureLayer, irrDriver->getTexture(texture));
-			ps->setMaterialType(eType);
+			//ps->setMaterialType(eType);
 		
 			ParticleSystem* pst = addParticleSystemNode(ps, tag);
 		

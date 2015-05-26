@@ -31,6 +31,7 @@ public:
 	SColor minColor;
 	SColor maxColor;
 	u32 sphereRadius;
+	bool isSolid;
 
 	aabbox3d<f32> boxSize;
 

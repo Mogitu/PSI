@@ -98,6 +98,8 @@ void MainWindow::connectInputElements(){
     connect(ui->lineCylinderRadius,SIGNAL(textChanged(QString)),this,SLOT(applySettings()));
     connect(ui->checkCylinderOutlineOnly,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
 
+    connect(ui->checkSolid,SIGNAL(stateChanged(int)),this,SLOT(applySettings()));
+
 
 }
 
@@ -172,12 +174,14 @@ void MainWindow::applySettings()
     irrRenderWidget->particleSettings->cylinderRadius =ui->lineCylinderRadius->text().toFloat();
     irrRenderWidget->particleSettings->cylinderOutLineOnly = ui->checkCylinderOutlineOnly->isChecked();
 
-
+    irrRenderWidget->particleSettings->isSolid= ui->checkSolid->isChecked();
     //create the emitter
     irrRenderWidget->particleSettings->createEmitter();
 
     //apply affectors
     irrRenderWidget->particleSettings->createAffector();
+
+
 }
 
 //Open dialog for darkest color

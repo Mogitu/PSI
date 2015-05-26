@@ -49,6 +49,15 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 					maxColor.setGreen(xml->getAttributeValueAsInt(L"maxColorG"));
 					maxColor.setBlue(xml->getAttributeValueAsInt(L"maxColorB"));
 					maxColor.setAlpha(xml->getAttributeValueAsInt(L"maxColorA"));				
+
+					if (xml->getAttributeValueAsInt(L"isSolid")==1)
+					{
+						isSolid= true;
+					}
+					else{
+						isSolid = false;
+					}
+					
 				}
 				else if (nodeName.equals_ignore_case("sphereSettings") && xml->getAttributeValueAsInt(L"value") == 1)
 				{					
@@ -131,7 +140,7 @@ ParticleSettings::ParticleSettings(IrrlichtDevice *device, stringw file) :device
 						rotation_pivotPoint.X = xml->getAttributeValueAsFloat(L"rotation_pivotPointX");
 						rotation_pivotPoint.Y = xml->getAttributeValueAsFloat(L"rotation_pivotPointY");
 						rotation_pivotPoint.Z = xml->getAttributeValueAsFloat(L"rotation_pivotPointZ");
-					}
+					}					
 				}
 			}
 		break;

@@ -71,6 +71,8 @@ void ParticleSettings::init()
     cylinderRadius =20;
     cylinderOutLineOnly =false;
 
+    isSolid=false;
+
     imagepath= "";
     createParticle();
 }
@@ -148,7 +150,14 @@ void ParticleSettings::createParticle()
     particleNode->setMaterialFlag(EMF_LIGHTING, false);
     particleNode->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
     particleNode->setMaterialTexture(0, device->getVideoDriver()->getTexture(imagepath));
-    particleNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
+
+    if(isSolid)
+    {
+         particleNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL);
+    }else{
+         particleNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
+    }
+
 }
 
 //creates and sets a new emitter for the current particlenode.
@@ -213,6 +222,12 @@ void ParticleSettings::createEmitter()
                                                           minTime,maxTime,0,
                                                           dimension2df(minStartSize,minStartSize),
                                                           dimension2df(maxStartSize,maxStartSize));
+    }
+    if(isSolid)
+    {
+         particleNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL);
+    }else{
+         particleNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
     }
     particleNode->setEmitter(particleEmitter);
 }
@@ -331,6 +346,13 @@ void ParticleSettings::exportToFile(stringw fileName, Ui_MainWindow *ui){
 
     commonElements.push_back(L"maxColorB");
     commonValues.push_back(stringw(maxColor.getBlue()));
+
+    commonElements.push_back(L"isSolid");    
+    if(ui->checkSolid->isChecked()==true){
+        commonValues.push_back(L"1");
+    }else{
+         commonValues.push_back(L"0");
+    }
 
     //finally write to the file, again we should use writelement for each option we have and pass the proper containers in.
     xml->writeElement(L"commonSettings",false,commonElements,commonValues);   

@@ -135,6 +135,28 @@ void GameWorld::update(u32 frameDeltaTime)
 						const btVector3& normalOnB = pt.m_normalWorldOnB;
 						//std::cout << "Hit" << std::endl;
 					}
+
+					ElementalType *type = &((Player*)player)->getCurrentTypeWeapon();
+					std::cout << *type << std::endl;
+					switch (*type)
+					{
+					case Ice:
+						ParticleManager::createFullParticleEffect("../Assets/iceexplosion.xml", nodeB->getPosition());
+						ParticleManager::createFullParticleEffect("../Assets/iceexplosion.xml", nodeA->getPosition());
+						break;
+					case Fire:
+						ParticleManager::createFullParticleEffect("../Assets/fireexplosion.xml", nodeB->getPosition());
+						ParticleManager::createFullParticleEffect("../Assets/fireexplosion.xml", nodeA->getPosition());
+						break;
+					case Earth:
+						ParticleManager::createFullParticleEffect("../Assets/earthexplosion.xml", nodeB->getPosition());
+						ParticleManager::createFullParticleEffect("../Assets/earthexplosion.xml", nodeA->getPosition());
+						break;
+					case Wind:
+						ParticleManager::createFullParticleEffect("../Assets/windexplosion.xml", nodeB->getPosition());
+						ParticleManager::createFullParticleEffect("../Assets/windexplosion.xml", nodeA->getPosition());
+						break;
+					}					
 					ParticleManager::createFullParticleEffect("../Assets/bloodsplat.xml", nodeB->getPosition());
 					ParticleManager::createFullParticleEffect("../Assets/bloodsplat.xml", nodeA->getPosition());
 					
@@ -179,19 +201,38 @@ void GameWorld::update(u32 frameDeltaTime)
 			if ((nameB == "EnemyProjectile"&&nameA == "Player") || (nameA == "EnemyProjectile"&&nameB == "Player"))
 			{
 				Player *p = (Player*)getPlayer();
+				Enemy* en = NULL;
 				Projectile* proj = nullptr;
 				
 				if (nameA == "EnemyProjectile")
 				{
 					nodeA->setName("dead");
 					proj = (Projectile*)gameObjA;
+					en = (Enemy*)gameObjB;
 				}
 				else if (nameB == "EnemyProjectile")
 				{
 					nodeB->setName("dead");
 					proj = (Projectile*)gameObjB;
+					en = (Enemy*)gameObjA;
+				}			
+
+				ElementalType type = en->getWeapon()->getWeaponElementalType();
+				switch (type)
+				{
+				case Ice:
+					ParticleManager::createFullParticleEffect("../Assets/iceexplosion.xml", p->getNodePosition());
+					break;
+				case Fire:
+					ParticleManager::createFullParticleEffect("../Assets/fireexplosion.xml", p->getNodePosition());
+					break;
+				case Earth:
+					ParticleManager::createFullParticleEffect("../Assets/earthexplosion.xml", p->getNodePosition());
+					break;
+				case Wind:
+					ParticleManager::createFullParticleEffect("../Assets/windexplosion.xml", p->getNodePosition());					
+					break;
 				}
-				
 				if (proj)
 					p->takeDamage(proj->getDamage());								
 			}				

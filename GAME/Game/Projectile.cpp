@@ -30,7 +30,7 @@ void Projectile::Initialize()
 	body->setLinearFactor(btVector3(1, 0, 1));	
 }
 
-void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir, ElementalType eType, int dmg)
+void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir, ElementalType eType, int dmg, stringw textPath)
 {	
 	aliveTime = 0.0f;
 	maxLifeTime = 3.0f;
@@ -40,14 +40,14 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 	{		
 		speed = 4000;
 		isAlive = true;
-		mesh = smgr->getGeometryCreator()->createSphereMesh(5, 16, 16);
+		mesh = smgr->getGeometryCreator()->createSphereMesh(3, 16, 16);
 		node = smgr->addMeshSceneNode(mesh);
 		node->setName(projectileName);
 		//node->setPosition(vector3df(0, 20, 0));
 		body = h->createBody(this, Shape_Type::SPHERE, 10);
 		body->setLinearFactor(btVector3(1, 0, 1));
 		warmedUp = true;
-		
+		node->setMaterialTexture(0, Common::device->getVideoDriver()->getTexture(textPath));
 		switch (elementalType)
 		{
 		case Fire:

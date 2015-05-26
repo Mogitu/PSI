@@ -100,7 +100,9 @@ int main() {
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 
-	
+	vector3df spawnPos(player->node->getPosition());
+	spawnPos.Y = 0;
+	ParticleManager::createFullParticleEffect("../Assets/spawn.xml", spawnPos);
 	while (device->run()) {	
 		core::stringw fpsText = "FPS ";
 		
@@ -143,11 +145,11 @@ int main() {
 				break;
 			}						
 		}
-		else if ((gWorld->gameState == PAUSED || gWorld->gameState==GAMEOVER) && input->IsKeyDown(KEY_KEY_Q))
+		else if ((gWorld->gameState == PAUSED || gWorld->gameState == GAMEOVER || gWorld->gameState == LEVELCOMPLETE) && input->IsKeyDown(KEY_KEY_Q))
 		{
 			device->closeDevice();
 		}
-		else if ((gWorld->gameState == PAUSED || gWorld->gameState==GAMEOVER)&& input->IsKeyDown(KEY_KEY_R))
+		else if ((gWorld->gameState == PAUSED || gWorld->gameState == GAMEOVER || gWorld->gameState == LEVELCOMPLETE) && input->IsKeyDown(KEY_KEY_R))
 		{
 			char buffer[MAX_PATH];
 			GetModuleFileName(NULL, buffer, MAX_PATH);
@@ -157,7 +159,7 @@ int main() {
 			std::cout << p << std::endl;
 			ShellExecute(NULL, "open", p.c_str(), NULL, NULL, SW_SHOWDEFAULT);
 			device->closeDevice();			
-		}
+		}		
 		
 		//Close Device
 		if (input->IsKeyDown(EKEY_CODE::KEY_ESCAPE))

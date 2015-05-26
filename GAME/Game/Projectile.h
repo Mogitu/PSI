@@ -16,7 +16,7 @@ public:
 	void fire(btVector3 &pos, btVector3 &direction);
 	virtual void kill();
 	virtual void Initialize();	
-	virtual void Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir, ElementalType eType, int dmg);
+	virtual void Initialize(ISceneManager *smgr, BulletHelper *h, stringw projectileName, btVector3 &pos, btVector3 &dir, ElementalType eType, int dmg, stringw textPath);
 	virtual void Update(u32 deltaTime);	
 	virtual void revive();
 	ParticleManager::ParticleSystem *a;

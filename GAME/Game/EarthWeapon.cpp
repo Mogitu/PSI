@@ -5,7 +5,7 @@ void EarthWeapon::fire(btVector3 &offset, btVector3 &direction, stringw name)
 {
 	if (canShoot)
 	{
-		getWeaponBehaviour()->doWeaponBehaviour(offset, direction, name, getWeaponElementalType(), getDamagePerProjectile());
+		getWeaponBehaviour()->doWeaponBehaviour(offset, direction, name, getWeaponElementalType(), getDamagePerProjectile(), "../Assets/textures/earthpickup.png");
 		canShoot = false;
 	}
 }
