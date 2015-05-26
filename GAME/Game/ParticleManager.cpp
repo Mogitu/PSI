@@ -106,7 +106,10 @@ namespace ParticleManager
 		}				
 		if (s.isSolid)
 		{
-			ps->psNode->setMaterialType(EMT_SOLID);
+			ps->psNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL);
+			if (s.imagepath==""){
+				ps->psNode->setMaterialType(EMT_SOLID);
+			}
 		}
 		else{
 			ps->psNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);

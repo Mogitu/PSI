@@ -153,7 +153,7 @@ void ParticleSettings::createParticle()
 
     if(isSolid)
     {
-         particleNode->setMaterialType(EMT_SOLID);
+         particleNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL);
     }else{
          particleNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
     }
@@ -225,7 +225,7 @@ void ParticleSettings::createEmitter()
     }
     if(isSolid)
     {
-         particleNode->setMaterialType(EMT_SOLID);
+         particleNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL);
     }else{
          particleNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
     }

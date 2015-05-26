@@ -136,6 +136,7 @@ void Enemy::shoot()
 
 		getWeapon()->fire(pos + offSet, dir, "EnemyProjectile");
 		
+		
 }
 
 void Enemy::SetDeath(float begindeath, float enddeath, float deathspeed)

@@ -273,3 +273,7 @@ void Player::attachHUD(Hud* h)
 {
 	hud = h;
 }
+
+ElementalType &Player::getCurrentTypeWeapon(){
+	return currentTypeWeapon;
+}

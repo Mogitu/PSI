@@ -99,7 +99,9 @@ int main() {
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 
-	ParticleManager::createFullParticleEffect("../Assets/spawn.xml", player->node->getPosition());
+	vector3df spawnPos(player->node->getPosition());
+	spawnPos.Y = 0;
+	ParticleManager::createFullParticleEffect("../Assets/spawn.xml", spawnPos);
 	while (device->run()) {		
 		//basic stuff
 		deltaTime = irrTimer->getTime() - timeStamp;
