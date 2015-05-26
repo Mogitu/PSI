@@ -48,12 +48,7 @@ public:
     QPushButton *loadTexture;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
-    QLabel *labelDuration;
-    QLineEdit *lineMinTime;
-    QLineEdit *lineMinScale;
-    QLabel *labelMinScale;
-    QLineEdit *lineMaxScale;
-    QLabel *labelMaxScale;
+    QLabel *labelSolid;
     QLabel *labelMinTime;
     QLineEdit *lineDuration;
     QLineEdit *lineMaxTime;
@@ -62,6 +57,13 @@ public:
     QLabel *labelMaxRate;
     QLineEdit *lineMinRate;
     QLabel *labelMinRate;
+    QLabel *labelMaxScale;
+    QLabel *labelDuration;
+    QLineEdit *lineMinTime;
+    QLineEdit *lineMinScale;
+    QLabel *labelMinScale;
+    QLineEdit *lineMaxScale;
+    QCheckBox *checkSolid;
     QGroupBox *groupBox;
     QWidget *horizontalLayoutWidget_2;
     QHBoxLayout *horizontalLayout_2;
@@ -237,35 +239,10 @@ public:
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        labelDuration = new QLabel(gridLayoutWidget);
-        labelDuration->setObjectName(QStringLiteral("labelDuration"));
+        labelSolid = new QLabel(gridLayoutWidget);
+        labelSolid->setObjectName(QStringLiteral("labelSolid"));
 
-        gridLayout->addWidget(labelDuration, 5, 0, 1, 1);
-
-        lineMinTime = new QLineEdit(gridLayoutWidget);
-        lineMinTime->setObjectName(QStringLiteral("lineMinTime"));
-
-        gridLayout->addWidget(lineMinTime, 4, 1, 1, 1);
-
-        lineMinScale = new QLineEdit(gridLayoutWidget);
-        lineMinScale->setObjectName(QStringLiteral("lineMinScale"));
-
-        gridLayout->addWidget(lineMinScale, 1, 1, 1, 1);
-
-        labelMinScale = new QLabel(gridLayoutWidget);
-        labelMinScale->setObjectName(QStringLiteral("labelMinScale"));
-
-        gridLayout->addWidget(labelMinScale, 1, 0, 1, 1);
-
-        lineMaxScale = new QLineEdit(gridLayoutWidget);
-        lineMaxScale->setObjectName(QStringLiteral("lineMaxScale"));
-
-        gridLayout->addWidget(lineMaxScale, 1, 3, 1, 1);
-
-        labelMaxScale = new QLabel(gridLayoutWidget);
-        labelMaxScale->setObjectName(QStringLiteral("labelMaxScale"));
-
-        gridLayout->addWidget(labelMaxScale, 1, 2, 1, 1);
+        gridLayout->addWidget(labelSolid, 5, 2, 1, 1);
 
         labelMinTime = new QLabel(gridLayoutWidget);
         labelMinTime->setObjectName(QStringLiteral("labelMinTime"));
@@ -306,6 +283,42 @@ public:
         labelMinRate->setObjectName(QStringLiteral("labelMinRate"));
 
         gridLayout->addWidget(labelMinRate, 2, 0, 1, 1);
+
+        labelMaxScale = new QLabel(gridLayoutWidget);
+        labelMaxScale->setObjectName(QStringLiteral("labelMaxScale"));
+
+        gridLayout->addWidget(labelMaxScale, 1, 2, 1, 1);
+
+        labelDuration = new QLabel(gridLayoutWidget);
+        labelDuration->setObjectName(QStringLiteral("labelDuration"));
+
+        gridLayout->addWidget(labelDuration, 5, 0, 1, 1);
+
+        lineMinTime = new QLineEdit(gridLayoutWidget);
+        lineMinTime->setObjectName(QStringLiteral("lineMinTime"));
+
+        gridLayout->addWidget(lineMinTime, 4, 1, 1, 1);
+
+        lineMinScale = new QLineEdit(gridLayoutWidget);
+        lineMinScale->setObjectName(QStringLiteral("lineMinScale"));
+
+        gridLayout->addWidget(lineMinScale, 1, 1, 1, 1);
+
+        labelMinScale = new QLabel(gridLayoutWidget);
+        labelMinScale->setObjectName(QStringLiteral("labelMinScale"));
+
+        gridLayout->addWidget(labelMinScale, 1, 0, 1, 1);
+
+        lineMaxScale = new QLineEdit(gridLayoutWidget);
+        lineMaxScale->setObjectName(QStringLiteral("lineMaxScale"));
+
+        gridLayout->addWidget(lineMaxScale, 1, 3, 1, 1);
+
+        checkSolid = new QCheckBox(gridLayoutWidget);
+        checkSolid->setObjectName(QStringLiteral("checkSolid"));
+        checkSolid->setChecked(false);
+
+        gridLayout->addWidget(checkSolid, 5, 3, 1, 1);
 
         groupBox = new QGroupBox(Options);
         groupBox->setObjectName(QStringLiteral("groupBox"));
@@ -362,14 +375,6 @@ public:
         lineMaxBoxX = new QLineEdit(groupBoxSettings);
         lineMaxBoxX->setObjectName(QStringLiteral("lineMaxBoxX"));
         lineMaxBoxX->setGeometry(QRect(10, 80, 31, 20));
-        labelMinBoxDimension->raise();
-        labelMaxBoxDimension->raise();
-        lineMinBoxX->raise();
-        lineMinBoxY->raise();
-        lineMinBoxZ->raise();
-        lineMaxBoxZ->raise();
-        lineMaxBoxY->raise();
-        lineMaxBoxX->raise();
 
         horizontalLayout_3->addWidget(groupBoxSettings);
 
@@ -827,21 +832,7 @@ public:
         Options->setTitle(QApplication::translate("MainWindow", "Settings", 0));
         lblTexture->setText(QApplication::translate("MainWindow", "Texture", 0));
         loadTexture->setText(QApplication::translate("MainWindow", "Load", 0));
-        labelDuration->setText(QApplication::translate("MainWindow", "Duration", 0));
-#ifndef QT_NO_TOOLTIP
-        lineMinTime->setToolTip(QApplication::translate("MainWindow", "Biggest scale of particles", 0));
-#endif // QT_NO_TOOLTIP
-        lineMinTime->setText(QApplication::translate("MainWindow", "500", 0));
-#ifndef QT_NO_TOOLTIP
-        lineMinScale->setToolTip(QApplication::translate("MainWindow", "Smallest scale of the particles", 0));
-#endif // QT_NO_TOOLTIP
-        lineMinScale->setText(QApplication::translate("MainWindow", "1", 0));
-        labelMinScale->setText(QApplication::translate("MainWindow", "Min Scale", 0));
-#ifndef QT_NO_TOOLTIP
-        lineMaxScale->setToolTip(QApplication::translate("MainWindow", "Biggest scale of particles", 0));
-#endif // QT_NO_TOOLTIP
-        lineMaxScale->setText(QApplication::translate("MainWindow", "2", 0));
-        labelMaxScale->setText(QApplication::translate("MainWindow", "Max Scale", 0));
+        labelSolid->setText(QApplication::translate("MainWindow", "Solid", 0));
         labelMinTime->setText(QApplication::translate("MainWindow", "Min Time", 0));
 #ifndef QT_NO_TOOLTIP
         lineDuration->setToolTip(QApplication::translate("MainWindow", "Biggest scale of particles", 0));
@@ -862,6 +853,22 @@ public:
 #endif // QT_NO_TOOLTIP
         lineMinRate->setText(QApplication::translate("MainWindow", "100", 0));
         labelMinRate->setText(QApplication::translate("MainWindow", "Min Rate", 0));
+        labelMaxScale->setText(QApplication::translate("MainWindow", "Max Scale", 0));
+        labelDuration->setText(QApplication::translate("MainWindow", "Duration", 0));
+#ifndef QT_NO_TOOLTIP
+        lineMinTime->setToolTip(QApplication::translate("MainWindow", "Biggest scale of particles", 0));
+#endif // QT_NO_TOOLTIP
+        lineMinTime->setText(QApplication::translate("MainWindow", "500", 0));
+#ifndef QT_NO_TOOLTIP
+        lineMinScale->setToolTip(QApplication::translate("MainWindow", "Smallest scale of the particles", 0));
+#endif // QT_NO_TOOLTIP
+        lineMinScale->setText(QApplication::translate("MainWindow", "1", 0));
+        labelMinScale->setText(QApplication::translate("MainWindow", "Min Scale", 0));
+#ifndef QT_NO_TOOLTIP
+        lineMaxScale->setToolTip(QApplication::translate("MainWindow", "Biggest scale of particles", 0));
+#endif // QT_NO_TOOLTIP
+        lineMaxScale->setText(QApplication::translate("MainWindow", "2", 0));
+        checkSolid->setText(QString());
         groupBox->setTitle(QApplication::translate("MainWindow", "Shape", 0));
         labelShapeType->setText(QApplication::translate("MainWindow", "Shape Type:", 0));
         comboShape->clear();

@@ -99,7 +99,7 @@ int main() {
 	// Main loop
 	u32 timeStamp = irrTimer->getTime(), deltaTime = 0;
 
-	
+	ParticleManager::createFullParticleEffect("../Assets/test.xml", vector3df(447,0,-299));
 	while (device->run()) {		
 		//basic stuff
 		deltaTime = irrTimer->getTime() - timeStamp;
