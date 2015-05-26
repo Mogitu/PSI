@@ -219,13 +219,13 @@ void Player::kill()
 {
 	//ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 	isAlive = false;
-	node->remove();
-	// Remove the object from the world
-	helper->getWorld()->removeRigidBody(body);
-	// Free memory
-	delete body->getMotionState();
-	delete body->getCollisionShape();
-	delete body;
+	//node->remove();
+	//// Remove the object from the world
+	//helper->getWorld()->removeRigidBody(body);
+	//// Free memory
+	//delete body->getMotionState();
+	//delete body->getCollisionShape();
+	//delete body;
 }
 
 const vector3df& Player::getNodePosition() const

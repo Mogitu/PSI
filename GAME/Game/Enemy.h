@@ -28,6 +28,11 @@ public:
 	GameObjectType getType() const;
 	void addAvoidance(vector3df delta);
 	void resetAvoidance();
+
+	~Enemy()
+	{
+		cout << "REMOVING ENEMY!\n";
+	}
 private:
 	irr::scene::ISceneManager *smgr;
 	irr::video::IVideoDriver *irrDriver;

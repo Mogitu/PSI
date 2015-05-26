@@ -13,7 +13,7 @@ Projectile::Projectile()
 
 Projectile::~Projectile()
 {
-	
+	cout << "REMOVING PROJECTILE\n";
 }
 
 void Projectile::Initialize()

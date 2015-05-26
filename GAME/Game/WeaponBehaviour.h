@@ -30,6 +30,11 @@ public:
 			}
 		}
 	}
+
+	virtual ~WeaponBehaviour()
+	{
+		delete pool;
+	}
 };
 
 #endif

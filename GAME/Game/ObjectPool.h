@@ -11,7 +11,7 @@ private:
 	};
 public:	
 	ObjectPool(int size);
-	~ObjectPool();		
+	~ObjectPool();
 	T *create();	
 	Object *getObjects();
 	int getSize();
@@ -50,8 +50,8 @@ ObjectPool<T>::ObjectPool(int s){
 
 template <typename T>
 ObjectPool<T>::~ObjectPool(){
-	delete objects;
-	delete firstAvailable;
+	delete[] objects;
+	//delete firstAvailable;
 }
 template<typename T>
 T *ObjectPool<T>::create(){

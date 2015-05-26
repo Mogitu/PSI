@@ -44,6 +44,11 @@ public:
 	int getScore();
 	void addWeaponToArsenal(Weapon* w);
 	void attachHUD(Hud* h);
+	~Player()
+	{
+		helper->getWorld()->removeRigidBody(body);
+		delete weaponArsenal;
+	}
 };
 
 #endif // !__PLAYER_H__

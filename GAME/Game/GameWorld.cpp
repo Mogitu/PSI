@@ -46,12 +46,28 @@ void GameWorld::update(u32 frameDeltaTime)
 			//gets the name of the node
 			stringw nodeName = gameObject->node->getName();
 			//if object not alive or name is dead we kill/clean it.
-			if ((!gameObject->isAlive || nodeName == "dead"))
+			//TODO: OBject pool also deletes the projectiles but the Iterators are still in the gameWorld!
+			if (gameObject->getType() != GameObjectType::PROJECTILE &&(!gameObject->isAlive || nodeName == "dead"))
 			{
-				gameObject->node->setName("killed");
-				gameObject->kill();				
-				//gameObjects.erase(Iterator);
-				//delete gameObject;				
+				core::list<IGameObject *>::Iterator tmp = Iterator;
+				--tmp;
+				gameObjects.erase(Iterator);
+
+				Iterator = tmp;
+
+				gameObject->kill();
+
+				gameObject->node->remove();
+				
+				delete gameObject->body->getMotionState();
+				delete gameObject->body->getCollisionShape();
+				helper->getWorld()->removeCollisionObject(gameObject->body);
+				delete gameObject->body;
+
+				delete gameObject;
+
+				continue;
+				
 			}
 			else
 			{
@@ -85,8 +101,7 @@ void GameWorld::update(u32 frameDeltaTime)
 				if (!isAvoiding)
 					e->resetAvoidance();
 			}
-		}
-	
+		}	
 
 		//collision detection
 		//TODO: VERY SLOPPY; in its current state this will need a lot of special case checks. Needs to be improved in later sprints.
