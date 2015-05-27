@@ -50,7 +50,7 @@ ObjectPool<T>::ObjectPool(int s){
 
 template <typename T>
 ObjectPool<T>::~ObjectPool(){
-	delete[] objects;
+	//delete[] objects;
 	//delete firstAvailable;
 }
 template<typename T>

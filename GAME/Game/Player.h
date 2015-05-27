@@ -4,7 +4,6 @@
 #include "InputReceiver.h"
 #include "BulletHelper.h"
 #include "Character.h"
-#include "GameWorld.h"
 #include "WeaponArsenal.h"
 
 class Hud; //Defining HUD; Forward declaring because we can't include each others headers
@@ -13,10 +12,8 @@ class Player : public Character
 {
 private:
 	InputReceiver* input;
-	BulletHelper* helper;
 	ISceneManager* smgr;
-	vector2di centerScreenPosition;
-	GameWorld *world;	
+	vector2di centerScreenPosition;	
 	bool justJumped;
 	bool isGrounded();
 	int score;

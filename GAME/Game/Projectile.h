@@ -36,7 +36,6 @@ private:
 	u32 speed;
 	float maxLifeTime;
 	stringw projectileName;
-	ParticleManager::ParticleSystem *particleEffect;
 	ElementalType elementalType;
 	int damage;
 };

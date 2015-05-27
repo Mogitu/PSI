@@ -4,7 +4,6 @@
 #include "IGameObject.h"
 #include "BulletHelper.h"
 #include <irrlicht.h>
-#include "GameWorld.h"
 
 class WeaponPickup : public IGameObject
 {

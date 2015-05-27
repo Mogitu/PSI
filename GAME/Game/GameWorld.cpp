@@ -1,4 +1,6 @@
 #include "GameWorld.h"
+#include "IGameObject.h"
+#include "Projectile.h"
 #include "Player.h"
 #include "WeaponPickup.h"
 #include "WeaponFactory.h"
@@ -54,15 +56,6 @@ void GameWorld::update(u32 frameDeltaTime)
 				gameObjects.erase(Iterator);
 
 				Iterator = tmp;
-
-				gameObject->kill();
-
-				gameObject->node->remove();
-				
-				delete gameObject->body->getMotionState();
-				delete gameObject->body->getCollisionShape();
-				helper->getWorld()->removeCollisionObject(gameObject->body);
-				delete gameObject->body;
 
 				delete gameObject;
 

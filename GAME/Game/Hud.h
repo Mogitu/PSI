@@ -3,6 +3,7 @@
 
 #include "irrlicht.h"
 #include "GameWorld.h"
+#include "Elementals.h"
 
 using namespace irr;
 using namespace gui;

@@ -14,6 +14,32 @@ Projectile::Projectile()
 Projectile::~Projectile()
 {
 	cout << "REMOVING PROJECTILE\n";
+
+	if (a)
+	{
+		a->psNode->clearParticles();
+		a->psNode->setVisible(false);
+		a->psNode->remove();
+		delete a;
+	}
+
+	if (b)
+	{	
+		b->psNode->clearParticles();
+		b->psNode->setVisible(false);
+		b->psNode->remove();
+		delete b;
+	}
+
+	if (c)
+	{	
+		c->psNode->clearParticles();
+		c->psNode->setVisible(false);
+		c->psNode->remove();
+		delete c;
+	}
+
+	delete mesh;
 }
 
 void Projectile::Initialize()
@@ -36,6 +62,8 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 	maxLifeTime = 3.0f;
 	elementalType = eType;
 	damage = dmg;
+	helper = h;
+
 	if (!warmedUp)
 	{		
 		speed = 4000;
@@ -124,11 +152,6 @@ void Projectile::fire(btVector3 &pos, btVector3 &dir)
 
 void Projectile::kill()
 {
-	//particleEffect->psNode->drop();
-	//delete particleEffect;
-	//particleEffect = 0;
-	//ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
-
 	if (a)
 		a->psNode->clearParticles();
 	
@@ -138,16 +161,9 @@ void Projectile::kill()
 	if (c)
 		c->psNode->clearParticles();
 
-	//Node->remove();
 	isAlive = false;
 	node->setVisible(false);
 	body->setCollisionFlags(4);
-	//// Remove the object from the world
-	//h->getWorld()->removeRigidBody(body);
-	//// Free memory
-	////delete body->getMotionState();
-	//delete body->getCollisionShape();
-	//delete body;
 }
 
 ElementalType Projectile::getElementalType()

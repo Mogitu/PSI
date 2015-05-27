@@ -2,10 +2,8 @@
 #define Game_World_H
 
 #include <irrlicht.h>
-#include "IGameObject.h"
-#include "BulletHelper.h"
 #include "ParticleManager.h"
-#include "Projectile.h"
+#include "BulletHelper.h"
 #include "Level.h"
 #include "InputReceiver.h"
 #include "Menu.h"
@@ -24,6 +22,8 @@ enum GAMESTATE
 	GAMEOVER,
 	LEVELCOMPLETE
 };
+
+class IGameObject;
 
 class GameWorld
 {

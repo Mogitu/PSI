@@ -42,6 +42,7 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	this->smgr = smgr;
 	this->irrDriver = irrDriver;
 	this->world = world;
+	this->helper = helper;
 
 	//default node setup
 	node = mesh;
@@ -74,6 +75,7 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	this->smgr = smgr;
 	this->irrDriver = irrDriver;
 	this->world = world;
+	this->helper = helper;
 
 	IAnimatedMesh* mesh = smgr->getMesh(meshpath);
 

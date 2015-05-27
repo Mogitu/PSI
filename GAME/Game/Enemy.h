@@ -5,7 +5,6 @@
 #include <iostream>
 #include <string>
 #include "BulletHelper.h"
-#include "GameWorld.h"
 #include "Character.h"
 #include "TypeInterface.h"
 
@@ -37,8 +36,6 @@ private:
 	irr::scene::ISceneManager *smgr;
 	irr::video::IVideoDriver *irrDriver;
 	//irr::scene::IAnimatedMeshSceneNode* node;
-	BulletHelper* helper;
-	GameWorld *world;
 	float shootFollowRange;
 	float begindeath;
 	float enddeath;

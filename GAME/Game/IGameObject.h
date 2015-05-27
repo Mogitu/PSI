@@ -3,6 +3,7 @@
 
 #include <irrlicht.h>
 #include "BulletHelper.h"
+#include "GameWorld.h"
 
 enum GameObjectType
 {
@@ -15,30 +16,24 @@ enum GameObjectType
 
 class IGameObject
 {
+protected:
+	GameWorld *world;
+	BulletHelper *helper;
 public:
 	bool isAlive;
 	btRigidBody *body;
 	ISceneNode *node;
+
 	virtual ~IGameObject()
 	{
-		//Node->remove();
-		//// Remove the object from the world
-		//helper->getWorld()->removeRigidBody(body);
-		//// Free memory
-		//delete body->getMotionState();
-		//delete body->getCollisionShape();
-		//delete body;
 		std::cout << "REMOVING IGAMEOBJECT\n";
-		
-		//node->removeAll();
-		
-		//if (body && body->getMotionState())
-		//	delete body->getMotionState();
+		node->remove();
+		delete body->getMotionState();
+		delete body->getCollisionShape();
 
-		//if (body && body->getCollisionShape())
-		//	delete body->getCollisionShape();
+		helper->getWorld()->removeCollisionObject(body);
 
-		//delete body;		
+		delete body;
 	}
 	virtual void Initialize() = 0;
 	virtual void Update(irr::u32 frameDeltaTime) = 0;
