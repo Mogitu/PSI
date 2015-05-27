@@ -244,6 +244,7 @@ void GameWorld::update(u32 frameDeltaTime)
 				p->addWeaponToArsenal(WeaponFactory::createIceWeapon(new SingleShotBehaviour(), 250, 10, this));
 				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
 				std::cout << "Ice weapon picked up" << std::endl;				
+				ParticleManager::createFullParticleEffect("../Assets/icepickupeffect.xml", p->getNodePosition());
 				if (nameB=="IceWeapon")
 				{
 					nodeB->setName("dead");
@@ -259,6 +260,7 @@ void GameWorld::update(u32 frameDeltaTime)
 				Player *p = (Player*)getPlayer();
 				p->addWeaponToArsenal(WeaponFactory::createFireWeapon(new SingleShotBehaviour(), 250, 10, this));
 				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
+				ParticleManager::createFullParticleEffect("../Assets/firepickupeffect.xml", p->getNodePosition());
 				std::cout << "Fire weapon picked up" << std::endl;
 				if (nameB == "FireWeapon")
 				{
@@ -275,6 +277,7 @@ void GameWorld::update(u32 frameDeltaTime)
 				p->addWeaponToArsenal(WeaponFactory::createWindWeapon(new SingleShotBehaviour(), 250, 10, this));
 				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
 				std::cout << "Wind weapon picked up" << std::endl;
+				ParticleManager::createFullParticleEffect("../Assets/windpickupeffect.xml", p->getNodePosition());
 				if (nameB == "WindWeapon")
 				{
 					nodeB->setName("dead");
@@ -287,6 +290,7 @@ void GameWorld::update(u32 frameDeltaTime)
 			if ((nameB == "EarthWeapon"&&nameA == "Player") || (nameA == "EarthWeapon"&&nameB == "Player"))
 			{
 				Player *p = (Player*)getPlayer();
+				ParticleManager::createFullParticleEffect("../Assets/earthpickupeffect.xml", p->getNodePosition());
 				p->addWeaponToArsenal(WeaponFactory::createEarthWeapon(new SingleShotBehaviour(), 250, 10, this));
 				Common::soundEngine->play2D("../Assets/Sounds/pickup.wav");
 				std::cout << "Earth weapon picked up" << std::endl;
