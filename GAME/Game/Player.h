@@ -20,7 +20,6 @@ private:
 	float restriction = 1; //1 = no restriction; 0 = stop movement
 	float speed = 50;
 	WeaponArsenal* weaponArsenal;
-	ElementalType currentTypeWeapon;
 	Hud* hud;
 public:
 	Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass = 1,vector3df position = vector3df(0, 0, 0), vector3df rotation = vector3df(0, 0, 0), vector3df scale = vector3df(1, 1, 1));
@@ -45,6 +44,7 @@ public:
 	{
 		helper->getWorld()->removeRigidBody(body);
 		delete weaponArsenal;
+		setWeapon(nullptr);
 	}
 };
 

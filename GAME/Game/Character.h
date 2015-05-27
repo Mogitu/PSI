@@ -16,7 +16,8 @@ public:
 	
 	virtual ~Character()
 	{
-		delete weapon;
+		if (weapon)
+			delete weapon;
 	}
 };
 

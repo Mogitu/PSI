@@ -245,9 +245,6 @@
     <ClInclude Include="EnemyFactory.h">
       <Filter>Header Files\Characters</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponArsenal.h">
-      <Filter>Header Files\Characters</Filter>
-    </ClInclude>
     <ClInclude Include="WeaponFactory.h">
       <Filter>Header Files\Characters\Weapons</Filter>
     </ClInclude>
@@ -262,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponArsenal.h">
+      <Filter>Header Files\Characters\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

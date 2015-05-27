@@ -93,7 +93,7 @@ int main() {
 	camera->setParent(player->getNode());
 	camera->setTarget(player->getNodeAbsolutePosition());
 	
-	Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
+	//Common::soundEngine->play2D("../Assets/Sounds/darknight.mp3",true);
 	
 	Hud *hud = new Hud(device, player, gWorld,"../Assets/textures/hud_2.png");	
 	// Main loop

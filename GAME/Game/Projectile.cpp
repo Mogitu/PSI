@@ -9,6 +9,14 @@ Projectile::Projectile(ISceneManager *smgr, BulletHelper *h, stringw projectileN
 Projectile::Projectile()
 {
 	warmedUp = false;
+	
+	//Otherwise the deconstructor doesn't know these aren't initialized
+	a = nullptr;
+	b = nullptr;
+	c = nullptr;
+	mesh = nullptr;
+	node = nullptr;
+	body = nullptr;
 }
 
 Projectile::~Projectile()
@@ -39,7 +47,13 @@ Projectile::~Projectile()
 		delete c;
 	}
 
-	delete mesh;
+	//We're just removing the Iterator out of the gameworld list;
+	cout << "REMOVING ITERATOR!!";
+	world->removeGameObject(this);
+
+	//We delete the node in IGameObject so this might not be needed :D
+	//if (mesh)
+		//delete mesh;
 }
 
 void Projectile::Initialize()
@@ -76,6 +90,10 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 		body->setLinearFactor(btVector3(1, 0, 1));
 		warmedUp = true;
 		node->setMaterialTexture(0, Common::device->getVideoDriver()->getTexture(textPath));
+		a = nullptr;
+		b = nullptr;
+		c = nullptr;
+
 		switch (elementalType)
 		{
 		case Fire:
@@ -84,24 +102,16 @@ void Projectile::Initialize(ISceneManager *smgr, BulletHelper *h, stringw projec
 			c = ParticleManager::createFullParticleEffect("../Assets/projectilefire.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 			break;
 		case Ice:
-			a = nullptr;
-			b = nullptr;
 			c = ParticleManager::createFullParticleEffect("../Assets/projectileIce.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 			break;
 		case Wind:
-			a = nullptr;
-			b = nullptr;
 			c = ParticleManager::createFullParticleEffect("../Assets/projectileWind.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 			c->psNode->setParticlesAreGlobal(false);
 			break;
 		case Earth:
-			a = nullptr;
-			b = nullptr;
 			c = ParticleManager::createFullParticleEffect("../Assets/projectileEarth.xml", vector3df(pos.getX(), pos.getY(), pos.getZ()), node);
 			break;
 		}
-		
-		
 	}
 	else
 	{
@@ -121,7 +131,7 @@ void Projectile::Update(u32 deltaTime)
 		aliveTime += deltaTime;
 		if (aliveTime >= maxLifeTime * 1000)
 		{
-			isAlive = false;
+			kill();
 			aliveTime = 0.0f;
 		}
 	}	
@@ -162,6 +172,7 @@ void Projectile::kill()
 		c->psNode->clearParticles();
 
 	isAlive = false;
+	node->setName("dead");
 	node->setVisible(false);
 	body->setCollisionFlags(4);
 }

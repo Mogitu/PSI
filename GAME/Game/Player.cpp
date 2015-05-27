@@ -61,7 +61,6 @@ void Player::Initialize(ISceneManager* smgr, IVideoDriver* driver, BulletHelper*
 	world->addGameObject(this);
 
 	weaponArsenal = new WeaponArsenal();
-	currentTypeWeapon = ElementalType::NONE;
 }
 
 void Player::Update(u32 frameDeltaTime)
@@ -157,7 +156,7 @@ void Player::PlayerMovement(u32 frameDeltaTime)
 void Player::WeaponSelect()
 {
 	ElementalType swapTo = ElementalType::NONE;
-
+	
 	if (input->IsKeyDown(KEY_KEY_1))
 		swapTo = ElementalType::Fire;
 	else if (input->IsKeyDown(KEY_KEY_2)) 
@@ -167,15 +166,13 @@ void Player::WeaponSelect()
 	else if (input->IsKeyDown(KEY_KEY_4))
 		swapTo = ElementalType::Earth;
 	
-	if (swapTo != ElementalType::NONE && currentTypeWeapon != swapTo)
+	if (swapTo != ElementalType::NONE && getWeapon()->getWeaponElementalType() != swapTo)
 	{
 		Weapon* w = weaponArsenal->getWeaponOfElementalType(swapTo);
 		// If weapon exists in arsenal then swap
 		if (w)
 		{
 			setWeapon(w);
-			currentTypeWeapon = swapTo;
-
 			//Update HUD
 			if (hud)
 				hud->moveWeaponSelectionHightlight(swapTo);

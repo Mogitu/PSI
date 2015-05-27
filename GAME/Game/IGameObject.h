@@ -27,13 +27,20 @@ public:
 	virtual ~IGameObject()
 	{
 		std::cout << "REMOVING IGAMEOBJECT\n";
-		node->remove();
-		delete body->getMotionState();
-		delete body->getCollisionShape();
 
-		helper->getWorld()->removeCollisionObject(body);
+		if (node)
+			node->remove();
 
-		delete body;
+		if (body)
+		{
+			delete body->getMotionState();
+			delete body->getCollisionShape();
+
+			helper->getWorld()->removeCollisionObject(body);
+
+			delete body;
+		}
+		
 	}
 	virtual void Initialize() = 0;
 	virtual void Update(irr::u32 frameDeltaTime) = 0;

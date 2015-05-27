@@ -15,6 +15,13 @@ private:
 public:
 	~WeaponArsenal()
 	{
+		for (core::list<Weapon*>::Iterator Iterator = weapons.begin(); Iterator != weapons.end(); ++Iterator)
+		{
+			Weapon* w = *Iterator;
+
+			delete w;
+		}
+
 		weapons.clear();
 	}
 

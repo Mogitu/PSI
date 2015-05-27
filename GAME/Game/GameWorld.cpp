@@ -48,7 +48,8 @@ void GameWorld::update(u32 frameDeltaTime)
 			//gets the name of the node
 			stringw nodeName = gameObject->node->getName();
 			//if object not alive or name is dead we kill/clean it.
-			//TODO: OBject pool also deletes the projectiles but the Iterators are still in the gameWorld!
+			//TODO: Object pool also deletes the projectiles but the Iterators are still in the gameWorld!
+			//For now the Projectiles are being filtered out
 			if (gameObject->getType() != GameObjectType::PROJECTILE &&(!gameObject->isAlive || nodeName == "dead"))
 			{
 				core::list<IGameObject *>::Iterator tmp = Iterator;
@@ -58,9 +59,7 @@ void GameWorld::update(u32 frameDeltaTime)
 				Iterator = tmp;
 
 				delete gameObject;
-
 				continue;
-				
 			}
 			else
 			{
@@ -147,7 +146,7 @@ void GameWorld::update(u32 frameDeltaTime)
 					ParticleManager::createFullParticleEffect("../Assets/bloodsplat.xml", nodeA->getPosition());
 					
 					en->takeDamage(proj->getDamage(), proj->getElementalType());
-					proj->node->setName("dead");
+					proj->kill();
 					
 					Common::soundEngine->play2D("../Assets/Sounds/splat.wav");
 					p->increaseScore(10);
@@ -190,18 +189,16 @@ void GameWorld::update(u32 frameDeltaTime)
 				Projectile* proj = nullptr;
 				
 				if (nameA == "EnemyProjectile")
-				{
-					nodeA->setName("dead");
 					proj = (Projectile*)gameObjA;
-				}
 				else if (nameB == "EnemyProjectile")
-				{
-					nodeB->setName("dead");
 					proj = (Projectile*)gameObjB;
-				}
 				
 				if (proj)
-					p->takeDamage(proj->getDamage());								
+				{
+					p->takeDamage(proj->getDamage());
+					proj->kill();
+				}
+												
 			}				
 
 			//check collisions between player and weapon pickups..
@@ -284,7 +281,6 @@ void GameWorld::removeGameObject(IGameObject* gameObject)
 		if (gameObject == *Iterator)
 		{
 			gameObjects.erase(Iterator);
-			delete gameObject;
 			break;
 		}
 	}
@@ -314,6 +310,7 @@ void GameWorld::buildIrrLevel(Level *level)
 		//get the prefix to check against
 		std::string namePrefix = name.substr(0, 2);
 
+		//TODO: Change placeHolder to none pointers
 		//create a suitable rigid body  depending on the prefix
 		if (namePrefix == DYNAMIC_CUBE)
 		{

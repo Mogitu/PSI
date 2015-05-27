@@ -3,11 +3,12 @@
 void SingleShotBehaviour::setUpWeaponBehaviour(GameWorld* w)
 {
 	this->setWorld(w);
+	//WeaponBehaviour::createFourPools();
 }
 
 void SingleShotBehaviour::doWeaponBehaviour(btVector3 &offset, btVector3 &direction, stringw name, ElementalType eType, int damagePerProjectile, stringw path)
 {
-	Projectile *p = getPool()->create();
+	Projectile *p = getPool(ElementToN(eType))->create();
 	if (p)
 	{
 		if (!p->warmedUp)

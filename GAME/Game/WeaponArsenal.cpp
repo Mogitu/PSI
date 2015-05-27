@@ -2,6 +2,7 @@
 
 void WeaponArsenal::addWeapon(Weapon* w)
 {
+	//Only one type of each weapon allowed
 	if(!getWeaponOfElementalType(w->getWeaponElementalType()))
 		weapons.push_back(w);
 }
