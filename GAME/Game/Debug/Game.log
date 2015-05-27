@@ -1,7 +1,12 @@
-﻿Build started 5/27/2015 11:47:16 AM.
+﻿Build started 5/27/2015 9:28:46 PM.
      1>Project "C:\Users\Maikel\Documents\GitHub\PSI\GAME\Game\Game.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameWorld.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt EarthWeapon.cpp Enemy.cpp FireWeapon.cpp GameWorld.cpp Hud.cpp IceWeapon.cpp Main.cpp Player.cpp SingleShotBehaviour.cpp WeaponArsenal.cpp WeaponPickup.cpp WindWeapon.cpp
+         WeaponPickup.cpp
+         Main.cpp
+     1>c:\users\maikel\documents\github\psi\game\game\main.cpp(24): warning C4305: 'initializing' : truncation from 'double' to 'irr::f32'
+     1>c:\users\maikel\documents\github\psi\game\game\main.cpp(25): warning C4305: 'initializing' : truncation from 'double' to 'irr::f32'
+     1>c:\users\maikel\documents\github\psi\game\game\main.cpp(29): warning C4305: 'initializing' : truncation from 'double' to 'irr::f32'
          GameWorld.cpp
      1>c:\users\maikel\documents\github\psi\game\game\enemyfactory.h(14): warning C4316: 'Enemy' : object allocated on the heap may not be aligned 16
      1>c:\users\maikel\documents\github\psi\game\game\enemyfactory.h(19): warning C4316: 'Enemy' : object allocated on the heap may not be aligned 16
@@ -16,6 +21,17 @@
      1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(380): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
      1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(388): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
      1>c:\users\maikel\documents\github\psi\game\game\gameworld.cpp(389): warning C4305: 'argument' : truncation from 'double' to 'btScalar'
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         WindWeapon.cpp
+         WeaponArsenal.cpp
+         SingleShotBehaviour.cpp
+         Player.cpp
+         IceWeapon.cpp
+         Hud.cpp
+         FireWeapon.cpp
+         Enemy.cpp
+         EarthWeapon.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\bin\Game.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\lib irrlicht.lib BulletCollision.lib BulletDynamics.lib LinearMath.lib irrKlang.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\bin\Game.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\bin\Game.lib" /MACHINE:X86 Debug\Game.res
          Debug\BulletHelper.obj
@@ -120,4 +136,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.20
+Time Elapsed 00:00:06.10
