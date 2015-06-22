@@ -138,7 +138,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ScaleOverLifeTimeAffector.h" />
     <ClInclude Include="SingleShotBehaviour.h" />
-    <ClInclude Include="Statistic.h" />
     <ClInclude Include="testCharacter.h" />
     <ClInclude Include="TypeBehaviour.h" />
     <ClInclude Include="TypeInterface.h" />

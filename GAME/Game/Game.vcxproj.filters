@@ -278,9 +278,6 @@
     <ClInclude Include="LevelAttribute.h">
       <Filter>Header Files\Characters</Filter>
     </ClInclude>
-    <ClInclude Include="Statistic.h">
-      <Filter>Header Files\Characters</Filter>
-    </ClInclude>
     <ClInclude Include="WeaponDecorator.h">
       <Filter>Header Files\Characters\Weapons</Filter>
     </ClInclude>
