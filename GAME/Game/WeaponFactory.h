@@ -8,6 +8,7 @@
 #include "EarthWeapon.h"
 #include "WeaponBehaviour.h"
 #include "SingleShotBehaviour.h"
+#include "WeaponExtraDamage.h"
 #include "Elementals.h"
 
 class WeaponFactory
