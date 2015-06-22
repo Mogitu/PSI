@@ -6,19 +6,27 @@ using namespace scene;
 using namespace core;
 using namespace video;
 
+Enemy::Enemy(LevelProgress* level, int XP)
+{
+	this->level = level;
+	this->ExpierencePoints = XP;
+
+	Initialize();
+}
+
 Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, io::path meshpath, io::path texturepath, Shape_Type bodyType, btScalar bodyMass, ElementalType element, vector3df position, vector3df rotation, vector3df scale)
 {
-	this->Initialize(smgr, irrDriver, helper, world, meshpath, texturepath, bodyType, bodyMass, position, rotation, scale, element);
 	this->Initialize();
+	this->Initialize(smgr, irrDriver, helper, world, meshpath, texturepath, bodyType, bodyMass, position, rotation, scale, element);
 	
 	player = world->getPlayer();
 }
 
 Enemy::Enemy(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, ElementalType element, vector3df position, vector3df rotation, vector3df scale)
 {
-	this->Initialize(smgr, irrDriver, helper, world, mesh, bodyType, bodyMass, position, rotation, scale, element);
 	this->Initialize();
-
+	this->Initialize(smgr, irrDriver, helper, world, mesh, bodyType, bodyMass, position, rotation, scale, element);
+	
 	player = world->getPlayer();
 }
 
@@ -30,10 +38,14 @@ void Enemy::Initialize()
 	shootTimerMax = 5;
 	shootFollowRange = 200;
 	walkSpeed = 75;
-	body->setActivationState(DISABLE_DEACTIVATION);
 	avoidStrength = 2;
 	avoidance = btVector3(0, 0, 0);
 	direction = btVector3(0, 0, 0);
+
+	this->level = new LevelProgress();
+	this->ExpierencePoints = 25;
+
+	typeInterface.setType(ElementalType::NONE);
 }
 
 void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver* irrDriver, BulletHelper* helper, GameWorld* world, scene::IAnimatedMeshSceneNode *mesh, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale, ElementalType element)
@@ -59,6 +71,7 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	body->setFriction(.3);
 	//body->setLinearFactor(btVector3(0, 1, 0));
 	body->setAngularFactor(btVector3(0, 0, 0));
+	body->setActivationState(DISABLE_DEACTIVATION);
 	world->addGameObject(this);
 
 	//Weapon Choice based on Element
@@ -93,6 +106,7 @@ void Enemy::Initialize(irr::scene::ISceneManager* smgr, irr::video::IVideoDriver
 	body->setFriction(.3);
 	//body->setLinearFactor(btVector3(0, 1, 0));
 	body->setAngularFactor(btVector3(0, 0, 0));
+	body->setActivationState(DISABLE_DEACTIVATION);
 	world->addGameObject(this);
 
 	//Weapon Choice based on Element
@@ -153,7 +167,10 @@ void Enemy::getcurrentframe()
 
 void Enemy::takeDamage(int bulldamage, ElementalType bullelement)
 {
-	health -= bulldamage * typeInterface.getMultiplier(bullelement);
+	if (node)
+		health -= bulldamage * typeInterface.getMultiplier(bullelement);
+	else
+		health -= bulldamage;
 
 	if (health <= 0)
 		isAlive = false;
@@ -192,10 +209,13 @@ void Enemy::kill()
 {	
 	//ISceneNode *Node = static_cast<ISceneNode *>(body->getUserPointer());
 	isAlive = false;
-	node->setVisible(false);
-	body->setActivationState(0);
-	node->setName("dead");
-	
+	if (node)
+	{
+		node->setVisible(false);
+		body->setActivationState(0);
+		node->setName("dead");
+	}
+
 	/*
 	Node->remove();
 	// Remove the object from the world

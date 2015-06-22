@@ -5,7 +5,6 @@
 #include "IGameObject.h"
 #include "BulletHelper.h"
 #include "ParticleManager.h"
-#include "Projectile.h"
 #include "Level.h"
 #include "InputReceiver.h"
 #include "Menu.h"

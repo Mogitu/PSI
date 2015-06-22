@@ -3,6 +3,7 @@
 #include "WeaponPickup.h"
 #include "WeaponFactory.h"
 #include "EnemyFactory.h"
+#include "Projectile.h"
 #include "GameObjectPlaceHolder.h"
 
 GameWorld::GameWorld(BulletHelper *h, IrrlichtDevice *device) :helper(h), device(device)
@@ -47,7 +48,7 @@ void GameWorld::update(u32 frameDeltaTime)
 			stringw nodeName = gameObject->node->getName();
 			//if object not alive or name is dead we kill/clean it.
 			if ((!gameObject->isAlive || nodeName == "dead"))
-			{
+			{		
 				gameObject->node->setName("killed");
 				gameObject->kill();				
 				//gameObjects.erase(Iterator);
@@ -161,6 +162,10 @@ void GameWorld::update(u32 frameDeltaTime)
 					ParticleManager::createFullParticleEffect("../Assets/bloodsplat.xml", nodeA->getPosition());
 					
 					en->takeDamage(proj->getDamage(), proj->getElementalType());
+
+					if (!en->isAlive)
+						dynamic_cast<Character*>(player)->level->GrantExperiencePoints(en->getExpierncePoints());
+
 					proj->node->setName("dead");
 					
 					Common::soundEngine->play2D("../Assets/Sounds/splat.wav");

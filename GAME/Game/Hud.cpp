@@ -53,6 +53,24 @@ void Hud::draw()
 	//draw selection highlight around current weapon
 	driver->draw2DImage(image, position2d<s32>(xSelectionHighlight, 0), rect<s32>(0, 128, 64, 196), 0, white, true);
 	
+	// Draw font: level and experience points of player
+	core::stringw sText = "Level: ";
+	sText += player->level->getLevel();
+	sText += "\nExp: ";
+	sText += player->level->getCurrentExperiencePoints();
+	sText += "\\";
+	sText += player->level->ExperiencePointsNeeded();
+
+	//Print Players level and XP
+	font->draw(sText, rect<s32>(0, 64, 0, 0), SColor(255, 255, 255, 255));
+
+	sText = "";
+	sText += player->health;
+	sText += "/";
+	sText += player->getMaxHealth();
+
+	//Print hp/max hp
+	font->draw(sText, rect<s32>(96, 20, 0, 0), SColor(255, 255, 255, 255));
 	/*
 	//score
 	stringw playerScore(player->getScore());

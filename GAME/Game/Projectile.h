@@ -1,12 +1,12 @@
+#ifndef PROJECTILE_H
+#define PROJECTILE_H
+
 #include "GameWorld.h"
 #include "BulletHelper.h"
 #include "ParticleManager.h"
 #include "IGameObject.h"
 #include "Elementals.h"
 
-
-#ifndef PROJECTILE_H
-#define PROJECTILE_H
 class Projectile: public IGameObject
 {
 public:

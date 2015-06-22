@@ -86,6 +86,7 @@
     <ClCompile Include="IceWeapon.cpp" />
     <ClCompile Include="IceType.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelAttribute.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="ParticleAffector.cpp" />
@@ -102,6 +103,7 @@
     <ClCompile Include="WeaponPickup.cpp" />
     <ClCompile Include="WindWeapon.cpp" />
     <ClCompile Include="WindType.cpp" />
+    <ClCompile Include="_Level.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BulletHelper.h" />
@@ -124,6 +126,7 @@
     <ClInclude Include="IGameObject.h" />
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelAttribute.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ParticleAffector.h" />
@@ -135,15 +138,20 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ScaleOverLifeTimeAffector.h" />
     <ClInclude Include="SingleShotBehaviour.h" />
+    <ClInclude Include="Statistic.h" />
+    <ClInclude Include="testCharacter.h" />
     <ClInclude Include="TypeBehaviour.h" />
     <ClInclude Include="TypeInterface.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WeaponArsenal.h" />
     <ClInclude Include="WeaponBehaviour.h" />
+    <ClInclude Include="WeaponDecorator.h" />
+    <ClInclude Include="WeaponExtraDamage.h" />
     <ClInclude Include="WeaponFactory.h" />
     <ClInclude Include="WeaponPickup.h" />
     <ClInclude Include="WindWeapon.h" />
     <ClInclude Include="WindType.h" />
+    <ClInclude Include="_Level.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc" />

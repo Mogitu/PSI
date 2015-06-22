@@ -2,15 +2,21 @@
 #include <iostream>
 #include "Hud.h"
 
-Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
+Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, GameWorld* world, InputReceiver* input, io::path meshName, io::path textureName, LevelProgress* level, int XP, LevelAttribute* attribute, Shape_Type bodyType, btScalar bodyMass, vector3df position, vector3df rotation, vector3df scale)
 {
 	this->Initialize(smgr, driver, helper, world, input, meshName, textureName, bodyType, bodyMass, position, rotation, scale);
 	this->world = world;
 	isAlive = true;
 	world->setPlayer(this);	
-	health = 100;
+	increaseMaxHealth(100);
 	score = 0;
 	speed = 100;
+
+	this->level = level;
+	this->ExpierencePoints = XP;
+	this->attribute = attribute;
+	this->level->setAttribute(attribute);
+	this->attribute->setCharacter(this);
 }
 
 void Player::Initialize()
