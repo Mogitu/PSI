@@ -15,6 +15,7 @@ LevelProgress::LevelProgress(int n, int baseXP)
 void LevelProgress::setAttribute(LevelAttribute* attribute)
 {
 	this->attribute = attribute;
+	attribute->increaseAttributes(level - 1, level - 1);
 }
 
 int LevelProgress::getLevel() const

@@ -12,11 +12,7 @@ void LevelAttribute::increaseAttributes(int constiAmount, int dexAmount)
 	constitution += constiAmount;
 	dexterity += dexAmount;
 
-	if (character)
-	{
-		character->increaseMaxHealth(constiAmount * 5);
-		character->increaseMovementSpeed(dexAmount * 2);
-	}
+	updateCharacterStat(constiAmount, dexAmount);
 }
 
 int LevelAttribute::getConstitution() const
@@ -32,4 +28,14 @@ int LevelAttribute::getDexterity() const
 void LevelAttribute::setCharacter(Character* c)
 {
 	this->character = c;
+	updateCharacterStat(constitution, dexterity);
+}
+
+void LevelAttribute::updateCharacterStat(int constiAmount, int dexAmount)
+{
+	if (character)
+	{
+		character->increaseMaxHealth(constiAmount * 5);
+		character->increaseMovementSpeed(dexAmount * 2);
+	}
 }

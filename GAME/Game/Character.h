@@ -30,10 +30,17 @@ public:
 	{
 		this->level = level;
 		ExpierencePoints = XP;
+
+		if (attribute)
+			this->level->setAttribute(attribute);			
 	}
 	void setLevelAttribute(LevelAttribute* attribute)
 	{
 		this->attribute = attribute;
+		this->attribute->setCharacter(this);
+
+		if (level)
+			this->level->setAttribute(attribute);
 	}
 	int getMaxHealth()
 	{

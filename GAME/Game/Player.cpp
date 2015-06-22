@@ -8,15 +8,16 @@ Player::Player(ISceneManager* smgr, IVideoDriver* driver, BulletHelper* helper, 
 	this->world = world;
 	isAlive = true;
 	world->setPlayer(this);	
-	increaseMaxHealth(100);
+	increaseMaxHealth(95);
 	score = 0;
 	speed = 100;
 
+	this->attribute = attribute;
+	this->attribute->setCharacter(this);
+
 	this->level = level;
 	this->ExpierencePoints = XP;
-	this->attribute = attribute;
 	this->level->setAttribute(attribute);
-	this->attribute->setCharacter(this);
 }
 
 void Player::Initialize()
